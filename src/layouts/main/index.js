@@ -96,8 +96,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-export default function Main() {
-    const isLoggedIn = true;
+const isLoggedIn = true;
+
+export default function Main(props) {    
+    const isLogged = props.isLoggedIn
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
