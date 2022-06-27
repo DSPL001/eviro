@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { history } from '../helpers/history';
+import { history } from "helper/history";
 
 const parseJwt = (token) => {
   try {
@@ -17,7 +17,7 @@ class AuthVerify extends Component {
       const user = JSON.parse(localStorage.getItem("user"));
 
       if (user) {
-        const decodedJwt = parseJwt(user.accessToken);
+        const decodedJwt = parseJwt(user.token);
 
         if (decodedJwt.exp * 1000 < Date.now()) {
           props.logOut();

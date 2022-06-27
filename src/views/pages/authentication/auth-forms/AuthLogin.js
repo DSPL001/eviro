@@ -57,7 +57,7 @@ const FirebaseLogin = ({ ...others }) => {
 
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState('');
-    const [severity, setSeverity] = useState(0);
+    const [severity, setSeverity] = useState('info');
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -160,8 +160,8 @@ const FirebaseLogin = ({ ...others }) => {
                                 .catch(err => {
                                     setStatus({ success: false });
                                     setSubmitting(false);
-                                    setMessage(err.error.title);
-                                    setSeverity(err.error.status);
+                                    setMessage(err.message);
+                                    setSeverity(err.status);
                                     setOpen(true);
                                 })
 
@@ -172,8 +172,8 @@ const FirebaseLogin = ({ ...others }) => {
                             setStatus({ success: false });
                             setErrors({ submit: err.message });
                             setSubmitting(false);
-                            setMessage(err.error.title);
-                            setSeverity(err.error.status);
+                            setMessage(err.message);
+                            setSeverity(err.status);
                             setOpen(true);
                         }
                     }
@@ -276,7 +276,7 @@ const FirebaseLogin = ({ ...others }) => {
                 )}
             </Formik>
             <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity={severity === 200 ? 'success' : 'error'} sx={{ width: '100%' }}>
+                <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
                     {message}
                 </Alert>
             </Snackbar>

@@ -1,4 +1,4 @@
-class Session {
+class SessionHelper {
  set = (key, value) => {
     sessionStorage.setItem(key, value);
  }
@@ -6,3 +6,5 @@ class Session {
     sessionStorage.getItem(key);
  }
 }
+
+export default new SessionHelper();

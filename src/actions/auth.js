@@ -56,8 +56,12 @@ export const login = (username, password) => (dispatch) => {
           type: LOGIN_SUCCESS,
           payload: { user: data },
         });
-
-        return Promise.resolve(data);
+        const successResponse = {
+          status: 'success',
+          message: 'User Logged In Successfully',
+          logindata: data
+        }
+        return Promise.resolve(successResponse);
       }
     )
     .catch(
@@ -77,8 +81,12 @@ export const login = (username, password) => (dispatch) => {
           type: SET_MESSAGE,
           payload: message,
         });
-
-        return Promise.reject(error);
+        const errorResponse = {
+          status: 'error',
+          message: 'User Logged In Failure',
+          logindata: error
+        }
+        return Promise.reject(errorResponse);
       }
 
     );

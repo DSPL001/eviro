@@ -18,6 +18,10 @@ const GuestRoutes = {
             path: EviroConfig.path.landing.home,
             element: <Landing />
         },
+        {
+            path: '/',
+            element: <Landing />
+        },
     ]
 };
 
