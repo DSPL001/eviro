@@ -6,6 +6,7 @@ import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import {
+    Alert,
     Checkbox,
     Divider,
     FormControl,
@@ -18,7 +19,8 @@ import {
     OutlinedInput,
     Stack,
     Typography,
-    useMediaQuery
+    useMediaQuery,
+    Snackbar
 } from '@mui/material';
 
 // third party
@@ -51,6 +53,16 @@ const FirebaseLogin = ({ ...others }) => {
 
     const googleHandler = async () => {
         console.error('Login');
+    };
+
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState('');
+    const [severity, setSeverity] = useState(0);
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
     };
 
     const [showPassword, setShowPassword] = useState(false);
@@ -137,14 +149,20 @@ const FirebaseLogin = ({ ...others }) => {
                     try {
                         if (scriptedRef.current) {
                             dispatch(login(values.email, values.password))
-                                .then(() => {
+                                .then(succ => {
                                     setStatus({ success: true });
                                     setSubmitting(false);
+                                    setMessage(succ.message);
+                                    setSeverity(succ.status);
+                                    setOpen(true);
                                     navigate(EviroConfig.path.main.dashboard);
                                 })
-                                .catch(() =>{
+                                .catch(err => {
                                     setStatus({ success: false });
                                     setSubmitting(false);
+                                    setMessage(err.error.title);
+                                    setSeverity(err.error.status);
+                                    setOpen(true);
                                 })
 
                         }
@@ -154,6 +172,9 @@ const FirebaseLogin = ({ ...others }) => {
                             setStatus({ success: false });
                             setErrors({ submit: err.message });
                             setSubmitting(false);
+                            setMessage(err.error.title);
+                            setSeverity(err.error.status);
+                            setOpen(true);
                         }
                     }
                 }}
@@ -254,6 +275,11 @@ const FirebaseLogin = ({ ...others }) => {
                     </form>
                 )}
             </Formik>
+            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity={severity === 200 ? 'success' : 'error'} sx={{ width: '100%' }}>
+                    {message}
+                </Alert>
+            </Snackbar>
         </>
     );
 };

@@ -3,5 +3,5 @@ export const appConfiguration = {
     defaultPath: '/',
     fontFamily: `'Poppins', sans-serif`,
     borderRadius: 12,
-    theme: 'dark',
+    theme: 'dark',    
 }

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
+    Alert,
     Box,
     Button,
     Checkbox,
@@ -19,7 +20,8 @@ import {
     OutlinedInput,
     TextField,
     Typography,
-    useMediaQuery
+    useMediaQuery,
+    Snackbar
 } from '@mui/material';
 
 // third party
@@ -45,6 +47,18 @@ const FirebaseRegister = ({ ...others }) => {
     const customization = useSelector((state) => state.customization);
     const [showPassword, setShowPassword] = useState(false);
     const [checked, setChecked] = useState(true);
+
+
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState('');
+    const [severity, setSeverity] = useState('info');
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
 
     const dispatch = useDispatch();
 
@@ -128,7 +142,7 @@ const FirebaseRegister = ({ ...others }) => {
 
             <Formik
                 initialValues={{
-                    username:'',
+                    username: '',
                     email: '',
                     password: '',
                     submit: null
@@ -142,15 +156,23 @@ const FirebaseRegister = ({ ...others }) => {
                     try {
                         if (scriptedRef.current) {
                             dispatch(register(values.username, values.email, values.password))
-                            .then(() => {
-                                setStatus({ success: true });
-                                setSubmitting(false);
-                            })
-                            .catch(() => {
-                                setStatus({ success: false });
-                                setSubmitting(false);
-                            })
-                            
+                                .then(succ => {
+                                    setStatus({ success: true });
+                                    setSubmitting(false);
+                                    setMessage(succ.message);
+                                    setSeverity(succ.status);
+                                    setOpen(true);
+                                })
+
+                                .catch(err => {
+                                    setStatus({ success: false });
+                                    setSubmitting(false);
+                                    setMessage(err.error.message);
+                                    setSeverity(err.error.status);
+                                    setOpen(true);
+
+                                })
+
                         }
                     } catch (err) {
                         console.error(err);
@@ -158,6 +180,9 @@ const FirebaseRegister = ({ ...others }) => {
                             setStatus({ success: false });
                             setErrors({ submit: err.message });
                             setSubmitting(false);
+                            setMessage(err.error.message);
+                            setSeverity(err.error.status);
+                            setOpen(true);
                         }
                     }
                 }}
@@ -327,7 +352,13 @@ const FirebaseRegister = ({ ...others }) => {
                         </Box>
                     </form>
                 )}
+
             </Formik>
+            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity={severity.toLowerCase()} sx={{ width: '100%' }}>
+                    {message}
+                </Alert>
+            </Snackbar>
         </>
     );
 };
