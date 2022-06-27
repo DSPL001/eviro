@@ -8,7 +8,7 @@ import { Box, Card, Divider, Grid, Typography } from '@mui/material';
 import MuiBreadcrumbs from '@mui/material/Breadcrumbs';
 
 // project imports
-import config from 'config';
+import EviroConfig from 'config-items';
 import { gridSpacing } from 'store/constant';
 
 // assets
@@ -48,7 +48,7 @@ const Breadcrumbs = ({ card, divider, icon, icons, maxItems, navigation, rightAl
                 if (collapse.type && collapse.type === 'collapse') {
                     getCollapse(collapse);
                 } else if (collapse.type && collapse.type === 'item') {
-                    if (document.location.pathname === config.basename + collapse.url) {
+                    if (document.location.pathname === EviroConfig.app.basename + collapse.url) {
                         setMain(menu);
                         setItem(collapse);
                     }

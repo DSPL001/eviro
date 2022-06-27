@@ -9,7 +9,7 @@ import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography, u
 
 // project imports
 import { MENU_OPEN, SET_MENU } from 'reducers/actions';
-import config from 'config';
+import EviroConfig from 'config-items';
 
 // assets
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
@@ -41,7 +41,7 @@ const NavItem = ({ item, level }) => {
     }
 
     let listItemProps = {
-        component: forwardRef((props, ref) => <Link ref={ref} {...props} to={`${config.basename}${item.url}`} target={itemTarget} />)
+        component: forwardRef((props, ref) => <Link ref={ref} {...props} to={`${EviroConfig.app.basename}${item.url}`} target={itemTarget} />)
     };
     if (item?.external) {
         listItemProps = { component: 'a', href: item.url, target: itemTarget };

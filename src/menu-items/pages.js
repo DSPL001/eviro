@@ -1,6 +1,6 @@
 // assets
 import { IconKey } from '@tabler/icons';
-import config from 'config';
+import EviroConfig from 'config-items';
 // constant
 const icons = {
     IconKey
@@ -25,14 +25,14 @@ const pages = {
                     id: 'login',
                     title: 'Login',
                     type: 'item',
-                    url: config.path.authentication.login,
+                    url: EviroConfig.path.authentication.login,
                     target: true
                 },
                 {
                     id: 'register',
                     title: 'Register',
                     type: 'item',
-                    url: config.path.authentication.register,
+                    url: EviroConfig.path.authentication.register,
                     target: true
                 }
             ]

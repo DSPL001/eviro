@@ -10,7 +10,7 @@ import {
 // assets
 import LoginTwoToneIcon from '@mui/icons-material/LoginTwoTone';
 import AppRegistrationTwoToneIcon from '@mui/icons-material/AppRegistrationTwoTone';
-import config from 'config';
+import EviroConfig from 'config-items';
 
 // ==============================|| NOTIFICATION ||============================== //
 
@@ -32,7 +32,7 @@ const AuthenticationSection = () => {
                     size="large"
                     aria-label="Login"
                     component={Link}
-                    to = {config.path.authentication.login}
+                    to = {EviroConfig.path.authentication.login}
                     color="inherit"
                 >
                     <LoginTwoToneIcon />
@@ -41,7 +41,7 @@ const AuthenticationSection = () => {
                     size="large"
                     aria-label="Register"
                     component={Link}
-                    to={config.path.authentication.register}
+                    to={EviroConfig.path.authentication.register}
                     color="inherit"
                 >
                     <AppRegistrationTwoToneIcon />

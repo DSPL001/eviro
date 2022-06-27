@@ -12,7 +12,7 @@ import AuthRegister from '../auth-forms/AuthRegister';
 import AuthFooter from 'ui-component/cards/AuthFooter';
 
 // assets
-import config from 'config';
+import EviroConfig from 'config-items';
 // ===============================|| AUTH3 - REGISTER ||=============================== //
 
 const Register = () => {
@@ -28,7 +28,7 @@ const Register = () => {
                             <AuthCardWrapper>
                                 <Grid container spacing={2} alignItems="center" justifyContent="center">
                                     <Grid item sx={{ mb: 3 }}>
-                                    <Link to= {config.path.landing.home} style={{ color: 'inherit', textDecoration: 'inherit' }}>
+                                    <Link to= {EviroConfig.path.landing.home} style={{ color: 'inherit', textDecoration: 'inherit' }}>
                                             <Logo />
                                         </Link>
                                     </Grid>
@@ -69,7 +69,7 @@ const Register = () => {
                                         <Grid item container direction="column" alignItems="center" xs={12}>
                                             <Typography
                                                 component={Link}
-                                                to={config.path.authentication.login}
+                                                to={EviroConfig.path.authentication.login}
                                                 variant="subtitle1"
                                                 sx={{ textDecoration: 'none' }}
                                             >

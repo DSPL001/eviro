@@ -29,7 +29,7 @@ import { Formik } from 'formik';
 import useScriptRef from 'hooks/useScriptRef';
 import { login } from "actions/auth";
 import AnimateButton from 'ui-component/extended/AnimateButton';
-import config from 'config';
+import EviroConfig from 'config-items';
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -140,7 +140,7 @@ const FirebaseLogin = ({ ...others }) => {
                                 .then(() => {
                                     setStatus({ success: true });
                                     setSubmitting(false);
-                                    navigate(config.path.main.dashboard);
+                                    navigate(EviroConfig.path.main.dashboard);
                                 })
                                 .catch(() =>{
                                     setStatus({ success: false });
@@ -226,7 +226,7 @@ const FirebaseLogin = ({ ...others }) => {
                                 }
                                 label="Remember me"
                             />
-                            <Typography component={Link} to={config.path.authentication.forgotPassword} variant="subtitle1" color="secondary" sx={{ textDecoration: 'none', cursor: 'pointer' }}>
+                            <Typography component={Link} to={EviroConfig.path.authentication.forgotPassword} variant="subtitle1" color="secondary" sx={{ textDecoration: 'none', cursor: 'pointer' }}>
                                 Forgot Password?
                             </Typography>
                         </Stack>

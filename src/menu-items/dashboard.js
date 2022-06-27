@@ -1,6 +1,6 @@
 // assets
 import { IconDashboard } from '@tabler/icons';
-import config from 'config';
+import EviroConfig from 'config-items';
 // constant
 const icons = { IconDashboard };
 
@@ -15,7 +15,7 @@ const dashboard = {
             id: 'default',
             title: 'Dashboard',
             type: 'item',
-            url: config.path.main.dashboard,
+            url: EviroConfig.path.main.dashboard,
             icon: icons.IconDashboard,
             breadcrumbs: false
         }

@@ -1,6 +1,6 @@
 // assets
 import { IconTypography, IconPalette, IconShadow, IconWindmill } from '@tabler/icons';
-import config from 'config';
+import EviroConfig from 'config-items';
 // constant
 const icons = {
     IconTypography,
@@ -20,7 +20,7 @@ const utilities = {
             id: 'util-typography',
             title: 'Typography',
             type: 'item',
-            url: config.path.main.typography,
+            url: EviroConfig.path.main.typography,
             icon: icons.IconTypography,
             breadcrumbs: false
         },
@@ -28,7 +28,7 @@ const utilities = {
             id: 'util-color',
             title: 'Color',
             type: 'item',
-            url: config.path.main.color,
+            url: EviroConfig.path.main.color,
             icon: icons.IconPalette,
             breadcrumbs: false
         },
@@ -36,7 +36,7 @@ const utilities = {
             id: 'util-shadow',
             title: 'Shadow',
             type: 'item',
-            url: config.path.main.shadow,
+            url: EviroConfig.path.main.shadow,
             icon: icons.IconShadow,
             breadcrumbs: false
         },
@@ -50,14 +50,14 @@ const utilities = {
                     id: 'tabler-icons',
                     title: 'Tabler Icons',
                     type: 'item',
-                    url: config.path.main.tablerIcons,
+                    url: EviroConfig.path.main.tablerIcons,
                     breadcrumbs: false
                 },
                 {
                     id: 'material-icons',
                     title: 'Material Icons',
                     type: 'item',
-                    url: config.path.main.materialIcons,
+                    url: EviroConfig.path.main.materialIcons,
                     breadcrumbs: false
                 }
             ]

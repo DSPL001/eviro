@@ -1,6 +1,6 @@
 // assets
 import { IconBrandChrome, IconHelp } from '@tabler/icons';
-import config from 'config';
+import EviroConfig from 'config-items';
 // constant
 const icons = { IconBrandChrome, IconHelp };
 // ==============================|| SAMPLE PAGE & DOCUMENTATION MENU ITEMS ||============================== //
@@ -13,7 +13,7 @@ const other = {
             id: 'sample-page',
             title: 'Sample Page',
             type: 'item',
-            url: config.path.main.samplePage,
+            url: EviroConfig.path.main.samplePage,
             icon: icons.IconBrandChrome,
             breadcrumbs: false
         },
@@ -21,7 +21,7 @@ const other = {
             id: 'documentation',
             title: 'Documentation',
             type: 'item',
-            url: 'https://codedthemes.gitbook.io/berry/',
+            url: 'https://demeter-systems.com/',
             icon: icons.IconHelp,
             external: true,
             target: true

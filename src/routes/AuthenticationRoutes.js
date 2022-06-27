@@ -3,7 +3,7 @@ import { lazy } from 'react';
 // project imports
 import Loadable from 'ui-component/Loadable';
 import MinimalLayout from 'layout/MinimalLayout';
-import config from 'config';
+import EviroConfig from 'config-items';
 // login option 3 routing
 const AuthLogin = Loadable(lazy(() => import('views/pages/authentication/authentication/Login')));
 const AuthRegister = Loadable(lazy(() => import('views/pages/authentication/authentication/Register')));
@@ -16,15 +16,15 @@ const AuthenticationRoutes = {
     element: <MinimalLayout />,
     children: [
         {
-            path: config.path.authentication.login,
+            path: EviroConfig.path.authentication.login,
             element: <AuthLogin />
         },
         {
-            path: config.path.authentication.register,
+            path: EviroConfig.path.authentication.register,
             element: <AuthRegister />
         },
         {
-            path: config.path.authentication.forgotPassword,
+            path: EviroConfig.path.authentication.forgotPassword,
             element: <AuthForgotPassword />
         },
 

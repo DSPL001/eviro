@@ -12,7 +12,7 @@ import Logo from 'ui-component/Logo';
 import AuthFooter from 'ui-component/cards/AuthFooter';
 
 // assets
-import config from 'config';
+import EviroConfig from 'config-items';
 // ================================|| AUTH - LOGIN ||================================ //
 
 const ForgotPassword = () => {
@@ -28,7 +28,7 @@ const ForgotPassword = () => {
                             <AuthCardWrapper>
                                 <Grid container spacing={2} alignItems="center" justifyContent="center">
                                     <Grid item sx={{ mb: 3 }}>
-                                        <Link to={ config.path.landing.home} style={{ color: 'inherit', textDecoration: 'inherit' }}>
+                                        <Link to={ EviroConfig.path.landing.home} style={{ color: 'inherit', textDecoration: 'inherit' }}>
                                             <Logo />
                                         </Link>
                                     </Grid>

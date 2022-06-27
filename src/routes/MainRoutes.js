@@ -3,7 +3,8 @@ import { lazy } from 'react';
 // project imports
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
-import config from 'config';
+import EviroConfig from 'config-items';
+
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
 
@@ -25,31 +26,31 @@ const MainRoutes = {
     children: [
         
         {
-            path: config.path.main.dashboard,
+            path: EviroConfig.path.main.dashboard,
             element: <DashboardDefault />
         },
         {
-            path: config.path.main.typography,
+            path: EviroConfig.path.main.typography,
             element: <UtilsTypography />
         },
         {
-            path: config.path.main.color,
+            path: EviroConfig.path.main.color,
             element: <UtilsColor />
         },
         {
-            path: config.path.main.shadow,
+            path: EviroConfig.path.main.shadow,
             element: <UtilsShadow />
         },
         {
-            path: config.path.main.tablerIcons,
+            path: EviroConfig.path.main.tablerIcons,
             element: <UtilsTablerIcons />
         },
         {
-            path: config.path.main.materialIcons,
+            path: EviroConfig.path.main.materialIcons,
             element: <UtilsMaterialIcons />
         },
         {
-            path: config.path.main.samplePage,
+            path: EviroConfig.path.main.samplePage,
             element: <SamplePage />
         }
     ]

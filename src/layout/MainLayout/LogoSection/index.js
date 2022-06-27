@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import { ButtonBase } from '@mui/material';
 
 // project imports
-import config from 'config';
+import EviroConfig from 'config-items';
 import Logo from 'ui-component/Logo';
 
 // ==============================|| MAIN LOGO ||============================== //
 const redirectpath = () => {
-return config.user.isAuthenticated? config.path.main.dashboard : config.path.main.home;
+return EviroConfig.user.isAuthenticated? EviroConfig.path.main.dashboard : EviroConfig.path.main.home;
 }
 const LogoSection = () => (
     <ButtonBase disableRipple component={Link} to={redirectpath}>

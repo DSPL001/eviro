@@ -1,13 +1,13 @@
 // project imports
-import config from 'config';
+import EviroConfig from 'config-items';
 
 // action - state management
 import * as actionTypes from './actions';
 
 export const initialState = {
     isOpen: [], // for active default menu
-    fontFamily: config.fontFamily,
-    borderRadius: config.borderRadius,
+    fontFamily: EviroConfig.app.fontFamily,
+    borderRadius: EviroConfig.app.borderRadius,
     opened: true
 };
 
