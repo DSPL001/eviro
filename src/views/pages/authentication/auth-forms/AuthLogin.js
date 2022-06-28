@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -38,13 +39,14 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import Google from 'assets/images/icons/social-google.svg';
-import { Link, useNavigate } from 'react-router-dom';
+
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const FirebaseLogin = ({ ...others }) => {
     const theme = useTheme();
-    const scriptedRef = useScriptRef();
+    const scriptedRef = useScriptRef();    
+
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
     const customization = useSelector((state) => state.customization);
     const [checked, setChecked] = useState(true);
@@ -78,7 +80,7 @@ const FirebaseLogin = ({ ...others }) => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-
+    
     return (
         <>
             <Grid container direction="column" justifyContent="center" spacing={2}>

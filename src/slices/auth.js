@@ -75,10 +75,12 @@ const authSlice = createSlice({
             state.isLoggedIn = false;
         },
         [login.fulfilled]: (state, action) => {
+            debugger
             state.isLoggedIn = true;
-            state.user = action.payload.user;
+            state.user = action.payload;
         },
         [login.rejected]: (state, action) => {
+            debugger
             state.isLoggedIn = false;
             state.user = null;
         },

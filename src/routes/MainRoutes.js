@@ -1,9 +1,11 @@
 import { lazy } from 'react';
+import { Navigate } from 'react-router-dom';
 
 // project imports
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
 import EviroConfig from 'config-items';
+import { PrivateRoute } from './PrivateRoute';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
@@ -24,34 +26,58 @@ const MainRoutes = {
     path: '/',
     element: <MainLayout />,
     children: [
-        
+
         {
             path: EviroConfig.path.main.dashboard,
-            element: <DashboardDefault />
+            element: <PrivateRoute>
+                <DashboardDefault />
+            </PrivateRoute>
+        },
+        {
+            path: "/",
+            element: <PrivateRoute>
+                <DashboardDefault />
+            </PrivateRoute>
         },
         {
             path: EviroConfig.path.main.typography,
-            element: <UtilsTypography />
+            element: <PrivateRoute>
+                <UtilsTypography />
+            </PrivateRoute>
         },
         {
             path: EviroConfig.path.main.color,
-            element: <UtilsColor />
+            element: <PrivateRoute>
+                <UtilsColor />
+            </PrivateRoute>
         },
         {
             path: EviroConfig.path.main.shadow,
-            element: <UtilsShadow />
+            element: <PrivateRoute>
+                <UtilsShadow />
+            </PrivateRoute>
         },
         {
             path: EviroConfig.path.main.tablerIcons,
-            element: <UtilsTablerIcons />
+            element: <PrivateRoute>
+                <UtilsTablerIcons />
+            </PrivateRoute>
         },
         {
             path: EviroConfig.path.main.materialIcons,
-            element: <UtilsMaterialIcons />
+            element: <PrivateRoute>
+                <UtilsMaterialIcons />
+            </PrivateRoute>
         },
         {
             path: EviroConfig.path.main.samplePage,
-            element: <SamplePage />
+            element: <PrivateRoute>
+                <SamplePage />
+            </PrivateRoute>
+        },
+        {
+            path: '*',
+            element: <Navigate to="/" />
         }
     ]
 };

@@ -2,16 +2,12 @@ import ReactDOM from 'react-dom/client';
 // third party
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from 'store';
 // project imports
+import store from 'store';
 import * as serviceWorker from 'serviceWorker';
 import App from 'App';
-
-
 // style + assets
 import 'assets/scss/style.scss';
-
-
 // ==============================|| REACT DOM RENDER  ||============================== //
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
