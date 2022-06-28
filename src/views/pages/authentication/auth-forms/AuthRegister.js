@@ -33,7 +33,8 @@ import useScriptRef from 'hooks/useScriptRef';
 import Google from 'assets/images/icons/social-google.svg';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import { strengthColor, strengthIndicator } from 'utils/password-strength';
-import { register } from "actions/auth";
+import { register } from 'slices/auth';
+import { clearMessage } from 'slices/message';
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -84,8 +85,9 @@ const FirebaseRegister = ({ ...others }) => {
     };
 
     useEffect(() => {
+        dispatch(clearMessage());
         changePassword('123456');
-    }, []);
+    }, [dispatch]);
 
     return (
         <>
@@ -153,9 +155,13 @@ const FirebaseRegister = ({ ...others }) => {
                     password: Yup.string().max(255).required('Password is required')
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+                    const username = values.username;
+                    const email = values.email;
+                    const password = values.password;
                     try {
                         if (scriptedRef.current) {
-                            dispatch(register(values.username, values.email, values.password))
+                            dispatch(register({ username, email, password }))
+                                .unwrap()
                                 .then(succ => {
                                     setStatus({ success: true });
                                     setSubmitting(false);

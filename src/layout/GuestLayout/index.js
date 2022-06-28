@@ -14,7 +14,7 @@ import Breadcrumbs from 'ui-component/extended/Breadcrumbs';
 import Header from './Header';
 import Customization from '../Customization';
 import navigation from 'menu-items';
-import { SET_MENU } from 'reducers/actions';
+import { SET_MENU } from 'slices/actions';
 import GlobalStyles from '@mui/material/GlobalStyles';
 
 // assets

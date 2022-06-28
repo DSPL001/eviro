@@ -8,7 +8,7 @@ import { useTheme } from '@mui/material/styles';
 import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography, useMediaQuery } from '@mui/material';
 
 // project imports
-import { MENU_OPEN, SET_MENU } from 'reducers/actions';
+import { MENU_OPEN, SET_MENU } from 'slices/actions';
 import EviroConfig from 'config-items';
 
 // assets

@@ -13,7 +13,7 @@ import Sidebar from './Sidebar';
 import Customization from '../Customization';
 import navigation from 'menu-items';
 import { drawerWidth } from 'store/constant';
-import { SET_MENU } from 'reducers/actions';
+import { SET_MENU } from 'slices/actions';
 
 // assets
 import { IconChevronRight } from '@tabler/icons';
@@ -66,6 +66,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({
 
 const MainLayout = () => {
     const theme = useTheme();
+    
     const matchDownMd = useMediaQuery(theme.breakpoints.down('lg'));
 
     // Handle left drawer
@@ -107,7 +108,7 @@ const MainLayout = () => {
                 {/* breadcrumb */}
                 <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign />
                 <Outlet />
-            </Main>
+            </Main>           
             <Customization />
         </Box>
     );

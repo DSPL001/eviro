@@ -1,7 +1,8 @@
 import Axios from "axios";
+import store from "store";
 import EviroConfig from "config-items";
 import authHeader from "./auth-header";
-import { store } from "store";
+
 
 const BASE_URL = EviroConfig.api.apiBaseURL;
 const headerObj = { headers: authHeader() }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
@@ -29,7 +29,8 @@ import { Formik } from 'formik';
 
 // project imports
 import useScriptRef from 'hooks/useScriptRef';
-import { login } from "actions/auth";
+import { login } from 'slices/auth';
+import { clearMessage } from 'slices/message';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import EviroConfig from 'config-items';
 // assets
@@ -54,6 +55,10 @@ const FirebaseLogin = ({ ...others }) => {
     const googleHandler = async () => {
         console.error('Login');
     };
+
+    useEffect(() => {
+        dispatch(clearMessage());
+    }, [dispatch]);
 
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState('');
@@ -147,8 +152,11 @@ const FirebaseLogin = ({ ...others }) => {
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
+                        const username = values.email;
+                        const password = values.password;
                         if (scriptedRef.current) {
-                            dispatch(login(values.email, values.password))
+                            dispatch(login({ username, password }))
+                                .unwrap()
                                 .then(succ => {
                                     setStatus({ success: true });
                                     setSubmitting(false);
