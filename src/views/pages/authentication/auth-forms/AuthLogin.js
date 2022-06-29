@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import { LoadingButton } from '@mui/lab';
 import {
     Alert,
     Checkbox,
@@ -13,7 +14,7 @@ import {
     FormControl,
     FormControlLabel,
     FormHelperText,
-    Grid,
+    Grid,    
     IconButton,
     InputAdornment,
     InputLabel,
@@ -45,12 +46,12 @@ import Google from 'assets/images/icons/social-google.svg';
 
 const FirebaseLogin = ({ ...others }) => {
     const theme = useTheme();
-    const scriptedRef = useScriptRef();    
+    const scriptedRef = useScriptRef();
 
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
     const customization = useSelector((state) => state.customization);
     const [checked, setChecked] = useState(true);
-
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -80,7 +81,7 @@ const FirebaseLogin = ({ ...others }) => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
-    
+
     return (
         <>
             <Grid container direction="column" justifyContent="center" spacing={2}>
@@ -154,6 +155,7 @@ const FirebaseLogin = ({ ...others }) => {
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                     try {
+                        setLoading(true);
                         const username = values.email;
                         const password = values.password;
                         if (scriptedRef.current) {
@@ -165,6 +167,7 @@ const FirebaseLogin = ({ ...others }) => {
                                     setMessage(succ.message);
                                     setSeverity(succ.status);
                                     setOpen(true);
+                                    setLoading(false);
                                     navigate(EviroConfig.path.main.dashboard);
                                 })
                                 .catch(err => {
@@ -173,6 +176,7 @@ const FirebaseLogin = ({ ...others }) => {
                                     setMessage(err.message);
                                     setSeverity(err.status);
                                     setOpen(true);
+                                    setLoading(false);
                                 })
 
                         }
@@ -185,6 +189,7 @@ const FirebaseLogin = ({ ...others }) => {
                             setMessage(err.message);
                             setSeverity(err.status);
                             setOpen(true);
+                            setLoading(false);
                         }
                     }
                 }}
@@ -269,17 +274,19 @@ const FirebaseLogin = ({ ...others }) => {
 
                         <Box sx={{ mt: 2 }}>
                             <AnimateButton>
-                                <Button
+                                <LoadingButton
                                     disableElevation
                                     disabled={isSubmitting}
                                     fullWidth
                                     size="large"
+                                    loading={loading}
+                                    loadingIndicator="Signing In..."
                                     type="submit"
                                     variant="contained"
                                     color="secondary"
                                 >
                                     Sign in
-                                </Button>
+                                </LoadingButton>
                             </AnimateButton>
                         </Box>
                     </form>

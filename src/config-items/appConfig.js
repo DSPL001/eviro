@@ -1,6 +1,5 @@
 export const appConfiguration = {
-    basename: '',
-    defaultPath: '/',
+    basename: '',    
     fontFamily: `'Poppins', sans-serif`,
     borderRadius: 12,
     theme: 'dark',    

@@ -1,16 +1,16 @@
 // material-ui
+import { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import {       
-    FormControl,    
+import {
+    FormControl,
     FormHelperText,
-    Grid,   
+    Grid,
     InputLabel,
-    OutlinedInput,    
-    Typography    
+    OutlinedInput,
+    Typography
 } from '@mui/material';
-
+import LoadingButton from '@mui/lab/LoadingButton';
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -24,8 +24,8 @@ import AnimateButton from 'ui-component/extended/AnimateButton';
 
 const FirebaseForgotPassword = ({ ...others }) => {
     const theme = useTheme();
-    const scriptedRef = useScriptRef();   
-
+    const scriptedRef = useScriptRef();
+    const [loading, setLoading] = useState(false);
 
     return (
         <>
@@ -48,10 +48,12 @@ const FirebaseForgotPassword = ({ ...others }) => {
                     password: Yup.string().max(255).required('Password is required')
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+                    setLoading(true);
                     try {
                         if (scriptedRef.current) {
                             setStatus({ success: true });
                             setSubmitting(false);
+                            setLoading(false);
                         }
                     } catch (err) {
                         console.error(err);
@@ -59,6 +61,7 @@ const FirebaseForgotPassword = ({ ...others }) => {
                             setStatus({ success: false });
                             setErrors({ submit: err.message });
                             setSubmitting(false);
+                            setLoading(false);
                         }
                     }
                 }}
@@ -91,17 +94,19 @@ const FirebaseForgotPassword = ({ ...others }) => {
 
                         <Box sx={{ mt: 2 }}>
                             <AnimateButton>
-                                <Button
+                                <LoadingButton
                                     disableElevation
                                     disabled={isSubmitting}
                                     fullWidth
                                     size="large"
+                                    loading={loading}
+                                    loadingIndicator="Signing In..."
                                     type="submit"
                                     variant="contained"
                                     color="secondary"
                                 >
                                     Send Email
-                                </Button>
+                                </LoadingButton>
                             </AnimateButton>
                         </Box>
                     </form>

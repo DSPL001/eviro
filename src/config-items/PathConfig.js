@@ -1,4 +1,5 @@
 export const Path = {
+    defaultPath: '/',
     authentication: {
         login: '/authentication/login',
         register: '/authentication/register',

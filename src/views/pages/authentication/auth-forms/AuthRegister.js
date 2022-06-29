@@ -23,6 +23,7 @@ import {
     useMediaQuery,
     Snackbar
 } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 // third party
 import * as Yup from 'yup';
@@ -48,7 +49,7 @@ const FirebaseRegister = ({ ...others }) => {
     const customization = useSelector((state) => state.customization);
     const [showPassword, setShowPassword] = useState(false);
     const [checked, setChecked] = useState(true);
-
+    const [loading, setLoading] = useState(false);
 
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState('');
@@ -159,6 +160,7 @@ const FirebaseRegister = ({ ...others }) => {
                     const email = values.email;
                     const password = values.password;
                     try {
+                        setLoading(true);
                         if (scriptedRef.current) {
                             dispatch(register({ username, email, password }))
                                 .unwrap()
@@ -168,6 +170,7 @@ const FirebaseRegister = ({ ...others }) => {
                                     setMessage(succ.message);
                                     setSeverity(succ.status);
                                     setOpen(true);
+                                    setLoading(false);
                                 })
 
                                 .catch(err => {
@@ -176,7 +179,7 @@ const FirebaseRegister = ({ ...others }) => {
                                     setMessage(err.error.message);
                                     setSeverity(err.error.status);
                                     setOpen(true);
-
+                                    setLoading(false);
                                 })
 
                         }
@@ -189,6 +192,7 @@ const FirebaseRegister = ({ ...others }) => {
                             setMessage(err.error.message);
                             setSeverity(err.error.status);
                             setOpen(true);
+                            setLoading(false);
                         }
                     }
                 }}
@@ -342,18 +346,20 @@ const FirebaseRegister = ({ ...others }) => {
                         )}
 
                         <Box sx={{ mt: 2 }}>
-                            <AnimateButton>
-                                <Button
+                            <AnimateButton>                                
+                                <LoadingButton
                                     disableElevation
                                     disabled={isSubmitting}
                                     fullWidth
                                     size="large"
+                                    loading={loading}
+                                    loadingIndicator="Signing Up..."
                                     type="submit"
                                     variant="contained"
                                     color="secondary"
                                 >
                                     Sign up
-                                </Button>
+                                </LoadingButton>
                             </AnimateButton>
                         </Box>
                     </form>

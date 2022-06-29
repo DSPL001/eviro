@@ -34,7 +34,7 @@ const MainRoutes = {
             </PrivateRoute>
         },
         {
-            path: "/",
+            path: EviroConfig.path.defaultPath,
             element: <PrivateRoute>
                 <DashboardDefault />
             </PrivateRoute>
