@@ -1,11 +1,9 @@
-import { useEffect } from 'react';
+// export default GuestLayout;
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
-
-// material-ui
-import {  useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import { AppBar, useMediaQuery } from '@mui/material';
-import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
@@ -16,16 +14,14 @@ import Customization from '../Customization';
 import navigation from 'menu-items';
 import { SET_MENU } from 'slices/actions';
 import GlobalStyles from '@mui/material/GlobalStyles';
-
+import GuestFooter from './Footer';
 // assets
 import { IconChevronRight } from '@tabler/icons';
-import AuthFooter from 'ui-component/cards/AuthFooter';
-
-
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
-const GuestLayout = () => {
+
+function LandingContent() {
     const theme = useTheme();
     const matchDownMd = useMediaQuery(theme.breakpoints.down('lg'));
 
@@ -40,37 +36,33 @@ const GuestLayout = () => {
         dispatch({ type: SET_MENU, opened: !matchDownMd });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [matchDownMd]);
-
     return (
-        <Box sx={{ display: 'flex' }}>
+        <React.Fragment>
             <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
             <CssBaseline />
-            {/* header */}
             <AppBar
-                enableColorOnDark
-                position="fixed"
-                color="inherit"
+                position="static"
+                color="default"
                 elevation={0}
-                sx={{
-                    bgcolor: theme.palette.background.default,
-                    transition: leftDrawerOpened ? theme.transitions.create('width') : 'none'
-                }}
+                sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
             >
-                <Toolbar>
+                <Toolbar sx={{ flexWrap: 'wrap' }}>
                     <Header handleLeftDrawerToggle={handleLeftDrawerToggle} />
                 </Toolbar>
             </AppBar>
 
             {/* main content */}
-            <Container theme={theme} disableGutters maxWidth="lg" component="main" sx={{ pt: 8, pb: 6 }}>
+            <Container theme={theme} disableGutters maxWidth="lg" component="main" sx={{ pt: 8, pb: 6, }}>
                 {/* breadcrumb */}
                 <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign />
                 <Outlet />
             </Container>
+            <GuestFooter />
             <Customization />
-            <AuthFooter />
-        </Box>
+        </React.Fragment>
     );
-};
+}
 
-export default GuestLayout;
+export default function GuestLayout() {
+    return <LandingContent />;
+}

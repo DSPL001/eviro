@@ -10,7 +10,7 @@ function PublicRoute({ children }) {
     history.navigate = useNavigate();
     history.location = useLocation();  
     const { user: authUser } = useSelector(x => x.auth);
-    debugger
+    
     if (authUser) {       
         return <Navigate to={ EviroConfig.path.main.dashboard } state={{ from: history.location }} />
     }    

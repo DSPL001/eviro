@@ -5,7 +5,7 @@ import { apiConfiguration } from './apiConfig';
 const EviroConfig = {
     app: appConfiguration,
     api: apiConfiguration,
-    path: Path,
+    path: Path    
 };
 
 export default EviroConfig;

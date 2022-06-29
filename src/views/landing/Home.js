@@ -8,7 +8,7 @@ import CardHeader from '@mui/material/CardHeader';
 import Grid from '@mui/material/Grid';
 import StarIcon from '@mui/icons-material/StarBorder';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import { Container } from '@mui/material';
 
 // project imports
 import { gridSpacing } from 'store/constant';
@@ -55,10 +55,10 @@ const tiers = [
 ];
 
 const Home = () => {
-   
+
     return (
-        <Grid container>
-            <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
+        <>
+            < Container disableGutters maxWidth="md" component="main" >
                 <Typography
                     component="h1"
                     variant="h2"
@@ -73,11 +73,11 @@ const Home = () => {
                     this layout. It&apos;s built with default MUI components with little
                     customization.
                 </Typography>
-            </Container>
-            {/* End hero unit */}
-            <Container maxWidth="md" component="main">
-                <Grid container spacing={gridSpacing} alignItems="flex-end">
-                    {tiers.map((tier) => (
+            </Container >
+
+            < Grid container spacing={gridSpacing} alignItems="flex-end" >
+                {
+                    tiers.map((tier) => (
                         // Enterprise card is full width at sm breakpoint
                         <Grid
                             item
@@ -138,10 +138,11 @@ const Home = () => {
                                 </CardActions>
                             </Card>
                         </Grid>
-                    ))}
-                </Grid>
-            </Container>
-        </Grid>
+                    ))
+                }
+            </Grid >
+        </>
+
     );
 };
 
