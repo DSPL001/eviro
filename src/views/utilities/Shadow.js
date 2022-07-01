@@ -7,7 +7,7 @@ import { Box, Card, Grid } from '@mui/material';
 import SubCard from 'ui-component/cards/SubCard';
 import MainCard from 'ui-component/cards/MainCard';
 import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
-import { gridSpacing } from 'store/constant';
+import EviroConfig from 'config-items';
 
 // ===============================|| SHADOW BOX ||=============================== //
 
@@ -36,10 +36,10 @@ ShadowBox.propTypes = {
 
 const UtilitiesShadow = () => (
     <MainCard title="Basic Shadow" secondary={<SecondaryAction link="https://next.material-ui.com/system/shadows/" />}>
-        <Grid container spacing={gridSpacing}>
+        <Grid container spacing={EviroConfig.app.gridSpacing}>
             <Grid item xs={12}>
                 <SubCard title="Basic Shadow">
-                    <Grid container spacing={gridSpacing}>
+                    <Grid container spacing={EviroConfig.app.gridSpacing}>
                         <Grid item xs={12} sm={6} md={4} lg={3}>
                             <ShadowBox shadow="0" />
                         </Grid>

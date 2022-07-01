@@ -12,7 +12,7 @@ import Header from './Header';
 import Sidebar from './Sidebar';
 import Customization from '../Customization';
 import navigation from 'menu-items';
-import { drawerWidth } from 'store/constant';
+import EviroConfig from 'config-items';
 import { SET_MENU } from 'slices/actions';
 
 // assets
@@ -29,17 +29,17 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({
             duration: theme.transitions.duration.leavingScreen
         }),
         [theme.breakpoints.up('md')]: {
-            marginLeft: -(drawerWidth - 20),
-            width: `calc(100% - ${drawerWidth}px)`
+            marginLeft: -(EviroConfig.app.drawerWidth - 20),
+            width: `calc(100% - ${EviroConfig.app.drawerWidth}px)`
         },
         [theme.breakpoints.down('md')]: {
             marginLeft: '20px',
-            width: `calc(100% - ${drawerWidth}px)`,
+            width: `calc(100% - ${EviroConfig.app.drawerWidth}px)`,
             padding: '16px'
         },
         [theme.breakpoints.down('sm')]: {
             marginLeft: '10px',
-            width: `calc(100% - ${drawerWidth}px)`,
+            width: `calc(100% - ${EviroConfig.app.drawerWidth}px)`,
             padding: '16px',
             marginRight: '10px'
         }
@@ -52,7 +52,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({
         marginLeft: 0,
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
-        width: `calc(100% - ${drawerWidth}px)`,
+        width: `calc(100% - ${EviroConfig.app.drawerWidth}px)`,
         [theme.breakpoints.down('md')]: {
             marginLeft: '20px'
         },

@@ -13,7 +13,7 @@ import Chart from 'react-apexcharts';
 // project imports
 import SkeletonTotalGrowthBarChart from 'ui-component/cards/Skeleton/TotalGrowthBarChart';
 import MainCard from 'ui-component/cards/MainCard';
-import { gridSpacing } from 'store/constant';
+import EviroConfig from 'config-items';
 
 // chart data
 import chartData from './chart-data/total-growth-bar-chart';
@@ -94,7 +94,7 @@ const TotalGrowthBarChart = ({ isLoading }) => {
                 <SkeletonTotalGrowthBarChart />
             ) : (
                 <MainCard>
-                    <Grid container spacing={gridSpacing}>
+                    <Grid container spacing={EviroConfig.app.gridSpacing}>
                         <Grid item xs={12}>
                             <Grid container alignItems="center" justifyContent="space-between">
                                 <Grid item>

@@ -48,7 +48,7 @@ export const login = createAsyncThunk(
             thunkAPI.dispatch(setMessage(message));
             const errorResponse = {
                 status: 'error',
-                message: 'User Logged In Failure',
+                message: error.error === undefined ? 'Server Error' : 'Check Username and Password',
                 logindata: error
             }
             return thunkAPI.rejectWithValue(errorResponse);
@@ -75,12 +75,10 @@ const authSlice = createSlice({
             state.isLoggedIn = false;
         },
         [login.fulfilled]: (state, action) => {
-            debugger
             state.isLoggedIn = true;
             state.user = action.payload;
         },
         [login.rejected]: (state, action) => {
-            debugger
             state.isLoggedIn = false;
             state.user = null;
         },

@@ -7,8 +7,11 @@ import Routes from 'routes';
 import themes from 'themes';
 // project imports
 import NavigationScroll from 'layout/NavigationScroll';
+import useNotifier from 'utils/useNotifier';
+
 // ==============================|| APP ||============================== //
 const App = () => {
+    useNotifier();
     const customization = useSelector((state) => state.customization);
     return (
         <StyledEngineProvider injectFirst>
@@ -16,7 +19,7 @@ const App = () => {
                 <CssBaseline />
                 <NavigationScroll>
                     <Routes />
-                </NavigationScroll>
+                </NavigationScroll>                
             </ThemeProvider>
         </StyledEngineProvider>
     );

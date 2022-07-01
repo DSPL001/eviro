@@ -7,7 +7,7 @@ import { Box, Card, Grid, Typography } from '@mui/material';
 import SubCard from 'ui-component/cards/SubCard';
 import MainCard from 'ui-component/cards/MainCard';
 import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
-import { gridSpacing } from 'store/constant';
+import EviroConfig from 'config-items';
 
 // ===============================|| COLOR BOX ||=============================== //
 
@@ -58,10 +58,10 @@ ColorBox.propTypes = {
 
 const UIColor = () => (
     <MainCard title="Color Palette" secondary={<SecondaryAction link="https://next.material-ui.com/system/palette/" />}>
-        <Grid container spacing={gridSpacing}>
+        <Grid container spacing={EviroConfig.app.gridSpacing}>
             <Grid item xs={12}>
                 <SubCard title="Primary Color">
-                    <Grid container spacing={gridSpacing}>
+                    <Grid container spacing={EviroConfig.app.gridSpacing}>
                         <Grid item xs={12} sm={6} md={4} lg={2}>
                             <ColorBox bgcolor="primary.light" data={{ label: 'Blue-50', color: '#E3F2FD' }} title="primary.light" dark />
                         </Grid>
@@ -82,7 +82,7 @@ const UIColor = () => (
             </Grid>
             <Grid item xs={12}>
                 <SubCard title="Secondary Color">
-                    <Grid container spacing={gridSpacing}>
+                    <Grid container spacing={EviroConfig.app.gridSpacing}>
                         <Grid item xs={12} sm={6} md={4} lg={2}>
                             <ColorBox
                                 bgcolor="secondary.light"
@@ -121,7 +121,7 @@ const UIColor = () => (
             </Grid>
             <Grid item xs={12}>
                 <SubCard title="Success Color">
-                    <Grid container spacing={gridSpacing}>
+                    <Grid container spacing={EviroConfig.app.gridSpacing}>
                         <Grid item xs={12} sm={6} md={4} lg={2}>
                             <ColorBox bgcolor="success.light" data={{ label: 'Green-A100', color: '#b9f6ca' }} title="success.light" dark />
                         </Grid>
@@ -139,7 +139,7 @@ const UIColor = () => (
             </Grid>
             <Grid item xs={12}>
                 <SubCard title="Orange Color">
-                    <Grid container spacing={gridSpacing}>
+                    <Grid container spacing={EviroConfig.app.gridSpacing}>
                         <Grid item xs={12} sm={6} md={4} lg={2}>
                             <ColorBox
                                 bgcolor="orange.light"
@@ -159,7 +159,7 @@ const UIColor = () => (
             </Grid>
             <Grid item xs={12}>
                 <SubCard title="Error Color">
-                    <Grid container spacing={gridSpacing}>
+                    <Grid container spacing={EviroConfig.app.gridSpacing}>
                         <Grid item xs={12} sm={6} md={4} lg={2}>
                             <ColorBox bgcolor="error.light" data={{ label: 'Red-50', color: '#ef9a9a' }} title="error.light" dark />
                         </Grid>
@@ -174,7 +174,7 @@ const UIColor = () => (
             </Grid>
             <Grid item xs={12}>
                 <SubCard title="Warning Color">
-                    <Grid container spacing={gridSpacing}>
+                    <Grid container spacing={EviroConfig.app.gridSpacing}>
                         <Grid item xs={12} sm={6} md={4} lg={2}>
                             <ColorBox bgcolor="warning.light" data={{ label: 'Amber-50', color: '#b9f6ca' }} title="warning.light" dark />
                         </Grid>
@@ -189,7 +189,7 @@ const UIColor = () => (
             </Grid>
             <Grid item xs={12}>
                 <SubCard title="Grey Color">
-                    <Grid container spacing={gridSpacing}>
+                    <Grid container spacing={EviroConfig.app.gridSpacing}>
                         <Grid item xs={12} sm={6} md={4} lg={2}>
                             <ColorBox bgcolor="grey.50" data={{ label: 'Grey-50', color: '#fafafa' }} title="grey[50]" dark />
                         </Grid>

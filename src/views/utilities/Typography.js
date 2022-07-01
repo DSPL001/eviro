@@ -5,13 +5,13 @@ import MuiTypography from '@mui/material/Typography';
 import SubCard from 'ui-component/cards/SubCard';
 import MainCard from 'ui-component/cards/MainCard';
 import SecondaryAction from 'ui-component/cards/CardSecondaryAction';
-import { gridSpacing } from 'store/constant';
+import EviroConfig from 'config-items';
 
 // ==============================|| TYPOGRAPHY ||============================== //
 
 const Typography = () => (
     <MainCard title="Basic Typography" secondary={<SecondaryAction link="https://next.material-ui.com/system/typography/" />}>
-        <Grid container spacing={gridSpacing}>
+        <Grid container spacing={EviroConfig.app.gridSpacing}>
             <Grid item xs={12} sm={6}>
                 <SubCard title="Heading">
                     <Grid container direction="column" spacing={1}>

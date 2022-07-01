@@ -7,8 +7,7 @@ import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
-import {
-    Alert,
+import {    
     Checkbox,
     Divider,
     FormControl,
@@ -21,8 +20,7 @@ import {
     OutlinedInput,
     Stack,
     Typography,
-    useMediaQuery,
-    Snackbar
+    useMediaQuery    
 } from '@mui/material';
 
 // third party
@@ -33,6 +31,7 @@ import { Formik } from 'formik';
 import useScriptRef from 'hooks/useScriptRef';
 import { login } from 'slices/auth';
 import { clearMessage } from 'slices/message';
+import { enqueueSnackbar as enqueueSnackbarAction } from 'slices/popup';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import EviroConfig from 'config-items';
 // assets
@@ -60,17 +59,8 @@ const FirebaseLogin = ({ ...others }) => {
     useEffect(() => {
         dispatch(clearMessage());
     }, [dispatch]);
-
-    const [open, setOpen] = useState(false);
-    const [message, setMessage] = useState('');
-    const [severity, setSeverity] = useState('info');
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
-    };
-
+   
+    const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -159,34 +149,48 @@ const FirebaseLogin = ({ ...others }) => {
                         if (scriptedRef.current) {
                             dispatch(login({ username, password }))
                                 .unwrap()
-                                .then(succ => {
+                                .then(succ => {                                    
                                     setStatus({ success: true });
-                                    setSubmitting(false);
-                                    setMessage(succ.message);
-                                    setSeverity(succ.status);
-                                    setOpen(true);
+                                    setSubmitting(false);                                    
+                                    enqueueSnackbar({
+                                        message: succ.message,
+                                        options: {
+                                            key: new Date().getTime() + Math.random(),
+                                            variant: succ.status,
+                                        },
+                                    });
                                     setLoading(false);
                                     navigate(EviroConfig.path.main.dashboard);
                                 })
-                                .catch(err => {
+                                .catch(error => {  
+                                    console.log(error)                                 
                                     setStatus({ success: false });
                                     setSubmitting(false);
-                                    setMessage(err.message);
-                                    setSeverity(err.status);
-                                    setOpen(true);
+                                    enqueueSnackbar({
+                                        message: (error && error.data && error.logindata.error.message) || error.message|| error.logindata.error.message || error.logindata.error.title || error.toString(),
+                                        options: {
+                                            key: new Date().getTime() + Math.random(),
+                                            variant: 'error',
+                                        },
+                                    });
                                     setLoading(false);
                                 })
 
                         }
-                    } catch (err) {
-                        console.error(err);
+                    } catch (error) {
+                        console.error(error);
                         if (scriptedRef.current) {
                             setStatus({ success: false });
-                            setErrors({ submit: err.message });
+                            setErrors({ submit: error.message });
                             setSubmitting(false);
-                            setMessage(err.message);
-                            setSeverity(err.status);
-                            setOpen(true);
+                            
+                            enqueueSnackbar({
+                                message: error.message,
+                                options: {
+                                    key: new Date().getTime() + Math.random(),
+                                    variant: 'warning',
+                                },
+                            });
                             setLoading(false);
                         }
                     }
@@ -289,13 +293,7 @@ const FirebaseLogin = ({ ...others }) => {
                         </Box>
                     </form>
                 )}
-            </Formik>
-            
-            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
-                    {message}
-                </Alert>
-            </Snackbar>
+            </Formik>            
         </>
     );
 };

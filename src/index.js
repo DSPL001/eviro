@@ -6,15 +6,18 @@ import { Provider } from 'react-redux';
 import store from 'store';
 import * as serviceWorker from 'serviceWorker';
 import App from 'App';
+import { SnackbarProvider } from 'notistack';
 // style + assets
 import 'assets/scss/style.scss';
 // ==============================|| REACT DOM RENDER  ||============================== //
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Provider store={store}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
+        <SnackbarProvider maxSnack={3} autoHideDuration={2000}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </SnackbarProvider>
     </Provider>
 );
 // If you want your app to work offline and load faster, you can change

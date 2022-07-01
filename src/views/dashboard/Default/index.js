@@ -10,7 +10,7 @@ import TotalOrderLineChartCard from './TotalOrderLineChartCard';
 import TotalIncomeDarkCard from './TotalIncomeDarkCard';
 import TotalIncomeLightCard from './TotalIncomeLightCard';
 import TotalGrowthBarChart from './TotalGrowthBarChart';
-import { gridSpacing } from 'store/constant';
+import EviroConfig from 'config-items';
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
@@ -21,9 +21,9 @@ const Dashboard = () => {
     }, []);
 
     return (
-        <Grid container spacing={gridSpacing}>
+        <Grid container spacing={EviroConfig.app.gridSpacing}>
             <Grid item xs={12}>
-                <Grid container spacing={gridSpacing}>
+                <Grid container spacing={EviroConfig.app.gridSpacing}>
                     <Grid item lg={4} md={6} sm={6} xs={12}>
                         <EarningCard isLoading={isLoading} />
                     </Grid>
@@ -31,7 +31,7 @@ const Dashboard = () => {
                         <TotalOrderLineChartCard isLoading={isLoading} />
                     </Grid>
                     <Grid item lg={4} md={12} sm={12} xs={12}>
-                        <Grid container spacing={gridSpacing}>
+                        <Grid container spacing={EviroConfig.app.gridSpacing}>
                             <Grid item sm={6} xs={12} md={6} lg={12}>
                                 <TotalIncomeDarkCard isLoading={isLoading} />
                             </Grid>
@@ -43,7 +43,7 @@ const Dashboard = () => {
                 </Grid>
             </Grid>
             <Grid item xs={12}>
-                <Grid container spacing={gridSpacing}>
+                <Grid container spacing={EviroConfig.app.gridSpacing}>
                     <Grid item xs={12} md={8}>
                         <TotalGrowthBarChart isLoading={isLoading} />
                     </Grid>

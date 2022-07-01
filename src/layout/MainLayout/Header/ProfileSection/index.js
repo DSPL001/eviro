@@ -36,6 +36,7 @@ import Transitions from 'ui-component/extended/Transitions';
 import UpgradePlanCard from './UpgradePlanCard';
 import User1 from 'assets/images/users/user-round.svg';
 import { logout } from 'slices/auth';
+import { enqueueSnackbar as enqueueSnackbarAction } from 'slices/popup';
 import EviroConfig from 'config-items';
 // assets
 import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons';
@@ -56,12 +57,19 @@ const ProfileSection = () => {
     /**
      * anchorRef is used on different componets and specifying one type leads to other components throwing an error
      * */
+    const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
     const anchorRef = useRef(null);
     const handleLogout = async () => {
         dispatch(logout())
             .then(succ => {
+                enqueueSnackbar({
+                    message: 'User Logged Out',
+                    options: {
+                        key: new Date().getTime() + Math.random(),
+                        variant: 'info',
+                    },
+                });
                 navigate(EviroConfig.path.landing.home);
-                console.log(succ)
             })
             .catch(err => {
                 console.log(err)

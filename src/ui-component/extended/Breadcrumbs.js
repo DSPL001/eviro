@@ -9,7 +9,6 @@ import MuiBreadcrumbs from '@mui/material/Breadcrumbs';
 
 // project imports
 import EviroConfig from 'config-items';
-import { gridSpacing } from 'store/constant';
 
 // assets
 import { IconTallymark1 } from '@tabler/icons';
@@ -115,7 +114,7 @@ const Breadcrumbs = ({ card, divider, icon, icons, maxItems, navigation, rightAl
             breadcrumbContent = (
                 <Card
                     sx={{
-                        marginBottom: card === false ? 0 : theme.spacing(gridSpacing),
+                        marginBottom: card === false ? 0 : theme.spacing(EviroConfig.app.gridSpacing),
                         border: card === false ? 'none' : '1px solid',
                         borderColor: theme.palette.primary[200] + 75,
                         background: card === false ? 'transparent' : theme.palette.background.default
@@ -162,7 +161,7 @@ const Breadcrumbs = ({ card, divider, icon, icons, maxItems, navigation, rightAl
                             )}
                         </Grid>
                     </Box>
-                    {card === false && divider !== false && <Divider sx={{ borderColor: theme.palette.primary.main, mb: gridSpacing }} />}
+                    {card === false && divider !== false && <Divider sx={{ borderColor: theme.palette.primary.main, mb: EviroConfig.app.gridSpacing }} />}
                 </Card>
             );
         }

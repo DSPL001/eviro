@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
-    Alert,
     Box,
     Button,
     Checkbox,
@@ -18,10 +17,9 @@ import {
     InputAdornment,
     InputLabel,
     OutlinedInput,
-    TextField,
     Typography,
-    useMediaQuery,
-    Snackbar
+    useMediaQuery
+
 } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 
@@ -36,6 +34,7 @@ import AnimateButton from 'ui-component/extended/AnimateButton';
 import { strengthColor, strengthIndicator } from 'utils/password-strength';
 import { register } from 'slices/auth';
 import { clearMessage } from 'slices/message';
+import { enqueueSnackbar as enqueueSnackbarAction } from 'slices/popup';
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -50,17 +49,6 @@ const FirebaseRegister = ({ ...others }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [checked, setChecked] = useState(true);
     const [loading, setLoading] = useState(false);
-
-    const [open, setOpen] = useState(false);
-    const [message, setMessage] = useState('');
-    const [severity, setSeverity] = useState('info');
-
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
-    };
 
     const dispatch = useDispatch();
 
@@ -84,12 +72,12 @@ const FirebaseRegister = ({ ...others }) => {
         setStrength(temp);
         setLevel(strengthColor(temp));
     };
-
+    const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
     useEffect(() => {
         dispatch(clearMessage());
         changePassword('123456');
     }, [dispatch]);
-
+    
     return (
         <>
             <Grid container direction="column" justifyContent="center" spacing={2}>
@@ -170,34 +158,49 @@ const FirebaseRegister = ({ ...others }) => {
                         if (scriptedRef.current) {
                             dispatch(register({ firstname, lastname, username, email, password }))
                                 .unwrap()
-                                .then(succ => {
+                                .then(succ => {                                    
                                     setStatus({ success: true });
                                     setSubmitting(false);
-                                    setMessage(succ.message);
-                                    setSeverity(succ.status);
-                                    setOpen(true);
+                                    enqueueSnackbar({
+                                        message: succ.message,
+                                        options: {
+                                            key: new Date().getTime() + Math.random(),
+                                            variant: succ.status,
+                                        },
+                                    });
+
                                     setLoading(false);
                                 })
 
-                                .catch(err => {
+                                .catch(error => {                                    
                                     setStatus({ success: false });
                                     setSubmitting(false);
-                                    setMessage(err.error.message);
-                                    setSeverity(err.error.status);
-                                    setOpen(true);
+                                    enqueueSnackbar({
+                                        message: (error && error.data && error.message) || error.error.message || error.error.title || error.message || error.toString(),
+                                        options: {
+                                            key: new Date().getTime() + Math.random(),
+                                            variant: 'error',
+                                        },
+                                    });
+
                                     setLoading(false);
                                 })
 
                         }
-                    } catch (err) {
-                        console.error(err);
+                    } catch (error) {
+                        console.error(error);
                         if (scriptedRef.current) {
                             setStatus({ success: false });
-                            setErrors({ submit: err.message });
+                            setErrors({ submit: error.message });
                             setSubmitting(false);
-                            setMessage(err.error.message);
-                            setSeverity(err.error.status);
-                            setOpen(true);
+                            enqueueSnackbar({
+                                message: (error && error.data && error.message) || error.error.message || error.error.title || error.message || error.toString(),
+                                options: {
+                                    key: new Date().getTime() + Math.random(),
+                                    variant: 'warning',
+                                },
+                            });
+
                             setLoading(false);
                         }
                     }
@@ -205,7 +208,7 @@ const FirebaseRegister = ({ ...others }) => {
             >
                 {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
                     <form noValidate onSubmit={handleSubmit} {...others}>
-                         <FormControl fullWidth error={Boolean(touched.firstname && errors.firstname)} sx={{ ...theme.typography.customInput }}>
+                        <FormControl fullWidth error={Boolean(touched.firstname && errors.firstname)} sx={{ ...theme.typography.customInput }}>
                             <InputLabel htmlFor="outlined-adornment-firstname-register">Firstname</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-firstname-register"
@@ -362,7 +365,7 @@ const FirebaseRegister = ({ ...others }) => {
                         )}
 
                         <Box sx={{ mt: 2 }}>
-                            <AnimateButton>                                
+                            <AnimateButton>
                                 <LoadingButton
                                     disableElevation
                                     disabled={isSubmitting}
@@ -382,11 +385,6 @@ const FirebaseRegister = ({ ...others }) => {
                 )}
 
             </Formik>
-            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity={severity.toLowerCase()} sx={{ width: '100%' }}>
-                    {message}
-                </Alert>
-            </Snackbar>
         </>
     );
 };

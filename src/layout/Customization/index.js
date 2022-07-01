@@ -25,7 +25,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import SubCard from 'ui-component/cards/SubCard';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import { SET_BORDER_RADIUS, SET_FONT_FAMILY } from 'slices/actions';
-import { gridSpacing } from 'store/constant';
+import EviroConfig from 'config-items';
 
 // concat 'px'
 function valueText(value) {
@@ -129,7 +129,7 @@ const Customization = () => {
                 }}
             >
                 <PerfectScrollbar component="div">
-                    <Grid container spacing={gridSpacing} sx={{ p: 3 }}>
+                    <Grid container spacing={EviroConfig.app.gridSpacing} sx={{ p: 3 }}>
                         <Grid item xs={12}>
                             {/* font family */}
                             <SubCard title="Font Family">

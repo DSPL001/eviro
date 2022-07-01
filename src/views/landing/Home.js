@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 
 // project imports
 import { getAllTier } from "slices/tier";
-import { gridSpacing } from 'store/constant';
+import EviroConfig from "config-items";
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 const Home = () => {
@@ -29,7 +29,7 @@ const Home = () => {
     }, [dispatch]);
 
     return (
-        < Grid container spacing={gridSpacing} alignItems="flex-end" >
+        < Grid container spacing={EviroConfig.app.gridSpacing} alignItems="flex-end" >
             {
                 tiers.map((tier) => (
                     // Enterprise card is full width at sm breakpoint
