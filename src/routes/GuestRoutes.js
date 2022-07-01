@@ -7,7 +7,7 @@ import GuestLayout from 'layout/GuestLayout';
 import EviroConfig from 'config-items';
 
 // login option 3 routing
-const Landing = Loadable(lazy(() => import('views/landing/Home')))
+const Landing = Loadable(lazy(() => import('views/landing')))
 // ==============================|| AUTHENTICATION ROUTING ||============================== //
 
 const GuestRoutes = {

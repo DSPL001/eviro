@@ -1,33 +1,33 @@
-import React, { useState, useEffect } from "react";
+// material-ui
+import Typography from '@mui/material/Typography';
+import { Container } from '@mui/material';
 
-import UserService from "../services/user.service";
+// project imports
+import Home from "./Home";
 
-const Home = () => {
-  const [content, setContent] = useState("");
-
-  useEffect(() => {
-    UserService.getPublicContent().then(
-      (response) => {
-        setContent(response.data);
-      },
-      (error) => {
-        const _content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-
-        setContent(_content);
-      }
+// ==============================|| DEFAULT DASHBOARD ||============================== //
+const Landing = () => {
+    return (
+        <>
+            < Container disableGutters maxWidth="md" component="main" >
+                <Typography
+                    component="h1"
+                    variant="h2"
+                    align="center"
+                    color="text.primary"
+                    gutterBottom
+                >
+                    Pricing
+                </Typography>
+                <Typography variant="h5" align="center" color="text.secondary" component="p">
+                    Quickly build an effective pricing table for your potential customers with
+                    this layout. It&apos;s built with default MUI components with little
+                    customization.
+                </Typography>
+            </Container >
+            <Home />
+        </>
     );
-  }, []);
-
-  return (
-    <div className="container">
-      <header className="jumbotron">
-        <h3>{content}</h3>
-      </header>
-    </div>
-  );
 };
 
-export default Home;
+export default Landing;
