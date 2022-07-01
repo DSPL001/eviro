@@ -38,9 +38,7 @@ import EviroConfig from 'config-items';
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
 import Google from 'assets/images/icons/social-google.svg';
-
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -292,6 +290,7 @@ const FirebaseLogin = ({ ...others }) => {
                     </form>
                 )}
             </Formik>
+            
             <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
                     {message}
