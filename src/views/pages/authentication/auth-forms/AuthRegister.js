@@ -145,24 +145,30 @@ const FirebaseRegister = ({ ...others }) => {
 
             <Formik
                 initialValues={{
+                    firstname: '',
+                    lastname: '',
                     username: '',
                     email: '',
                     password: '',
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
+                    firstname: Yup.string().max(120).required('Firstname is required'),
+                    lastname: Yup.string().max(120).required('Lastname is required'),
                     username: Yup.string().max(255).required('Username is required'),
                     email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
                     password: Yup.string().max(255).required('Password is required')
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+                    const firstname = values.firstname;
+                    const lastname = values.lastname;
                     const username = values.username;
                     const email = values.email;
                     const password = values.password;
                     try {
                         setLoading(true);
                         if (scriptedRef.current) {
-                            dispatch(register({ username, email, password }))
+                            dispatch(register({ firstname, lastname, username, email, password }))
                                 .unwrap()
                                 .then(succ => {
                                     setStatus({ success: true });
@@ -199,30 +205,40 @@ const FirebaseRegister = ({ ...others }) => {
             >
                 {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
                     <form noValidate onSubmit={handleSubmit} {...others}>
-                        <Grid container spacing={matchDownSM ? 0 : 2}>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    fullWidth
-                                    label="First Name"
-                                    margin="normal"
-                                    name="fname"
-                                    type="text"
-                                    defaultValue=""
-                                    sx={{ ...theme.typography.customInput }}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    fullWidth
-                                    label="Last Name"
-                                    margin="normal"
-                                    name="lname"
-                                    type="text"
-                                    defaultValue=""
-                                    sx={{ ...theme.typography.customInput }}
-                                />
-                            </Grid>
-                        </Grid>
+                         <FormControl fullWidth error={Boolean(touched.firstname && errors.firstname)} sx={{ ...theme.typography.customInput }}>
+                            <InputLabel htmlFor="outlined-adornment-firstname-register">Firstname</InputLabel>
+                            <OutlinedInput
+                                id="outlined-adornment-firstname-register"
+                                type="text"
+                                value={values.firstname}
+                                name="firstname"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                inputProps={{}}
+                            />
+                            {touched.firstname && errors.firstname && (
+                                <FormHelperText error id="standard-weight-helper-text--register">
+                                    {errors.firstname}
+                                </FormHelperText>
+                            )}
+                        </FormControl>
+                        <FormControl fullWidth error={Boolean(touched.lastname && errors.lastname)} sx={{ ...theme.typography.customInput }}>
+                            <InputLabel htmlFor="outlined-adornment-lastname-register">Lastname</InputLabel>
+                            <OutlinedInput
+                                id="outlined-adornment-lastname-register"
+                                type="text"
+                                value={values.lastname}
+                                name="lastname"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                inputProps={{}}
+                            />
+                            {touched.lastname && errors.lastname && (
+                                <FormHelperText error id="standard-weight-helper-text--register">
+                                    {errors.lastname}
+                                </FormHelperText>
+                            )}
+                        </FormControl>
                         <FormControl fullWidth error={Boolean(touched.username && errors.username)} sx={{ ...theme.typography.customInput }}>
                             <InputLabel htmlFor="outlined-adornment-email-register">Username</InputLabel>
                             <OutlinedInput
