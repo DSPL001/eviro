@@ -17,8 +17,8 @@ async function logout() {
   localStorage.removeItem("user");
 }
 
-async function register(username, email, password) {
-  const response = await postData({ serviceName: EviroConfig.api.authenticate.register, data: { username, email, password } })
+async function register(firstname, lastname, username, email, password) {
+  const response = await postData({ serviceName: EviroConfig.api.authenticate.register, data: { firstname, lastname, username, email, password } })
   const { success, data, error } = response;
   if (success) {
     return Promise.resolve(data);
