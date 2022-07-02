@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react';
-
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -29,7 +28,6 @@ import {
 
 // third-party
 import PerfectScrollbar from 'react-perfect-scrollbar';
-
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import Transitions from 'ui-component/extended/Transitions';
@@ -40,23 +38,25 @@ import { enqueueSnackbar as enqueueSnackbarAction } from 'slices/popup';
 import EviroConfig from 'config-items';
 // assets
 import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons';
+import moment from 'moment';
 
 // ==============================|| PROFILE MENU ||============================== //
 
 const ProfileSection = () => {
     const theme = useTheme();
     const customization = useSelector((state) => state.customization);
+    const { user: authUser } = useSelector(x => x.auth);
+    const [firstname] = useState(authUser.firstName);
+    const [lastname] = useState(authUser.lastName);
+    const [username] = useState(authUser.username);
     const navigate = useNavigate();
-
     const [sdm, setSdm] = useState(true);
     const [value, setValue] = useState('');
     const [notification, setNotification] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(-1);
     const [open, setOpen] = useState(false);
+    const [greeting, setGreeting] = useState('Welcome,');
     const dispatch = useDispatch();
-    /**
-     * anchorRef is used on different componets and specifying one type leads to other components throwing an error
-     * */
     const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
     const anchorRef = useRef(null);
     const handleLogout = async () => {
@@ -76,6 +76,8 @@ const ProfileSection = () => {
             })
         console.log('Logout');
     };
+     
+     
 
     const handleClose = (event) => {
         if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -97,9 +99,19 @@ const ProfileSection = () => {
     };
 
     const prevOpen = useRef(open);
+      
     useEffect(() => {
         if (prevOpen.current === true && open === false) {
             anchorRef.current.focus();
+        }
+        const hours = moment().hours();
+        if (hours < 12) {
+            setGreeting('Good Morning,')
+        } else if (hours < 18) {
+            setGreeting('Good Afternoon,')
+    
+        } else {
+            setGreeting('Good Evening,')
         }
 
         prevOpen.current = open;
@@ -175,12 +187,12 @@ const ProfileSection = () => {
                                     <Box sx={{ p: 2 }}>
                                         <Stack>
                                             <Stack direction="row" spacing={0.5} alignItems="center">
-                                                <Typography variant="h4">Good Morning,</Typography>
+                                                <Typography variant="h4">{greeting}</Typography>
                                                 <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
-                                                    Johne Doe
+                                                    {firstname}&nbsp;{lastname}
                                                 </Typography>
                                             </Stack>
-                                            <Typography variant="subtitle2">Project Admin</Typography>
+                                            <Typography variant="subtitle2">{username}</Typography>
                                         </Stack>
                                         <OutlinedInput
                                             sx={{ width: '100%', pr: 1, pl: 2, my: 2 }}
@@ -301,11 +313,7 @@ const ProfileSection = () => {
                                                         }
                                                     />
                                                 </ListItemButton>
-                                                <ListItemButton
-                                                    sx={{ borderRadius: `${customization.borderRadius}px` }}
-                                                    selected={selectedIndex === 4}
-                                                    onClick={handleLogout}
-                                                >
+                                                <ListItemButton sx={{ borderRadius: `${customization.borderRadius}px` }} selected={selectedIndex === 4} onClick={handleLogout}>
                                                     <ListItemIcon>
                                                         <IconLogout stroke={1.5} size="1.3rem" />
                                                     </ListItemIcon>

@@ -11,7 +11,7 @@ import useNotifier from 'utils/useNotifier';
 
 // ==============================|| APP ||============================== //
 const App = () => {
-    useNotifier();
+    useNotifier();    
     const customization = useSelector((state) => state.customization);
     return (
         <StyledEngineProvider injectFirst>

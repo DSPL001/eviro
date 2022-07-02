@@ -243,9 +243,9 @@ const FirebaseRegister = ({ ...others }) => {
                             )}
                         </FormControl>
                         <FormControl fullWidth error={Boolean(touched.username && errors.username)} sx={{ ...theme.typography.customInput }}>
-                            <InputLabel htmlFor="outlined-adornment-email-register">Username</InputLabel>
+                            <InputLabel htmlFor="outlined-adornment-username-register">Username</InputLabel>
                             <OutlinedInput
-                                id="outlined-adornment-email-register"
+                                id="outlined-adornment-username-register"
                                 type="text"
                                 value={values.username}
                                 name="username"
