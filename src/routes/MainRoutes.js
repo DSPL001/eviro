@@ -16,7 +16,7 @@ const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
 const UtilsShadow = Loadable(lazy(() => import('views/utilities/Shadow')));
 const UtilsMaterialIcons = Loadable(lazy(() => import('views/utilities/MaterialIcons')));
 const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons')));
-
+const UtilsTier = Loadable(lazy(() => import('views/pages/tier')));
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 
@@ -73,6 +73,12 @@ const MainRoutes = {
             path: EviroConfig.path.main.samplePage,
             element: <PrivateRoute>
                 <SamplePage />
+            </PrivateRoute>
+        },
+        {
+            path: EviroConfig.path.main.tier,
+            element: <PrivateRoute>
+                <UtilsTier />
             </PrivateRoute>
         },
         {

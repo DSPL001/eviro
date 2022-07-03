@@ -12,8 +12,20 @@ async function getAllTier() {
     }
 }
 
+async function addTier(tierName, description, amount, validity) {  
+    const response = await postData({ serviceName: EviroConfig.api.tier.Add, data: { tierName, description, amount, validity } })
+    const { success, data, error } = response;
+    if (success) {
+      return Promise.resolve(data);
+    }
+    else {
+      return Promise.reject(error);
+    }
+  }
+
 const tierService = {
-    getAllTier
+    getAllTier,
+    addTier
 }
 
 export default tierService;

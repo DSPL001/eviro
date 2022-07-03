@@ -21,6 +21,7 @@ const Home = () => {
     useEffect(() => {
         dispatch(getAllTier()).unwrap()
             .then(succ => {
+                console.log(succ);
                 setTiers(succ);
             })
             .catch(err => {

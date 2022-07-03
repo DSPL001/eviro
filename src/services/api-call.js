@@ -39,7 +39,6 @@ export async function getData({ serviceName, apiBaseUrl = BASE_URL }) {
 }
 
 export async function postData({ serviceName, apiBaseUrl = BASE_URL, data }) {
-
     const posturl = apiBaseUrl + serviceName
     return await Axios.post(posturl, data, headerObj)
         .then(function (response) {

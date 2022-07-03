@@ -18,5 +18,6 @@ export const Path = {
         tablerIcons: '/icons/tabler-icons',
         materialIcons: '/icons/material-icons',
         samplePage: '/sample-page',
+        tier: 'admin/tier'
     }
 }

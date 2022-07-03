@@ -9,8 +9,7 @@ function PrivateRoute({ children }) {
     history.navigate = useNavigate();
     history.location = useLocation();   
     const { user: authUser } = useSelector(x => x.auth);    
-    if (!authUser) {
-        
+    if (!authUser) {        
         return <Navigate to={ EviroConfig.path.landing.home } state={{ from: history.location }} />
     }
     return children;

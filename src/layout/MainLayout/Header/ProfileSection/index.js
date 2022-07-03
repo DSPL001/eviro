@@ -46,9 +46,9 @@ const ProfileSection = () => {
     const theme = useTheme();
     const customization = useSelector((state) => state.customization);
     const { user: authUser } = useSelector(x => x.auth);
-    const [firstname] = useState(authUser.firstName);
-    const [lastname] = useState(authUser.lastName);
-    const [username] = useState(authUser.username);
+    const [firstname] = useState(authUser? authUser.firstName: 'FIRST');
+    const [lastname] = useState(authUser? authUser.lastName: 'LAST');
+    const [username] = useState(authUser? authUser.username: 'USER');
     const navigate = useNavigate();
     const [sdm, setSdm] = useState(true);
     const [value, setValue] = useState('');
@@ -104,6 +104,7 @@ const ProfileSection = () => {
         if (prevOpen.current === true && open === false) {
             anchorRef.current.focus();
         }
+        
         const hours = moment().hours();
         if (hours < 12) {
             setGreeting('Good Morning,')
