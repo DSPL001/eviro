@@ -162,8 +162,7 @@ const FirebaseLogin = ({ ...others }) => {
                                     setLoading(false);
                                     navigate(EviroConfig.path.main.dashboard);
                                 })
-                                .catch(error => {  
-                                    console.log(error)                                 
+                                .catch(error => {                                                                    
                                     setStatus({ success: false });
                                     setSubmitting(false);
                                     enqueueSnackbar({
@@ -175,15 +174,12 @@ const FirebaseLogin = ({ ...others }) => {
                                     });
                                     setLoading(false);
                                 })
-
                         }
-                    } catch (error) {
-                        console.error(error);
+                    } catch (error) {                       
                         if (scriptedRef.current) {
                             setStatus({ success: false });
                             setErrors({ submit: error.message });
-                            setSubmitting(false);
-                            
+                            setSubmitting(false);                            
                             enqueueSnackbar({
                                 message: error.message,
                                 options: {

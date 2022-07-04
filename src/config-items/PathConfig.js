@@ -17,7 +17,12 @@ export const Path = {
         shadow: '/utils/util-shadow',
         tablerIcons: '/icons/tabler-icons',
         materialIcons: '/icons/material-icons',
-        samplePage: '/sample-page',
+        samplePage: '/sample-page',        
+    },
+    admin:{
         tier: 'admin/tier'
+    },
+    user:{
+        profile: 'user/profile'
     }
 }

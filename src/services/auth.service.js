@@ -5,10 +5,15 @@ async function login(username, password) {
   const response = await postData({ serviceName: EviroConfig.api.authenticate.login, data: { username, password } })
   const { success, data, error } = response;
   if (success) {
-    localStorage.setItem("user", JSON.stringify(data));
-    return Promise.resolve(data);
+    const successResponse = {
+      status: 'success',
+      message: 'User Logged In Successfully',
+      logindata: data
+    }
+    localStorage.setItem("user", JSON.stringify(successResponse));
+    return Promise.resolve(successResponse);
   }
-  else {
+  else {    
     return Promise.reject(error);
   }
 }

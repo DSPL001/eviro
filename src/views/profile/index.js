@@ -1,13 +1,15 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import config from "config";
+import EviroConfig from "config-items";
+import { Paper, Typography, Grid,ButtonBase,Rating, Chip } from "@mui/material";
 
 const Profile = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
+  console.log(currentUser)
   const navigate = useNavigate();
   if (!currentUser) {
-    navigate(config.path.authentication.login);
+    navigate(EviroConfig.path.authentication.login);
   }
 
   return (
@@ -18,11 +20,10 @@ const Profile = () => {
         </h3>
       </header>
       <p>
-        <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
-        {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
+      <strong>Last Name:</strong> {currentUser.lastName}
       </p>
       <p>
-        <strong>Id:</strong> {currentUser.id}
+        <strong>First Name:</strong> {currentUser.firstName}
       </p>
       <p>
         <strong>Email:</strong> {currentUser.email}

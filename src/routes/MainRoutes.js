@@ -19,6 +19,8 @@ const UtilsTablerIcons = Loadable(lazy(() => import('views/utilities/TablerIcons
 const UtilsTier = Loadable(lazy(() => import('views/pages/tier')));
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
+//User Profile routing
+const UserProfile = Loadable(lazy(() => import('views/profile')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -76,9 +78,15 @@ const MainRoutes = {
             </PrivateRoute>
         },
         {
-            path: EviroConfig.path.main.tier,
+            path: EviroConfig.path.admin.tier,
             element: <PrivateRoute>
                 <UtilsTier />
+            </PrivateRoute>
+        },
+        {
+            path: EviroConfig.path.user.profile,
+            element: <PrivateRoute>
+                <UserProfile />
             </PrivateRoute>
         },
         {

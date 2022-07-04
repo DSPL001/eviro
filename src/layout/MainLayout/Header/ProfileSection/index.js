@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 // material-ui
@@ -46,9 +46,9 @@ const ProfileSection = () => {
     const theme = useTheme();
     const customization = useSelector((state) => state.customization);
     const { user: authUser } = useSelector(x => x.auth);
-    const [firstname] = useState(authUser? authUser.firstName: 'FIRST');
-    const [lastname] = useState(authUser? authUser.lastName: 'LAST');
-    const [username] = useState(authUser? authUser.username: 'USER');
+    const [firstname] = useState(authUser ? authUser.logindata.firstName : 'FIRST');
+    const [lastname] = useState(authUser ? authUser.logindata.lastName : 'LAST');
+    const [username] = useState(authUser ? authUser.logindata.username : 'USER');
     const navigate = useNavigate();
     const [sdm, setSdm] = useState(true);
     const [value, setValue] = useState('');
@@ -76,9 +76,6 @@ const ProfileSection = () => {
             })
         console.log('Logout');
     };
-     
-     
-
     const handleClose = (event) => {
         if (anchorRef.current && anchorRef.current.contains(event.target)) {
             return;
@@ -99,18 +96,17 @@ const ProfileSection = () => {
     };
 
     const prevOpen = useRef(open);
-      
+
     useEffect(() => {
         if (prevOpen.current === true && open === false) {
             anchorRef.current.focus();
-        }
-        
+        }        
         const hours = moment().hours();
         if (hours < 12) {
             setGreeting('Good Morning,')
         } else if (hours < 18) {
             setGreeting('Good Afternoon,')
-    
+
         } else {
             setGreeting('Good Evening,')
         }
@@ -286,7 +282,7 @@ const ProfileSection = () => {
                                                     </ListItemIcon>
                                                     <ListItemText primary={<Typography variant="body2">Account Settings</Typography>} />
                                                 </ListItemButton>
-                                                <ListItemButton
+                                                <ListItemButton component={Link} to={EviroConfig.path.user.profile}
                                                     sx={{ borderRadius: `${customization.borderRadius}px` }}
                                                     selected={selectedIndex === 1}
                                                     onClick={(event) => handleListItemClick(event, 1, '/user/social-profile/posts')}
@@ -298,7 +294,7 @@ const ProfileSection = () => {
                                                         primary={
                                                             <Grid container spacing={1} justifyContent="space-between">
                                                                 <Grid item>
-                                                                    <Typography variant="body2">Social Profile</Typography>
+                                                                    <Typography variant="body2">Profile</Typography>
                                                                 </Grid>
                                                                 <Grid item>
                                                                     <Chip
