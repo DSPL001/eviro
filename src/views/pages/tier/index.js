@@ -8,6 +8,7 @@ import MainCard from 'ui-component/cards/MainCard';
 import { openModal } from 'slices/modal';
 import { clearMessage } from 'slices/message';
 import AddTier from './addTier';
+import Tierplans from './tierplans';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
@@ -30,6 +31,7 @@ const TierPage = () => {
                     Add Tier
                 </Button>                
             </div>
+            <Tierplans />
         </MainCard>
     )
 }

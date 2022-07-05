@@ -16,7 +16,7 @@ const admin = {
             id: 'tier',
             title: 'Tier',
             type: 'item',
-            url: EviroConfig.path.main.tier,
+            url: EviroConfig.path.admin.tier,
             icon: icons.IconDiamond,
             breadcrumbs: false
         }
