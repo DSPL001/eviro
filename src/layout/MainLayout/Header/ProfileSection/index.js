@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 // material-ui
@@ -32,7 +32,6 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import MainCard from 'ui-component/cards/MainCard';
 import Transitions from 'ui-component/extended/Transitions';
 import UpgradePlanCard from './UpgradePlanCard';
-import User1 from 'assets/images/users/user-round.svg';
 import { logout } from 'slices/auth';
 import { enqueueSnackbar as enqueueSnackbarAction } from 'slices/popup';
 import EviroConfig from 'config-items';
@@ -100,7 +99,7 @@ const ProfileSection = () => {
     useEffect(() => {
         if (prevOpen.current === true && open === false) {
             anchorRef.current.focus();
-        }        
+        }
         const hours = moment().hours();
         if (hours < 12) {
             setGreeting('Good Morning,')
@@ -138,7 +137,8 @@ const ProfileSection = () => {
                 }}
                 icon={
                     <Avatar
-                        src={User1}
+                        alt={firstname + ' ' + lastname}
+                        src="/static/images/avatar/1.jpg"
                         sx={{
                             ...theme.typography.mediumAvatar,
                             margin: '8px 0 8px 8px !important',
@@ -275,17 +275,17 @@ const ProfileSection = () => {
                                                 <ListItemButton
                                                     sx={{ borderRadius: `${customization.borderRadius}px` }}
                                                     selected={selectedIndex === 0}
-                                                    onClick={(event) => handleListItemClick(event, 0, '/user/account-profile/profile1')}
+                                                    onClick={(event) => handleListItemClick(event, 0, EviroConfig.path.user.account)}
                                                 >
                                                     <ListItemIcon>
                                                         <IconSettings stroke={1.5} size="1.3rem" />
                                                     </ListItemIcon>
                                                     <ListItemText primary={<Typography variant="body2">Account Settings</Typography>} />
                                                 </ListItemButton>
-                                                <ListItemButton component={Link} to={EviroConfig.path.user.profile}
+                                                <ListItemButton
                                                     sx={{ borderRadius: `${customization.borderRadius}px` }}
                                                     selected={selectedIndex === 1}
-                                                    onClick={(event) => handleListItemClick(event, 1, '/user/social-profile/posts')}
+                                                    onClick={(event) => handleListItemClick(event, 1, EviroConfig.path.user.profile)}
                                                 >
                                                     <ListItemIcon>
                                                         <IconUser stroke={1.5} size="1.3rem" />

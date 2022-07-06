@@ -1,43 +1,45 @@
 // assets
-import { IconKey } from '@tabler/icons';
+import { IconTypography, IconPalette, IconShadow, IconWindmill } from '@tabler/icons';
 import EviroConfig from 'config-items';
 // constant
 const icons = {
-    IconKey
+    IconTypography,
+    IconPalette,
+    IconShadow,
+    IconWindmill
 };
 
-// ==============================|| EXTRA PAGES MENU ITEMS ||============================== //
+// ==============================|| UTILITIES MENU ITEMS ||============================== //
 
-const pages = {
-    id: 'pages',
-    title: 'Pages',
-    caption: 'Pages Caption',
+const features = {
+    id: 'features',
+    title: 'Features',
+    caption: 'For Stocks and Options',
     type: 'group',
     children: [
         {
-            id: 'authentication',
-            title: 'Authentication',
+            id: 'watchlistgroup',
+            title: 'Watchlist',
             type: 'collapse',
-            icon: icons.IconKey,
-
+            icon: icons.IconWindmill,
             children: [
                 {
-                    id: 'login',
-                    title: 'Login',
+                    id: 'watchlist',
+                    title: 'Watchlist',
                     type: 'item',
-                    url: EviroConfig.path.authentication.login,
-                    target: true
+                    url: EviroConfig.path.main.watchlist,
+                    breadcrumbs: false
                 },
                 {
-                    id: 'register',
-                    title: 'Register',
+                    id: 'watchlistCollection',
+                    title: 'Collection',
                     type: 'item',
-                    url: EviroConfig.path.authentication.register,
-                    target: true
+                    url: EviroConfig.path.main.watchlistCollection,
+                    breadcrumbs: false
                 }
             ]
         }
     ]
 };
 
-export default pages;
+export default features;
