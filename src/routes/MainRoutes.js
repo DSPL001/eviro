@@ -9,7 +9,9 @@ import { PrivateRoute } from './PrivateRoute';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
-
+// Watchlist routing
+const Watchlist = Loadable(lazy(() => import('views/pages/watchlist')));
+const WatchlistCollection = Loadable(lazy(() => import('views/pages/watchlist/collection')));
 // utilities routing
 const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
 const UtilsColor = Loadable(lazy(() => import('views/utilities/Color')));
@@ -21,7 +23,7 @@ const UtilsTier = Loadable(lazy(() => import('views/pages/tier')));
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 //User Profile routing
 const UserProfile = Loadable(lazy(() => import('views/profile')));
-
+const UserAccount = Loadable(lazy(() => import('views/pages/account')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -87,6 +89,24 @@ const MainRoutes = {
             path: EviroConfig.path.user.profile,
             element: <PrivateRoute>
                 <UserProfile />
+            </PrivateRoute>
+        },
+        {
+            path: EviroConfig.path.user.account,
+            element: <PrivateRoute>
+                <UserAccount />
+            </PrivateRoute>
+        },
+        {
+            path: EviroConfig.path.main.watchlist,
+            element: <PrivateRoute>
+                <Watchlist />
+            </PrivateRoute>
+        },
+        {
+            path: EviroConfig.path.main.watchlistCollection,
+            element: <PrivateRoute>
+                <WatchlistCollection />
             </PrivateRoute>
         },
         {

@@ -12,6 +12,8 @@ export const Path = {
     },
     main: {
         dashboard: '/dashboard',
+        watchlist: '/watchlist',
+        watchlistCollection: '/watchlist/collection',
         typography: '/utils/util-typography',
         color: '/utils/util-color',
         shadow: '/utils/util-shadow',
@@ -23,6 +25,7 @@ export const Path = {
         tier: 'admin/tier'
     },
     user:{
-        profile: 'user/profile'
+        profile: 'user/profile',
+        account: 'user/account'
     }
 }
