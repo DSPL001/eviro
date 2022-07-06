@@ -35,6 +35,5 @@ const TierPage = () => {
         </MainCard>
     )
 }
-
 export default TierPage;
 

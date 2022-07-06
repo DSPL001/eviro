@@ -10,17 +10,25 @@ import StarIcon from '@mui/icons-material/StarBorder';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-
+import { useSelector } from "react-redux";
+import { openModal } from "slices/modal";
+import AddTier from "./addTier";
 // project imports
 import { getAllTier } from "slices/tier";
 import EviroConfig from "config-items";
 import { CardActions } from "@mui/material";
 
+
+
 // ==============================|| DEFAULT DASHBOARD ||============================== //
+
 const Tierplans = () => {
     const [tiers, setTiers] = useState([]);
+    const { isOpen } = useSelector((store) => store.modal);
     const dispatch = useDispatch();
-
+    const handleClickOpen = () => {        
+        dispatch(openModal());
+    };    
     useEffect(() => {
         dispatch(getAllTier()).unwrap()
             .then(succ => {
@@ -31,10 +39,10 @@ const Tierplans = () => {
                 console.log(err)
             })
     }, [dispatch]);
-
-    return (
+     return (
         < Grid container spacing={EviroConfig.app.gridSpacing} alignItems="flex-end" >
-            {
+            {isOpen && <AddTier />}
+               {
                 tiers.map((tier) => (
                     // Enterprise card is full width at sm breakpoint
                     <Grid
@@ -43,8 +51,9 @@ const Tierplans = () => {
                         xs={12}
                         sm={tier.tierName === 'Enterprise' ? 12 : 6}
                         md={4}
+                        
                     >
-                        <Card variant="outlined">
+                          <Card variant="outlined">
                             <CardHeader
                                 title={tier.tierName}
                                 subheader={tier.tierName}
@@ -58,9 +67,10 @@ const Tierplans = () => {
                                         theme.palette.mode === 'light'
                                             ? theme.palette.grey[200]
                                             : theme.palette.grey[700],
-                                }}
-                            />
-                            <CardContent>
+                                             }}
+                                
+                                />
+                                 <CardContent>
                                 <Box
                                     sx={{
                                         display: 'flex',
@@ -86,14 +96,13 @@ const Tierplans = () => {
                                         {tier.description}
                                     </Typography>
                                 </ul>
-                            </CardContent>
+                                   </CardContent>
                             <CardActions>
                                 <Stack spacing={2} direction="row">
-                                    
-                                    <Button variant="contained">Contained</Button>
-                                    <Button variant="contained">Outlined</Button>
+                                <Button variant="contained" onClick={handleClickOpen}>Edit</Button>
+                                <Button variant="contained">Delete</Button>
                                 </Stack>
-                            </CardActions>
+                         </CardActions>
                         </Card>
                     </Grid>
                 ))
@@ -101,5 +110,433 @@ const Tierplans = () => {
         </Grid >
     );
 };
-
 export default Tierplans;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                

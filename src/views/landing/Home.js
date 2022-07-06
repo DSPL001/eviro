@@ -9,6 +9,9 @@ import Grid from '@mui/material/Grid';
 import StarIcon from '@mui/icons-material/StarBorder';
 import Typography from '@mui/material/Typography';
 
+
+
+
 // project imports
 import { getAllTier } from "slices/tier";
 import EviroConfig from "config-items";
@@ -41,7 +44,7 @@ const Home = () => {
                         sm={tier.tierName === 'Enterprise' ? 12 : 6}
                         md={4}
                     >
-                        <Card variant="outlined">
+                         <Card variant="outlined">
                             <CardHeader
                                 title={tier.tierName}
                                 subheader={tier.tierName}
@@ -50,14 +53,15 @@ const Home = () => {
                                 subheaderTypographyProps={{
                                     align: 'center',
                                 }}
-                                sx={{
+                                   sx={{
                                     backgroundColor: (theme) =>
                                         theme.palette.mode === 'light'
                                             ? theme.palette.grey[200]
                                             : theme.palette.grey[700],
+                                            
                                 }}
-                            />
-                            <CardContent>
+                                />
+                                  <CardContent>
                                 <Box
                                     sx={{
                                         display: 'flex',
@@ -69,10 +73,10 @@ const Home = () => {
                                     <Typography component="h2" variant="h3" color="text.primary">
                                         ${tier.amount}
                                     </Typography>
-                                    <Typography variant="h6" color="text.secondary">
+                                     <Typography variant="h6" color="text.secondary">
                                         /mo
                                     </Typography>
-                                </Box>
+                                  </Box>
                                 <ul>
                                     <Typography
                                         component="li"
@@ -83,12 +87,13 @@ const Home = () => {
                                         {tier.description}
                                     </Typography>
                                 </ul>
-                            </CardContent>
+                                  </CardContent>
                         </Card>
                     </Grid>
                 ))
             }
         </Grid >
+        
     );
 };
 
