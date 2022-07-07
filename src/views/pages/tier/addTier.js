@@ -221,4 +221,3 @@ const AddTier = () => {
 }
 
 export default AddTier;
-

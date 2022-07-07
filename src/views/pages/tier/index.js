@@ -36,4 +36,3 @@ const TierPage = () => {
     )
 }
 export default TierPage;
-
