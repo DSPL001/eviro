@@ -6,6 +6,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+
+
 // material-ui
 import { LoadingButton } from '@mui/lab';
 import {
@@ -35,8 +37,7 @@ const AddTier = () => {
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
-
-    return (
+     return (
         <Dialog fullScreen={fullScreen} open={true} onClose={() => { dispatch(closeModal()); }} aria-labelledby="responsive-dialog-title">
             <DialogTitle id="responsive-dialog-title">
                 {"Create Tier?"}
@@ -84,7 +85,7 @@ const AddTier = () => {
                                         setStatus({ success: false });
                                         setSubmitting(false);
                                         enqueueSnackbar({
-                                            message: 'Close Modal',
+                                            message: 'Close Modal,',
                                             options: {
                                                 key: new Date().getTime() + Math.random(),
                                                 variant: 'error',
@@ -145,7 +146,7 @@ const AddTier = () => {
                                     label="Tier Description"
                                     inputProps={{}}
                                 />
-                                {touched.tierDescription && errors.tierDescription && (
+                                {touched.tierDescription && errors.tierDescription && ( 
                                     <FormHelperText error id="standard-weight-helper-text-tierDescription-add">
                                         {errors.tier}
                                     </FormHelperText>
@@ -209,7 +210,9 @@ const AddTier = () => {
                                     </LoadingButton>
                                 </AnimateButton>
                             </Box>
+                            
                         </form>
+                        
                     )}
                 </Formik>
             </DialogContent>
@@ -218,3 +221,4 @@ const AddTier = () => {
 }
 
 export default AddTier;
+
