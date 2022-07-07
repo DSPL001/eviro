@@ -46,6 +46,51 @@ export const login = createAsyncThunk(
     }
 );
 
+export const confirmEmail = createAsyncThunk(
+    "auth/confirmEmail",
+    async ({ userId, code }, thunkAPI) => {        
+        try {
+            const data = await authService.confirmEmail(userId, code);
+            return data;
+        }
+        catch (error) {
+            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+            thunkAPI.dispatch(setMessage(message));            
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
+
+export const resetPassword = createAsyncThunk(
+    "auth/resetPassword",
+    async ({ userId, code, password }, thunkAPI) => {        
+        try {
+            const data = await authService.resetPassword(userId, code, password);
+            return data;
+        }
+        catch (error) {
+            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+            thunkAPI.dispatch(setMessage(message));            
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
+
+export const forgotPassword = createAsyncThunk(
+    "auth/forgotPassword",
+    async ({ email }, thunkAPI) => {        
+        try {
+            const data = await authService.forgotPassword(email);
+            return data;
+        }
+        catch (error) {
+            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+            thunkAPI.dispatch(setMessage(message));            
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
+
 export const logout = createAsyncThunk("auth/logout", async () => {
     await authService.logout();
 });
@@ -73,6 +118,30 @@ const authSlice = createSlice({
             state.user = null;
         },
         [logout.fulfilled]: (state, action) => {
+            state.isLoggedIn = false;
+            state.user = null;
+        },
+        [confirmEmail.fulfilled]: (state, action) => {
+            state.isLoggedIn = false;
+            state.user = null;
+        },
+        [confirmEmail.rejected]: (state, action) => {
+            state.isLoggedIn = false;
+            state.user = null;
+        },
+        [forgotPassword.fulfilled]: (state, action) => {
+            state.isLoggedIn = false;
+            state.user = null;
+        },
+        [forgotPassword.rejected]: (state, action) => {
+            state.isLoggedIn = false;
+            state.user = null;
+        },
+        [resetPassword.fulfilled]: (state, action) => {
+            state.isLoggedIn = false;
+            state.user = null;
+        },
+        [resetPassword.rejected]: (state, action) => {
             state.isLoggedIn = false;
             state.user = null;
         },

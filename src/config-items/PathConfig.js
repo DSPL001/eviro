@@ -3,7 +3,9 @@ export const Path = {
     authentication: {
         login: '/authentication/login',
         register: '/authentication/register',
-        forgotPassword: '/authentication/forgotpassword'
+        forgotPassword: '/authentication/forgotpassword',
+        confirmEmail: '/ConfirmEmail/api/authenticate/register',
+        resetpassword: '/ResetPassword/api/Authenticate/ForgotPassword'
     },
     landing: {
         home: '/home',

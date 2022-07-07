@@ -7,7 +7,8 @@ import GuestLayout from 'layout/GuestLayout';
 import EviroConfig from 'config-items';
 
 // login option 3 routing
-const Landing = Loadable(lazy(() => import('views/landing')))
+const Landing = Loadable(lazy(() => import('views/landing')));
+const AuthConfirmEmail = Loadable(lazy(() => import('views/pages/authentication/authentication/ConfirmEmail')));
 // ==============================|| AUTHENTICATION ROUTING ||============================== //
 
 const GuestRoutes = {
@@ -19,7 +20,13 @@ const GuestRoutes = {
             element: <PublicRoute>
                 <Landing />
             </PublicRoute>
-        }      
+        },
+        {
+            path: EviroConfig.path.authentication.confirmEmail,
+            element: <PublicRoute>
+                <AuthConfirmEmail />
+            </PublicRoute>
+        },
     ]
 };
 

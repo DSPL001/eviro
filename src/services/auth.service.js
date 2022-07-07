@@ -33,10 +33,47 @@ async function register(firstname, lastname, username, email, password) {
   }
 }
 
+async function confirmEmail(userId, code) {  
+  const response = await postData({ serviceName: EviroConfig.api.authenticate.confirmEmail, data: { userId, code } })
+  const { success, data, error } = response;
+  if (success) {       
+    return Promise.resolve(data);
+  }
+  else {    
+    return Promise.reject(error);
+  }
+}
+
+async function forgotPassword(email) {  
+  const response = await postData({ serviceName: EviroConfig.api.authenticate.forgotPassword, data: { email } })
+  const { success, data, error } = response;
+  if (success) {       
+    return Promise.resolve(data);
+  }
+  else {    
+    return Promise.reject(error);
+  }
+}
+
+async function resetPassword(userId, code, password) {  
+  debugger
+  const response = await postData({ serviceName: EviroConfig.api.authenticate.resetPassword, data: { userId, code, password } })
+  const { success, data, error } = response;
+  if (success) {       
+    return Promise.resolve(data);
+  }
+  else {    
+    return Promise.reject(error);
+  }
+}
+
 const authService = {
   login,
   logout,
-  register
+  register,
+  confirmEmail,
+  forgotPassword,
+  resetPassword
 }
 
 export default authService;

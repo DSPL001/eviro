@@ -1,7 +1,8 @@
 // material-ui
 import { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import {
     FormControl,
@@ -9,6 +10,8 @@ import {
     Grid,
     InputLabel,
     OutlinedInput,
+    IconButton,
+    InputAdornment,
     Typography
 } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -19,43 +22,67 @@ import { Formik } from 'formik';
 // project imports
 import useScriptRef from 'hooks/useScriptRef';
 import AnimateButton from 'ui-component/extended/AnimateButton';
-import { forgotPassword } from 'slices/auth';
+import { strengthColor, strengthIndicator } from 'utils/password-strength';
+import { resetPassword } from 'slices/auth';
 import { enqueueSnackbar as enqueueSnackbarAction } from 'slices/popup';
+// assets
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
-const FirebaseForgotPassword = ({ ...others }) => {
+const FirebaseResetPassword = ({ ...others }) => {
     const theme = useTheme();
     const scriptedRef = useScriptRef();
+    const [searchParams] = useSearchParams();
+    const code = searchParams.get("code");
+    const userId = searchParams.get("userId");
+    const [strength, setStrength] = useState(0);
+    const [level, setLevel] = useState();
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+    const changePassword = (value) => {
+        const temp = strengthIndicator(value);
+        setStrength(temp);
+        setLevel(strengthColor(temp));
+    };
+
     return (
         <>
             <Grid container direction="column" justifyContent="center" spacing={2}>
                 <Grid item xs={12} container alignItems="center" justifyContent="center">
                     <Box sx={{ mb: 2 }}>
-                        <Typography variant="subtitle1">Forgot Password</Typography>
+                        <Typography variant="subtitle1">Reset Password</Typography>
                     </Box>
                 </Grid>
             </Grid>
 
             <Formik
                 initialValues={{
-                    email: 'info@codedthemes.com',
+                    password: '',
                     submit: null
                 }}
                 validationSchema={Yup.object().shape({
-                    email: Yup.string().email('Must be a valid email').max(255).required('Email is required')
+                    password: Yup.string().max(255).required('Password is required')
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-                    const email = values.email
+                    const password = values.password;
                     setLoading(true);
                     try {
                         if (scriptedRef.current) {
-                            dispatch(forgotPassword({email}))
+                            dispatch(resetPassword({userId, code, password}))
                                 .unwrap()
                                 .then(succ => {
+                                    console.log(succ)
                                     setStatus({ success: true });
                                     setSubmitting(false);
                                     enqueueSnackbar({
@@ -94,24 +121,65 @@ const FirebaseForgotPassword = ({ ...others }) => {
             >
                 {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
                     <form noValidate onSubmit={handleSubmit} {...others}>
-                        <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
-                            <InputLabel htmlFor="outlined-adornment-email-login">Email Address / Username</InputLabel>
+                        <FormControl
+                            fullWidth
+                            error={Boolean(touched.password && errors.password)}
+                            sx={{ ...theme.typography.customInput }}
+                        >
+                            <InputLabel htmlFor="outlined-adornment-password-register">Password</InputLabel>
                             <OutlinedInput
-                                id="outlined-adornment-email-login"
-                                type="email"
-                                value={values.email}
-                                name="email"
+                                id="outlined-adornment-password-register"
+                                type={showPassword ? 'text' : 'password'}
+                                value={values.password}
+                                name="password"
+                                label="Password"
                                 onBlur={handleBlur}
-                                onChange={handleChange}
-                                label="Email Address / Username"
+                                onChange={(e) => {
+                                    handleChange(e);
+                                    changePassword(e.target.value);
+                                }}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                            edge="end"
+                                            size="large"
+                                        >
+                                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
                                 inputProps={{}}
                             />
-                            {touched.email && errors.email && (
-                                <FormHelperText error id="standard-weight-helper-text-email-login">
-                                    {errors.email}
+                            {touched.password && errors.password && (
+                                <FormHelperText error id="standard-weight-helper-text-password-register">
+                                    {errors.password}
                                 </FormHelperText>
                             )}
                         </FormControl>
+
+                        {strength !== 0 && (
+                            <FormControl fullWidth>
+                                <Box sx={{ mb: 2 }}>
+                                    <Grid container spacing={2} alignItems="center">
+                                        <Grid item>
+                                            <Box
+                                                style={{ backgroundColor: level?.color }}
+                                                sx={{ width: 85, height: 8, borderRadius: '7px' }}
+                                            />
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography variant="subtitle1" fontSize="0.75rem">
+                                                {level?.label}
+                                            </Typography>
+                                        </Grid>
+                                    </Grid>
+                                </Box>
+                            </FormControl>
+                        )}
+                        
                         {errors.submit && (
                             <Box sx={{ mt: 3 }}>
                                 <FormHelperText error>{errors.submit}</FormHelperText>
@@ -126,12 +194,12 @@ const FirebaseForgotPassword = ({ ...others }) => {
                                     fullWidth
                                     size="large"
                                     loading={loading}
-                                    loadingIndicator="Signing In..."
+                                    loadingIndicator="Resetting..."
                                     type="submit"
                                     variant="contained"
                                     color="secondary"
                                 >
-                                    Send Email
+                                    Reset Password
                                 </LoadingButton>
                             </AnimateButton>
                         </Box>
@@ -142,4 +210,4 @@ const FirebaseForgotPassword = ({ ...others }) => {
     );
 };
 
-export default FirebaseForgotPassword;
+export default FirebaseResetPassword;

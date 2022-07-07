@@ -9,6 +9,7 @@ import { PublicRoute } from './PublicRoute';
 const AuthLogin = Loadable(lazy(() => import('views/pages/authentication/authentication/Login')));
 const AuthRegister = Loadable(lazy(() => import('views/pages/authentication/authentication/Register')));
 const AuthForgotPassword = Loadable(lazy(() => import('views/pages/authentication/authentication/ForgotPassword')));
+const AuthResetPassword = Loadable(lazy(() => import('views/pages/authentication/authentication/ResetPassword')));
 
 // ==============================|| AUTHENTICATION ROUTING ||============================== //
 
@@ -34,6 +35,12 @@ const AuthenticationRoutes = {
                 <AuthForgotPassword />
             </PublicRoute>
         },
+        {
+            path: EviroConfig.path.authentication.resetpassword,
+            element: <PublicRoute>
+                <AuthResetPassword />
+            </PublicRoute>
+        }
 
     ]
 };
