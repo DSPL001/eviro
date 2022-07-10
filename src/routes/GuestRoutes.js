@@ -27,6 +27,12 @@ const GuestRoutes = {
                 <AuthConfirmEmail />
             </PublicRoute>
         },
+        {
+            path: EviroConfig.path.authentication.confirmResendEmail,
+            element: <PublicRoute>
+                <AuthConfirmEmail />
+            </PublicRoute>
+        },
     ]
 };
 

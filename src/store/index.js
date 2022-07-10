@@ -3,8 +3,7 @@ import authReducer from 'slices/auth';
 import messageReducer from 'slices/message';
 import customizationSlice from 'slices/customization';
 import popupSlice from 'slices/popup';
-import modalSlice from 'slices/modal';
-
+import tierSlice from 'slices/tier';
 
 const store = configureStore({
     reducer: {
@@ -12,8 +11,7 @@ const store = configureStore({
         message: messageReducer,
         customization: customizationSlice,
         popup: popupSlice,
-        modal: modalSlice
+        tier: tierSlice
     }
 });
-
 export default store;

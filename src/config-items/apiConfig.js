@@ -5,8 +5,9 @@ export const apiConfiguration = {
         register: 'api/Authenticate/register/',
         registerAdmin: 'api/Authenticate/register-admin/',
         confirmEmail: 'api/Authenticate/confirmEmail/',
-        forgotPassword: 'api/Authenticate/ForgotPassword',
-        resetPassword: 'api/Authenticate/ResetPassword'
+        forgotPassword: 'api/Authenticate/ForgotPassword/',
+        resetPassword: 'api/Authenticate/ResetPassword/',
+        resendEmail: 'api/Authenticate/ResendEmail/'
     },
     tier: {
         getAll : 'api/Tier/GetAll/',

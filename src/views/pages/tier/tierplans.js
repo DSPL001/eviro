@@ -1,109 +1,160 @@
 // material-ui
-import { useState, useEffect } from "react";
+import * as React from 'react';
+import { useState, useEffect, useCallback } from "react";
 import { useDispatch } from 'react-redux';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import StarIcon from '@mui/icons-material/StarBorder';
+import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import { useSelector } from "react-redux";
-import { openModal } from "slices/modal";
-import AddTier from "./addTier";
+import CardActions from '@mui/material/CardActions';
+import IconButton from '@mui/material/IconButton';
+import StarIcon from '@mui/icons-material/StarBorder';
+import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
+import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 // project imports
+import MainCard from 'ui-component/cards/MainCard';
+import AddTier from './addTier';
+import ModifyTier from './modifyTier';
 import { getAllTier } from "slices/tier";
 import EviroConfig from "config-items";
-import { CardActions } from "@mui/material";
+import DeleteTier from './deleteTier';
 // ==============================|| DEFAULT DASHBOARD ||============================== //
+
+
 const Tierplans = () => {
     const [tiers, setTiers] = useState([]);
-    const { isOpen } = useSelector((store) => store.modal);
+    const [openEditModal, setOpenEditModal] = useState(false);
+    const [openAddModal, setAddOpenModal] = useState(false);
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
+    const [infoModal, setInfoModal] = useState({});
     const dispatch = useDispatch();
-    const handleClickOpen = () => {        
-        dispatch(openModal());
-    };    
-    useEffect(() => {
+    const getTiers = useCallback(() => {
         dispatch(getAllTier()).unwrap()
             .then(succ => {
-                console.log(succ);
                 setTiers(succ);
             })
             .catch(err => {
                 console.log(err)
             })
     }, [dispatch]);
-     return (
-        < Grid container spacing={EviroConfig.app.gridSpacing} alignItems="flex-end" >
-            {isOpen && <AddTier />}
-               {
-                tiers.map((tier) => (
-                    // Enterprise card is full width at sm breakpoint
-                    <Grid
-                        item
-                        key={tier.tierName}
-                        xs={12}
-                        sm={tier.tierName === 'Enterprise' ? 12 : 6}
-                        md={4}
-                        
-                    >
-                          <Card variant="outlined">
-                            <CardHeader
-                                title={tier.tierName}
-                                subheader={tier.tierName}
-                                titleTypographyProps={{ align: 'center' }}
-                                action={tier.tierName === 'Pro' ? <StarIcon /> : null}
-                                subheaderTypographyProps={{
-                                    align: 'center',
-                                }}
-                                sx={{
-                                    backgroundColor: (theme) =>
-                                        theme.palette.mode === 'light'
-                                            ? theme.palette.grey[200]
-                                            : theme.palette.grey[700],
-                                             }}
-                                
-                                />
-                                 <CardContent>
-                                <Box
-                                    sx={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'baseline',
-                                        mb: 2,
+
+    useEffect(() => {
+        getTiers();
+    }, [getTiers]);
+
+    return (
+        <MainCard title="Tier" secondary={
+            <IconButton color="primary" onClick={() => setAddOpenModal(true)} aria-label="add to shopping cart">
+                <AddShoppingCartIcon />
+            </IconButton>}>
+            <AddTier show={openAddModal} close={() => { setAddOpenModal(false); getTiers();}} />
+            <ModifyTier
+                    show={openEditModal}
+                    close={() => { setOpenEditModal(false); getTiers(); }}
+                    info={infoModal}
+                />
+                <DeleteTier
+                    show={openDeleteModal}
+                    close={() => { setOpenDeleteModal(false); getTiers(); }}
+                    info={infoModal}
+                />
+            < Grid container spacing={EviroConfig.app.gridSpacing} alignItems="flex-end" >
+                
+                {
+                    tiers.map((tier) => (
+                        <Grid item key={tier.title} xs={12} sm={12} md={4}>
+
+                            <Card variant="outlined">
+                                <CardHeader
+                                    title={tier.title}
+                                    subheader={tier.subheader}
+                                    titleTypographyProps={{ align: 'center' }}
+                                    action={tier.title === 'Pro' ? <StarIcon /> : null}
+                                    subheaderTypographyProps={{
+                                        align: 'center',
                                     }}
-                                >
-                                    <Typography component="h2" variant="h3" color="text.primary">
-                                        ${tier.amount}
-                                    </Typography>
-                                    <Typography variant="h6" color="text.secondary">
-                                        /mo
-                                    </Typography>
-                                </Box>
-                                <ul>
-                                    <Typography
-                                        component="li"
-                                        variant="subtitle1"
-                                        align="center"
-                                        key={tier.description}
+                                    sx={{
+                                        backgroundColor: (theme) =>
+                                            theme.palette.mode === 'light'
+                                                ? theme.palette.grey[200]
+                                                : theme.palette.grey[700],
+                                    }}
+                                />
+                                <CardContent>
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'baseline',
+                                            mb: 2,
+                                        }}
                                     >
-                                        {tier.description}
-                                    </Typography>
-                                </ul>
-                                   </CardContent>
-                            <CardActions>
-                                <Stack spacing={2} direction="row">
-                                <Button variant="contained" onClick={handleClickOpen}>Edit</Button>
-                                <Button variant="contained">Delete</Button>
-                                </Stack>
-                         </CardActions>
-                        </Card>
-                    </Grid>
-                ))
-            }
-        </Grid >
+                                        <Typography component="h1" variant="h2" color="text.primary">
+                                            Rs.{tier.price}/{tier.validity} Days
+                                        </Typography>
+                                    </Box>
+                                    <ul>
+                                        <Typography
+                                            component="li"
+                                            variant="subtitle1"
+                                            align="center"
+                                            key={tier.description1}
+                                        >
+                                            {tier.description1}
+                                        </Typography>
+                                        <Typography
+                                            component="li"
+                                            variant="subtitle1"
+                                            align="center"
+                                            key={tier.description2}
+                                        >
+                                            {tier.description2}
+                                        </Typography>
+                                        <Typography
+                                            component="li"
+                                            variant="subtitle1"
+                                            align="center"
+                                            key={tier.description3}
+                                        >
+                                            {tier.description3}
+                                        </Typography>
+                                        <Typography
+                                            component="li"
+                                            variant="subtitle1"
+                                            align="center"
+                                            key={tier.description4}
+                                        >
+                                            {tier.description4}
+                                        </Typography>
+                                        <Typography
+                                            component="li"
+                                            variant="subtitle1"
+                                            align="center"
+                                            key={tier.description5}
+                                        >
+                                            {tier.description5}
+                                        </Typography>
+                                    </ul>
+                                </CardContent>
+                                <CardActions disableSpacing>
+                                    <IconButton aria-label="Edit" onClick={() => { setOpenEditModal(true); setInfoModal(tier); }}>
+                                        <EditTwoToneIcon color="secondary" />
+                                    </IconButton>
+                                    <IconButton aria-label="Delete" onClick={() => { setOpenDeleteModal(true); setInfoModal(tier); }}>
+                                        <DeleteForeverTwoToneIcon color="error" />
+                                    </IconButton>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+                    ))
+                }
+            </Grid >
+           
+        </MainCard>
+
     );
 };
 export default Tierplans;

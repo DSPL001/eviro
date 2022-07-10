@@ -5,7 +5,10 @@ export const Path = {
         register: '/authentication/register',
         forgotPassword: '/authentication/forgotpassword',
         confirmEmail: '/ConfirmEmail/api/authenticate/register',
-        resetpassword: '/ResetPassword/api/Authenticate/ForgotPassword'
+        resetpassword: '/ResetPassword/api/Authenticate/ForgotPassword',
+        resendEmail: '/authentication/resendEmail',
+        confirmResendEmail : '/ConfirmEmail/api/authenticate/resendEmail'
+
     },
     landing: {
         home: '/home',

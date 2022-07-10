@@ -67,13 +67,26 @@ async function resetPassword(userId, code, password) {
   }
 }
 
+async function resendEmail(email) {  
+  debugger
+  const response = await postData({ serviceName: EviroConfig.api.authenticate.resendEmail, data: { email } })
+  const { success, data, error } = response;
+  if (success) {       
+    return Promise.resolve(data);
+  }
+  else {    
+    return Promise.reject(error);
+  }
+}
+
 const authService = {
   login,
   logout,
   register,
   confirmEmail,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  resendEmail
 }
 
 export default authService;

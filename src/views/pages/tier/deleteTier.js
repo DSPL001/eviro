@@ -17,36 +17,34 @@ import * as Yup from 'yup';
 import useScriptRef from 'hooks/useScriptRef';
 import { enqueueSnackbar as enqueueSnackbarAction } from 'slices/popup';
 import AnimateButton from 'ui-component/extended/AnimateButton';
-import { addTier } from 'slices/tier';
+import { deleteTier } from 'slices/tier';
 
 // ==============================|| SAMPLE PAGE ||============================== //
-
-const AddTier = ({ show, close }) => {
+const DeleteTier = ({ show, close, info }) => {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     const scriptedRef = useScriptRef();
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
-    
     return (
         <Dialog fullScreen={fullScreen} open={show} onClose={close} aria-labelledby="responsive-dialog-title">
             <DialogTitle id="responsive-dialog-title">
-                {'Add Tier?'}
+                {'Delete Tier?'}
             </DialogTitle>
             <DialogContent>
                 <Formik
                     initialValues={{
-                        title: '',
-                        subheader: '',
-                        price: 0,
-                        validity: 0,
-                        priority: 0,
-                        description1: '',
-                        description2: '',
-                        description3: '',
-                        description4: '',
-                        description5: '',
+                        title: info.title,
+                        subheader: info.subheader,
+                        price: info.price,
+                        validity: info.validity,
+                        priority: info.priority,
+                        description1: info.description1,
+                        description2: info.description2,
+                        description3: info.description3,
+                        description4: info.description4,
+                        description5: info.description5,
                         submit: null
                     }}
                     validationSchema={Yup.object().shape({
@@ -62,6 +60,7 @@ const AddTier = ({ show, close }) => {
                         description5: Yup.string().max(255).required('Tier Description is required'),
                     })}
                     onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+                        const id = info.id
                         const title = values.title;
                         const subheader = values.subheader;
                         const price = values.price;
@@ -75,7 +74,7 @@ const AddTier = ({ show, close }) => {
                         try {
                             setLoading(true);
                             if (scriptedRef.current) {                                
-                                dispatch(addTier({ title,subheader, price, validity, priority, description1, description2, description3, description4, description5 }))
+                                dispatch(deleteTier({id, title,subheader, price, validity, priority, description1, description2, description3, description4, description5 }))
                                     .unwrap()
                                     .then(succ => {
                                         setStatus({ success: true });
@@ -323,11 +322,11 @@ const AddTier = ({ show, close }) => {
                                         fullWidth
                                         size="large"
                                         loading={loading}
-                                        loadingIndicator="Adding Tier..."
+                                        loadingIndicator="Deleting.."
                                         type="submit"
                                         variant="contained"
                                         color="secondary" >
-                                        Add Tier
+                                        Delete Tier
                                     </LoadingButton>
                                 </AnimateButton>
                             </Box>
@@ -338,8 +337,9 @@ const AddTier = ({ show, close }) => {
         </Dialog>
     )
 }
-AddTier.propTypes = {
+DeleteTier.propTypes = {
     show: PropTypes.bool,
-    close: PropTypes.func
+    close: PropTypes.func,
+    info: PropTypes.object
 }
-export default AddTier;
+export default DeleteTier;

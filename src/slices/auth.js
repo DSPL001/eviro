@@ -91,6 +91,21 @@ export const forgotPassword = createAsyncThunk(
     }
 );
 
+export const resendEmail = createAsyncThunk(
+    "auth/resendEmail",
+    async ({ email }, thunkAPI) => {        
+        try {
+            const data = await authService.resendEmail(email);
+            return data;
+        }
+        catch (error) {
+            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+            thunkAPI.dispatch(setMessage(message));            
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
+
 export const logout = createAsyncThunk("auth/logout", async () => {
     await authService.logout();
 });
@@ -145,6 +160,14 @@ const authSlice = createSlice({
             state.isLoggedIn = false;
             state.user = null;
         },
+        [resendEmail.fulfilled]: (state, action) => {
+            state.isLoggedIn = false;
+            state.user = null;
+        },
+        [resendEmail.rejected]: (state, action) => {
+            state.isLoggedIn = false;
+            state.user = null;
+        }
     },
 });
 

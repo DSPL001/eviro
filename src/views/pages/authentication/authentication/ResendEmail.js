@@ -2,17 +2,20 @@ import { Link } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
+import { Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 
 // project imports
 import AuthWrapper from '../AuthWrapper';
 import AuthCardWrapper from '../AuthCardWrapper';
-import AuthLogin from '../auth-forms/AuthLogin';
+import AuthResendEmail from '../auth-forms/AuthResendEmail'
 import Logo from 'ui-component/Logo';
 import AuthFooter from 'ui-component/cards/AuthFooter';
+
+// assets
 import EviroConfig from 'config-items';
 // ================================|| AUTH - LOGIN ||================================ //
-const Login = () => {
+
+const ResendEmail = () => {
     const theme = useTheme();
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -25,7 +28,7 @@ const Login = () => {
                             <AuthCardWrapper>
                                 <Grid container spacing={2} alignItems="center" justifyContent="center">
                                     <Grid item sx={{ mb: 3 }}>
-                                        <Link to= {EviroConfig.path.landing.home} style={{ color: 'inherit', textDecoration: 'inherit' }}>
+                                        <Link to={ EviroConfig.path.landing.home} style={{ color: 'inherit', textDecoration: 'inherit' }}>
                                             <Logo />
                                         </Link>
                                     </Grid>
@@ -39,52 +42,18 @@ const Login = () => {
                                             <Grid item>
                                                 <Stack alignItems="center" justifyContent="center" spacing={1}>
                                                     <Typography
-                                                        color={theme.palette.secondary.main}
-                                                        gutterBottom
-                                                        variant={matchDownSM ? 'h3' : 'h2'}
-                                                    >
-                                                        Hi, Welcome Back
-                                                    </Typography>
-                                                    <Typography
                                                         variant="caption"
                                                         fontSize="16px"
                                                         textAlign={matchDownSM ? 'center' : 'inherit'}
                                                     >
-                                                        Enter your credentials to continue
+                                                        Enter your Email to continue
                                                     </Typography>
                                                 </Stack>
                                             </Grid>
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <AuthLogin />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Divider />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Grid item container direction="column" alignItems="center" xs={12}>
-                                            <Typography
-                                                component={Link}
-                                                to= {EviroConfig.path.authentication.register}
-                                                variant="subtitle1"
-                                                sx={{ textDecoration: 'none' }}
-                                            >
-                                                Don&apos;t have an account?
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Grid item container direction="column" alignItems="center" xs={12}>
-                                            <Typography
-                                                component={Link}
-                                                to= {EviroConfig.path.authentication.resendEmail}
-                                                variant="subtitle1"
-                                                sx={{ textDecoration: 'none' }}
-                                            >
-                                                Resend Email Confirmation
-                                            </Typography>
-                                        </Grid>
+                                        <AuthResendEmail />
                                     </Grid>
                                 </Grid>
                             </AuthCardWrapper>
@@ -99,4 +68,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default ResendEmail;

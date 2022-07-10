@@ -10,6 +10,7 @@ const AuthLogin = Loadable(lazy(() => import('views/pages/authentication/authent
 const AuthRegister = Loadable(lazy(() => import('views/pages/authentication/authentication/Register')));
 const AuthForgotPassword = Loadable(lazy(() => import('views/pages/authentication/authentication/ForgotPassword')));
 const AuthResetPassword = Loadable(lazy(() => import('views/pages/authentication/authentication/ResetPassword')));
+const AuthResendEmail = Loadable(lazy(() => import('views/pages/authentication/authentication/ResendEmail')));
 
 // ==============================|| AUTHENTICATION ROUTING ||============================== //
 
@@ -40,7 +41,14 @@ const AuthenticationRoutes = {
             element: <PublicRoute>
                 <AuthResetPassword />
             </PublicRoute>
+        },
+        {
+            path: EviroConfig.path.authentication.resendEmail,
+            element: <PublicRoute>
+                <AuthResendEmail />
+            </PublicRoute>
         }
+
 
     ]
 };

@@ -17,9 +17,29 @@ export const getAllTier = createAsyncThunk(
 
 export const addTier = createAsyncThunk(
     "tier/addTier",
-    async ({ tierName, description, amount, validity }, thunkAPI) => {
+    async ({ title, subheader, price, validity, priority, description1, description2, description3, description4, description5 }, thunkAPI) => {        
         try {
-            const response = await tierService.addTier(tierName, description, amount, validity);
+            const response = await tierService.addTier(title, subheader, price, validity, priority, description1, description2, description3, description4, description5);
+            thunkAPI.dispatch(setMessage(response.message));
+            return Promise.resolve(response);
+        }
+        catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            thunkAPI.dispatch(setMessage(message));
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
+export const editTier = createAsyncThunk(
+    "tier/editTier",
+    async ({ id, title, subheader, price, validity, priority, description1, description2, description3, description4, description5 }, thunkAPI) => {        
+        try {
+            const response = await tierService.editTier(id, title, subheader, price, validity, priority, description1, description2, description3, description4, description5);
             thunkAPI.dispatch(setMessage(response.message));
             return Promise.resolve(response);
         }
@@ -36,6 +56,26 @@ export const addTier = createAsyncThunk(
     }
 );
 
+export const deleteTier = createAsyncThunk(
+    "tier/deleteTier",
+    async ({ id, title, subheader, price, validity, priority, description1, description2, description3, description4, description5 }, thunkAPI) => {        
+        try {
+            const response = await tierService.deleteTier(id, title, subheader, price, validity, priority, description1, description2, description3, description4, description5);
+            thunkAPI.dispatch(setMessage(response.message));
+            return Promise.resolve(response);
+        }
+        catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            thunkAPI.dispatch(setMessage(message));
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
 
 const initialState = {
     server: true,
@@ -46,11 +86,11 @@ const tierSlice = createSlice({
     name: "tier",
     initialState,
     extraReducers: {
-        [getAllTier.fulfilled]: (state, action) => {
+        [getAllTier.fulfilled]: (state, action) => {            
             state.tierData = action.payload;
             state.server = true;
         },
-        [getAllTier.rejected]: (state, action) => {
+        [getAllTier.rejected]: (state, action) => {            
             state.tierData = null;
             state.server = false;
         },
@@ -62,7 +102,22 @@ const tierSlice = createSlice({
             state.tierData = action.payload;
             state.server = false;
         },
-
+        [editTier.fulfilled]: (state, action) => {
+            state.tierData = action.payload;
+            state.server = false;
+        },
+        [editTier.rejected]: (state, action) => {
+            state.tierData = action.payload;
+            state.server = false;
+        },
+        [deleteTier.fulfilled]: (state, action) => {
+            state.tierData = action.payload;
+            state.server = false;
+        },
+        [deleteTier.rejected]: (state, action) => {
+            state.tierData = action.payload;
+            state.server = false;
+        },
     },
 });
 

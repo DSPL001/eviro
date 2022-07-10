@@ -8,10 +8,6 @@ import CardHeader from '@mui/material/CardHeader';
 import Grid from '@mui/material/Grid';
 import StarIcon from '@mui/icons-material/StarBorder';
 import Typography from '@mui/material/Typography';
-
-
-
-
 // project imports
 import { getAllTier } from "slices/tier";
 import EviroConfig from "config-items";
@@ -20,11 +16,9 @@ import EviroConfig from "config-items";
 const Home = () => {
     const [tiers, setTiers] = useState([]);
     const dispatch = useDispatch();
-
     useEffect(() => {
         dispatch(getAllTier()).unwrap()
             .then(succ => {
-                console.log(succ);
                 setTiers(succ);
             })
             .catch(err => {
@@ -33,35 +27,28 @@ const Home = () => {
     }, [dispatch]);
 
     return (
-        < Grid container spacing={EviroConfig.app.gridSpacing} alignItems="flex-end" >
+        < Grid container spacing={EviroConfig.app.gridSpacing} alignItems="flex-end" >            
             {
                 tiers.map((tier) => (
-                    // Enterprise card is full width at sm breakpoint
-                    <Grid
-                        item
-                        key={tier.tierName}
-                        xs={12}
-                        sm={tier.tierName === 'Enterprise' ? 12 : 6}
-                        md={4}
-                    >
-                         <Card variant="outlined">
+                    <Grid item key={tier.title} xs={12} sm={12} md={4}>
+
+                        <Card variant="outlined">
                             <CardHeader
-                                title={tier.tierName}
-                                subheader={tier.tierName}
+                                title={tier.title}
+                                subheader={tier.subheader}
                                 titleTypographyProps={{ align: 'center' }}
-                                action={tier.tierName === 'Pro' ? <StarIcon /> : null}
+                                action={tier.title === 'Pro' ? <StarIcon /> : null}
                                 subheaderTypographyProps={{
                                     align: 'center',
                                 }}
-                                   sx={{
+                                sx={{
                                     backgroundColor: (theme) =>
                                         theme.palette.mode === 'light'
                                             ? theme.palette.grey[200]
                                             : theme.palette.grey[700],
-                                            
                                 }}
-                                />
-                                  <CardContent>
+                            />
+                            <CardContent>
                                 <Box
                                     sx={{
                                         display: 'flex',
@@ -70,30 +57,58 @@ const Home = () => {
                                         mb: 2,
                                     }}
                                 >
-                                    <Typography component="h2" variant="h3" color="text.primary">
-                                        ${tier.amount}
+                                    <Typography component="h1" variant="h2" color="text.primary">
+                                        Rs.{tier.price}/{tier.validity} Days
                                     </Typography>
-                                     <Typography variant="h6" color="text.secondary">
-                                        /mo
-                                    </Typography>
-                                  </Box>
+                                </Box>
                                 <ul>
                                     <Typography
                                         component="li"
                                         variant="subtitle1"
                                         align="center"
-                                        key={tier.description}
+                                        key={tier.description1}
                                     >
-                                        {tier.description}
+                                        {tier.description1}
+                                    </Typography>
+                                    <Typography
+                                        component="li"
+                                        variant="subtitle1"
+                                        align="center"
+                                        key={tier.description2}
+                                    >
+                                        {tier.description2}
+                                    </Typography>
+                                    <Typography
+                                        component="li"
+                                        variant="subtitle1"
+                                        align="center"
+                                        key={tier.description3}
+                                    >
+                                        {tier.description3}
+                                    </Typography>
+                                    <Typography
+                                        component="li"
+                                        variant="subtitle1"
+                                        align="center"
+                                        key={tier.description4}
+                                    >
+                                        {tier.description4}
+                                    </Typography>
+                                    <Typography
+                                        component="li"
+                                        variant="subtitle1"
+                                        align="center"
+                                        key={tier.description5}
+                                    >
+                                        {tier.description5}
                                     </Typography>
                                 </ul>
-                                  </CardContent>
+                            </CardContent>
                         </Card>
                     </Grid>
                 ))
             }
         </Grid >
-        
     );
 };
 
