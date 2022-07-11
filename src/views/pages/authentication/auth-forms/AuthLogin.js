@@ -130,7 +130,6 @@ const FirebaseLogin = ({ ...others }) => {
                     </Box>
                 </Grid>
             </Grid>
-
             <Formik
                 initialValues={{
                     email: 'admin@demeter-systems.com',
