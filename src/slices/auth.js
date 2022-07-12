@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setMessage } from "./message";
 
-import authService from "services/auth.service";
+import authService from "services/auth-service";
 
 const user = JSON.parse(localStorage.getItem("user"));
 
@@ -110,6 +110,27 @@ export const logout = createAsyncThunk("auth/logout", async () => {
     await authService.logout();
 });
 
+export const updateProfilePicture = createAsyncThunk(
+    "tier/updateProfilePicture",
+    async ({ id, ProfilePhoto }, thunkAPI) => {        
+        try {            
+            const response = await authService.updateProfilePicture(id, ProfilePhoto);
+            thunkAPI.dispatch(setMessage(response.message));
+            return Promise.resolve(response);
+        }
+        catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+            thunkAPI.dispatch(setMessage(message));
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
+
 const initialState = user
     ? { isLoggedIn: true, user }
     : { isLoggedIn: false, user: null };
@@ -167,6 +188,12 @@ const authSlice = createSlice({
         [resendEmail.rejected]: (state, action) => {
             state.isLoggedIn = false;
             state.user = null;
+        },
+        [updateProfilePicture.fulfilled]: (state, action) => {
+            state.isLoggedIn = true;            
+        },
+        [updateProfilePicture.rejected]: (state, action) => {
+            state.isLoggedIn = true;            
         }
     },
 });

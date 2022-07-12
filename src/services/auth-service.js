@@ -1,4 +1,4 @@
-import { postData } from "./api-call";
+import { postData, putData } from "./api";
 import EviroConfig from "config-items";
 
 async function login(username, password) {
@@ -78,6 +78,17 @@ async function resendEmail(email) {
     return Promise.reject(error);
   }
 }
+async function updateProfilePicture(id, ProfilePhoto) {    
+  const response = await putData({ serviceName: EviroConfig.api.authenticate.updateProfilePicture, params:id, data: ProfilePhoto, contentType: true})
+  const { success, data, error } = response;
+  if (success) {
+    return Promise.resolve(data);
+  }
+  else {
+    return Promise.reject(error);
+  }
+}
+
 
 const authService = {
   login,
@@ -86,7 +97,8 @@ const authService = {
   confirmEmail,
   forgotPassword,
   resetPassword,
-  resendEmail
+  resendEmail,
+  updateProfilePicture
 }
 
 export default authService;

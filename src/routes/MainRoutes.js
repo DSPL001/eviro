@@ -30,7 +30,6 @@ const MainRoutes = {
     path: '/',
     element: <MainLayout />,
     children: [
-
         {
             path: EviroConfig.path.main.dashboard,
             element: <PrivateRoute>

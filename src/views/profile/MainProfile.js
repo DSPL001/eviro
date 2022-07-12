@@ -13,58 +13,63 @@ import { Formik } from 'formik';
 // project imports
 import useScriptRef from 'hooks/useScriptRef';
 import AnimateButton from 'ui-component/extended/AnimateButton';
-import { register } from 'slices/auth';
+import { register, updateProfilePicture } from 'slices/auth';
 import { clearMessage } from 'slices/message';
 import { enqueueSnackbar as enqueueSnackbarAction } from 'slices/popup';
 import { MaterialUISwitch } from 'ui-component/ThemeSwitch';
-
-
 // ==============================|| Profile Page ||============================== //
 const MainProfile = ({ ...others }) => {
     const theme = useTheme();
     const scriptedRef = useScriptRef();
     const [loading, setLoading] = useState(false);
     const { user: authUser } = useSelector(x => x.auth);
+    const [userid] = useState(authUser ? authUser.logindata.id : 'ID');
     const [firstname] = useState(authUser ? authUser.logindata.firstName : 'FIRST');
     const [lastname] = useState(authUser ? authUser.logindata.lastName : 'LAST');
     const [username] = useState(authUser ? authUser.logindata.username : 'USER');
     const [email] = useState(authUser ? authUser.logindata.email : 'EMAIL');
-    const [img, setImg] = useState(authUser ? authUser.logindata.profilePicture : 'PHOTO');
+    const [profilePicture, setProfilePicture] = useState(authUser ? `data:image/*;base64,${authUser.logindata.profilePicture}` : 'PHOTO');    
     const dispatch = useDispatch();
     const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
     useEffect(() => {
-        dispatch(clearMessage());
-    }, [dispatch]);
+        dispatch(clearMessage());        
+    }, [dispatch ]);
 
     const Input = styled('input')({
         display: 'none',
     });
-
-    const getBase64 = file => {
-        return new Promise(resolve => {
-            let baseURL = "";
-            let reader = new FileReader();
-            // Convert the file to base64 text
-            reader.readAsDataURL(file);
-            // on reader load somthing...
-            reader.onload = () => {
-                // Make a fileInfo Object                
-                baseURL = reader.result;
-                resolve(baseURL);
-            };
-        });
-    };
+    
     const onImageChange = (e) => {
-        const [file] = e.target.files;
-        setImg(URL.createObjectURL(file));
-        getBase64(file)
-            .then(result => {
-                file["base64"] = result;
-                console.log(result)
+        const id = userid;
+        var file = e.target.files[0];
+        var imageType = /image.*/;
+        if (!file.type.match(imageType)) return;
+        var ProfilePhoto = new FormData();
+        ProfilePhoto.append('ProfilePhoto', file);
+        setProfilePicture(URL.createObjectURL(file));
+        dispatch(updateProfilePicture({ id, ProfilePhoto }))
+            .unwrap()
+            .then(succ => {
+                enqueueSnackbar({
+                    message: succ.message,
+                    options: {
+                        key: new Date().getTime() + Math.random(),
+                        variant: succ.status,
+                    },
+                });
+                setLoading(false);
             })
-            .catch(err => {
-                console.log(err);
-            });
+            .catch(error => {
+                enqueueSnackbar({
+                    message: (error && error.data && error.message) || error.error.message || error.error.title || error.message || error.toString(),
+                    options: {
+                        key: new Date().getTime() + Math.random(),
+                        variant: 'error',
+                    },
+                });
+                setLoading(false);
+            })
+
     };
     return (
         <Grid container spacing={2}>
@@ -73,7 +78,7 @@ const MainProfile = ({ ...others }) => {
                     <Stack direction="column" justifyContent="space-evenly" alignItems="center" spacing={2}>
                         <Avatar
                             alt={firstname + ' ' + lastname}
-                            src={img}
+                            src={profilePicture}
                             sx={{ width: 300, height: 300 }}
                         />
                         <label htmlFor="contained-button-file">

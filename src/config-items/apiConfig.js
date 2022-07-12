@@ -7,7 +7,8 @@ export const apiConfiguration = {
         confirmEmail: 'api/Authenticate/confirmEmail/',
         forgotPassword: 'api/Authenticate/ForgotPassword/',
         resetPassword: 'api/Authenticate/ResetPassword/',
-        resendEmail: 'api/Authenticate/ResendEmail/'
+        resendEmail: 'api/Authenticate/ResendEmail/',
+        updateProfilePicture: 'api/Authenticate/UpdateProfilePicture/'
     },
     tier: {
         getAll : 'api/Tier/GetAll/',

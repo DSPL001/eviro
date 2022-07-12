@@ -48,6 +48,7 @@ const ProfileSection = () => {
     const [firstname] = useState(authUser ? authUser.logindata.firstName : 'FIRST');
     const [lastname] = useState(authUser ? authUser.logindata.lastName : 'LAST');
     const [username] = useState(authUser ? authUser.logindata.username : 'USER');
+    const [profilePicture] = useState(authUser ? authUser.logindata.profilePicture : 'PHOTO');
     const navigate = useNavigate();
     const [sdm, setSdm] = useState(true);
     const [value, setValue] = useState('');
@@ -138,7 +139,7 @@ const ProfileSection = () => {
                 icon={
                     <Avatar
                         alt={firstname + ' ' + lastname}
-                        src="/static/images/avatar/1.jpg"
+                        src={`data:image/*;base64,${profilePicture}`}
                         sx={{
                             ...theme.typography.mediumAvatar,
                             margin: '8px 0 8px 8px !important',

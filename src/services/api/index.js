@@ -59,9 +59,10 @@ export async function postData({ serviceName, apiBaseUrl = BASE_URL, data }) {
         });
 }
 
-export async function putData({ serviceName, apiBaseUrl = BASE_URL, data, params}) {
-    const headerObj = { headers: authHeader() }
+export async function putData({ serviceName, apiBaseUrl = BASE_URL, data, params, contentType}) {
+    const headerObj = { headers: authHeader(contentType) }
     const puturl = apiBaseUrl + serviceName + params
+    debugger
     return await Axios.put(puturl, data, headerObj)
         .then(function (response) {
             let respData = response.data
