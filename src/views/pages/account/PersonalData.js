@@ -1,13 +1,10 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
 // material-ui
 import { Box, Button, TextField, Grid, Stack } from '@mui/material';
 // project imports
 
 
 // ==============================|| Profile Page ||============================== //
-const PersonalData = () => {
-    const { user: authUser } = useSelector(x => x.auth);
+const PersonalData = () => {    
     const deleteAccount = () => {
 
     };

@@ -1,7 +1,7 @@
 // material-ui
 import { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import {

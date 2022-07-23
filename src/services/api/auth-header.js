@@ -1,5 +1,7 @@
+import { objectDecrypt } from "services/encryption";
+
 export default function authHeader(contentType) {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = objectDecrypt(localStorage.getItem("user"));
   if (user && user.logindata.token) {
     if (contentType) {
       return {

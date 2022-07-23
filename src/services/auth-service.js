@@ -1,5 +1,6 @@
 import { postData, putData } from "./api";
 import EviroConfig from "config-items";
+import { objectEncrypt } from "./encryption";
 
 async function login(username, password) {
   const response = await postData({ serviceName: EviroConfig.api.authenticate.login, data: { username, password } })
@@ -9,8 +10,8 @@ async function login(username, password) {
       status: 'success',
       message: 'User Logged In Successfully',
       logindata: data
-    }
-    localStorage.setItem("user", JSON.stringify(successResponse));
+    }     
+    localStorage.setItem("user", objectEncrypt(successResponse));
     return Promise.resolve(successResponse);
   }
   else {    

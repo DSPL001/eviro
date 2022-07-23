@@ -5,5 +5,6 @@ export const appConfiguration = {
     theme: 'dark',  
     gridSpacing: 3,
     drawerWidth: 260,
-    appDrawerWidth: 320
+    appDrawerWidth: 320,
+    encryptionKey: 'DemeterSystems123!'
 }

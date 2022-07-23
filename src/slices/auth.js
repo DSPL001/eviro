@@ -2,8 +2,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { setMessage } from "./message";
 
 import authService from "services/auth-service";
+import { objectDecrypt } from "services/encryption";
 
-const user = JSON.parse(localStorage.getItem("user"));
+const user = objectDecrypt(localStorage.getItem("user"));
 
 export const register = createAsyncThunk(
     "auth/register",

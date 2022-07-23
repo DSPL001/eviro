@@ -16,5 +16,8 @@ export const apiConfiguration = {
         Add: 'api/Tier/Add/',
         Update: 'api/Tier/Update/',
         Delete: 'api/Tier/Delete/'
+    },
+    seBasic:{
+        marketStatus: 'api/BasicSE/Marketstatus',
     }    
 }
