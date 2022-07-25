@@ -18,6 +18,6 @@ export const apiConfiguration = {
         Delete: 'api/Tier/Delete/'
     },
     seBasic:{
-        marketStatus: 'api/BasicSE/Marketstatus',
+        marketStatus: 'api/Basic/Marketstatus',
     }    
 }

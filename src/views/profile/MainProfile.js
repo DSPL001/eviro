@@ -17,6 +17,7 @@ import { register, updateProfilePicture } from 'slices/auth';
 import { clearMessage } from 'slices/message';
 import { enqueueSnackbar as enqueueSnackbarAction } from 'slices/popup';
 import { MaterialUISwitch } from 'ui-component/ThemeSwitch';
+import CountrySelect from './SelectCountry';
 // ==============================|| Profile Page ||============================== //
 const MainProfile = ({ ...others }) => {
     const theme = useTheme();
@@ -28,17 +29,17 @@ const MainProfile = ({ ...others }) => {
     const [lastname] = useState(authUser ? authUser.logindata.lastName : 'LAST');
     const [username] = useState(authUser ? authUser.logindata.username : 'USER');
     const [email] = useState(authUser ? authUser.logindata.email : 'EMAIL');
-    const [profilePicture, setProfilePicture] = useState(authUser ? `data:image/*;base64,${authUser.logindata.profilePicture}` : 'PHOTO');    
+    const [profilePicture, setProfilePicture] = useState(authUser ? `data:image/*;base64,${authUser.logindata.profilePicture}` : 'PHOTO');
     const dispatch = useDispatch();
     const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
     useEffect(() => {
-        dispatch(clearMessage());        
-    }, [dispatch ]);
+        dispatch(clearMessage());
+    }, [dispatch]);
 
     const Input = styled('input')({
         display: 'none',
     });
-    
+
     const onImageChange = (e) => {
         const id = userid;
         var file = e.target.files[0];
@@ -318,7 +319,7 @@ const MainProfile = ({ ...others }) => {
                                                 )}
                                             </FormControl>
                                         </Grid>
-                                        <Grid item xs={12} md={4}>
+                                        <Grid item xs={12} md={3}>
                                             <FormControl fullWidth error={Boolean(touched.city && errors.city)} sx={{ ...theme.typography.customInput }}>
                                                 <InputLabel htmlFor="outlined-adornment-city-register">City</InputLabel>
                                                 <OutlinedInput
@@ -337,7 +338,7 @@ const MainProfile = ({ ...others }) => {
                                                 )}
                                             </FormControl>
                                         </Grid>
-                                        <Grid item xs={12} md={4}>
+                                        <Grid item xs={12} md={3}>
                                             <FormControl fullWidth error={Boolean(touched.state && errors.state)} sx={{ ...theme.typography.customInput }}>
                                                 <InputLabel htmlFor="outlined-adornment-state-register">State</InputLabel>
                                                 <OutlinedInput
@@ -356,7 +357,10 @@ const MainProfile = ({ ...others }) => {
                                                 )}
                                             </FormControl>
                                         </Grid>
-                                        <Grid item xs={12} md={4}>
+                                        <Grid item xs={12} md={3}>
+                                            <CountrySelect />
+                                        </Grid>
+                                        <Grid item xs={12} md={3}>
                                             <FormControl fullWidth error={Boolean(touched.pincode && errors.pincode)} sx={{ ...theme.typography.customInput }}>
                                                 <InputLabel htmlFor="outlined-adornment-pincode-register">Pincode</InputLabel>
                                                 <OutlinedInput
@@ -394,6 +398,7 @@ const MainProfile = ({ ...others }) => {
                                                 )}
                                             </FormControl>
                                         </Grid>
+
                                         <Grid item xs={12}>
                                             <FormControl fullWidth disabled error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
                                                 <InputLabel htmlFor="outlined-adornment-email-register">Email Address / Username</InputLabel>
