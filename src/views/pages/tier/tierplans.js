@@ -154,7 +154,6 @@ const Tierplans = () => {
             </Grid >
            
         </MainCard>
-
     );
 };
 export default Tierplans;
