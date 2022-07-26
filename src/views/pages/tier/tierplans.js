@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useDispatch } from 'react-redux';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
+import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -47,22 +48,13 @@ const Tierplans = () => {
 
     return (
         <MainCard title="Tier" secondary={
-            <IconButton color="primary" onClick={() => setAddOpenModal(true)} aria-label="add to shopping cart">
-                <AddShoppingCartIcon />
-            </IconButton>}>
-            <AddTier show={openAddModal} close={() => { setAddOpenModal(false); getTiers();}} />
-            <ModifyTier
-                    show={openEditModal}
-                    close={() => { setOpenEditModal(false); getTiers(); }}
-                    info={infoModal}
-                />
-                <DeleteTier
-                    show={openDeleteModal}
-                    close={() => { setOpenDeleteModal(false); getTiers(); }}
-                    info={infoModal}
-                />
+            <Fab size="small" color="secondary" onClick={() => setAddOpenModal(true)} aria-label="Add Tier">
+                    <AddShoppingCartIcon />
+                </Fab>}>
+            <AddTier show={openAddModal} close={() => { setAddOpenModal(false); getTiers(); }} />
+            <ModifyTier show={openEditModal} close={() => { setOpenEditModal(false); getTiers(); }} info={infoModal} />
+            <DeleteTier show={openDeleteModal} close={() => { setOpenDeleteModal(false); getTiers(); }} info={infoModal} />
             < Grid container spacing={EviroConfig.app.gridSpacing} alignItems="flex-end" >
-                
                 {
                     tiers.map((tier) => (
                         <Grid item key={tier.title} xs={12} sm={12} md={4}>
@@ -152,7 +144,7 @@ const Tierplans = () => {
                     ))
                 }
             </Grid >
-           
+
         </MainCard>
     );
 };
