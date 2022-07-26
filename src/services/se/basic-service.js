@@ -1,4 +1,4 @@
-import { deleteData, getData, postData, putData } from "../api";
+import { getData } from "../api";
 import EviroConfig from "config-items";
 
 async function marketStatus() {

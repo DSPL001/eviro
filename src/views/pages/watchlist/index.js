@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { useState, } from "react";
+import { useState } from "react";
+import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import InputLabel from '@mui/material/InputLabel';
@@ -18,6 +19,7 @@ import AddWatchlist from "./addWatchlist";
 // =============================|| TABLER ICONS ||============================= //
 
 const Watchlist = () => {
+    const { collection: currentCollection } = useSelector((state) => state.watchlist);
     const [addWatchlistModal, setAddWatchlistModal] = useState(false);
     const [age, setAge] = React.useState('');
 
@@ -37,9 +39,11 @@ const Watchlist = () => {
                             label="Age"
                             onChange={handleChange}
                         >
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
+                            {
+                                currentCollection.map((collection) => (
+                                    <MenuItem value={collection.id}>{collection.watchlistCollectionName}</MenuItem>
+                                ))
+                            }                           
                         </Select>
                     </FormControl>
                 </Box>

@@ -36,11 +36,12 @@ export async function getData({ serviceName, apiBaseUrl = BASE_URL, params }) {
         });
 }
 
-export async function postData({ serviceName, apiBaseUrl = BASE_URL, data }) {
+export async function postData({ serviceName, apiBaseUrl = BASE_URL, data }) {    
     const headerObj = { headers: authHeader() }
     const posturl = apiBaseUrl + serviceName
+    debugger
     return await Axios.post(posturl, data, headerObj)
-        .then(function (response) {
+        .then(function (response) {            
             let respData = response.data
             if (response.status === 200) {
                 return Promise.resolve({ success: true, data: respData });
@@ -51,7 +52,7 @@ export async function postData({ serviceName, apiBaseUrl = BASE_URL, data }) {
                 });
             }
         })
-        .catch(error => {
+        .catch(error => {            
             return Promise.reject({
                 success: false,
                 error: error.response.data
