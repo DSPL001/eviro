@@ -9,7 +9,10 @@ import { useDispatch } from 'react-redux';
 // material-ui
 import { LoadingButton } from '@mui/lab';
 import { FormControl, FormHelperText, InputLabel, OutlinedInput } from '@mui/material';
+import * as React from 'react';
 import Box from '@mui/material/Box';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 // third party
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -28,11 +31,14 @@ const AddWatchlist = ({ show, close }) => {
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
-    
+    const [age, setAge] = React.useState('');
+    const handleSelectChange = (event) => {
+        setAge(event.target.value);
+      };
     return (
         <Dialog fullScreen={fullScreen} open={show} onClose={close} aria-labelledby="responsive-dialog-title">
             <DialogTitle id="responsive-dialog-title">
-                {'Add Tier?'}
+                {'Add Stocks to Watchlist?'}
             </DialogTitle>
             <DialogContent>
                 <Formik
@@ -51,7 +57,7 @@ const AddWatchlist = ({ show, close }) => {
                     }}
                     validationSchema={Yup.object().shape({
                         title: Yup.string().max(255).required('Title is required'),
-                        subheader: Yup.string().max(255).required('Subheader is required'),                        
+                        subheader: Yup.string().max(255).required('Subheader is required'),
                         price: Yup.number().min(1).required('Tier Amount is required'),
                         validity: Yup.number().min(1).required('Tier Validity is required'),
                         priority: Yup.number().min(1).required('Tier Priority is required'),
@@ -74,8 +80,8 @@ const AddWatchlist = ({ show, close }) => {
                         const description5 = values.description5;
                         try {
                             setLoading(true);
-                            if (scriptedRef.current) {                                
-                                dispatch(addTier({ title,subheader, price, validity, priority, description1, description2, description3, description4, description5 }))
+                            if (scriptedRef.current) {
+                                dispatch(addTier({ title, subheader, price, validity, priority, description1, description2, description3, description4, description5 }))
                                     .unwrap()
                                     .then(succ => {
                                         setStatus({ success: true });
@@ -128,6 +134,22 @@ const AddWatchlist = ({ show, close }) => {
                 >
                     {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
                         <form noValidate onSubmit={handleSubmit}>
+                            <Box component="form" sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                                <FormControl fullWidth>
+                                    <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={age}
+                                        label="Age"
+                                        onChange={handleSelectChange}
+                                    >
+                                        <MenuItem value={10}>Ten</MenuItem>
+                                        <MenuItem value={20}>Twenty</MenuItem>
+                                        <MenuItem value={30}>Thirty</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Box>
                             <FormControl fullWidth error={Boolean(touched.title && errors.title)} sx={{ ...theme.typography.customInput }}>
                                 <InputLabel htmlFor="outlined-adornment-title-add">Tier Name</InputLabel>
                                 <OutlinedInput

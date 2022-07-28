@@ -23,5 +23,7 @@ export const apiConfiguration = {
     watchlist:{
         getCollections: 'api/Watchlist/GetCollections/',
         addCollection :'api/Watchlist/AddCollection/',
+        editCollection :'api/Watchlist/EditCollection/',
+        deleteCollection :'api/Watchlist/DeleteCollection/',
     }    
 }

@@ -37,9 +37,9 @@ export const addCollection = createAsyncThunk(
 );
 export const editCollection = createAsyncThunk(
     "watchlist/editCollection",
-    async ({ id, watchlistCollectionName, watchlistCollectionDescription, watchlistCount }, thunkAPI) => {        
-        try {
-            const response = await watchlistService.editCollection(id, watchlistCollectionName, watchlistCollectionDescription, watchlistCount);
+    async ({ id, userId, watchlistCollectionName, watchlistCollectionDescription, watchlistCount }, thunkAPI) => {        
+        try {            
+            const response = await watchlistService.editCollection(id, userId, watchlistCollectionName, watchlistCollectionDescription, watchlistCount);
             thunkAPI.dispatch(setMessage(response.message));
             return Promise.resolve(response);
         }
@@ -58,9 +58,9 @@ export const editCollection = createAsyncThunk(
 
 export const deleteCollection = createAsyncThunk(
     "watchlist/deleteCollection",
-    async ({ id, watchlistCollectionName, watchlistCollectionDescription, watchlistCount }, thunkAPI) => {        
+    async ({ id, userId, watchlistCollectionName, watchlistCollectionDescription, watchlistCount }, thunkAPI) => {        
         try {
-            const response = await watchlistService.deleteCollection(id, watchlistCollectionName, watchlistCollectionDescription, watchlistCount);
+            const response = await watchlistService.deleteCollection(id, userId, watchlistCollectionName, watchlistCollectionDescription, watchlistCount);
             thunkAPI.dispatch(setMessage(response.message));
             return Promise.resolve(response);
         }

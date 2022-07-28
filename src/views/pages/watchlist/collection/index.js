@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import CardHeader from '@mui/material/CardHeader';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
+import Stack from '@mui/material/Stack';
+import Chip from '@mui/material/Chip';
+import CardContent  from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import StarIcon from '@mui/icons-material/StarBorder';
@@ -31,9 +34,9 @@ const Collections = () => {
     const [openDeleteModal, setOpenDeleteModal] = useState(false);
     const [infoModal, setInfoModal] = useState({});
     const dispatch = useDispatch();
-    const getTiers = useCallback(() => {        
-        dispatch(getCollections({userId})).unwrap()
-            .then(succ => {                             
+    const getTiers = useCallback(() => {
+        dispatch(getCollections({ userId })).unwrap()
+            .then(succ => {
                 setCollections(succ);
             })
             .catch(err => {
@@ -48,15 +51,15 @@ const Collections = () => {
     return (
         <MainCard title="Collection - Watchlist" secondary={
             <Fab size="small" color="secondary" onClick={() => setAddOpenModal(true)} aria-label="Add Watchlist">
-                    <IconLayoutGridAdd />
-                </Fab>}>
+                <IconLayoutGridAdd />
+            </Fab>}>
             <AddWatchlistCollection show={openAddModal} close={() => { setAddOpenModal(false); getTiers(); }} />
             <EditWatchlistCollection show={openEditModal} close={() => { setOpenEditModal(false); getTiers(); }} info={infoModal} />
             <DeleteWatchlistCollection show={openDeleteModal} close={() => { setOpenDeleteModal(false); getTiers(); }} info={infoModal} />
             <Grid container spacing={EviroConfig.app.gridSpacing} alignItems="flex-end" >
                 {
                     collections.map((collection) => (
-                        <Grid item key={collection.id} xs={12} sm={12} md={4}>
+                        <Grid item key={collection.id} xs={12} sm={12} md={3}>
                             <Card variant="outlined">
                                 <CardHeader
                                     title={collection.watchlistCollectionName}
@@ -73,13 +76,20 @@ const Collections = () => {
                                                 : theme.palette.grey[700],
                                     }}
                                 />
-                                <CardActions disableSpacing>
-                                    <IconButton aria-label="Edit" onClick={() => { setOpenEditModal(true); setInfoModal(collection); }}>
-                                        <EditTwoToneIcon color="secondary" />
-                                    </IconButton>
-                                    <IconButton aria-label="Delete" onClick={() => { setOpenDeleteModal(true); setInfoModal(collection); }}>
-                                        <DeleteForeverTwoToneIcon color="error" />
-                                    </IconButton>
+                                <CardContent>
+                                    <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
+                                        <Chip label={collection.watchlistCount + ' Stocks'} color="info" />
+                                    </Stack>
+                                </CardContent>
+                                <CardActions>
+                                    <Stack direction="row" justifyContent="center" alignItems="center" spacing={1}>
+                                        <IconButton aria-label="Edit" onClick={() => { setOpenEditModal(true); setInfoModal(collection); }}>
+                                            <EditTwoToneIcon color="secondary" />
+                                        </IconButton>
+                                        <IconButton aria-label="Delete" onClick={() => { setOpenDeleteModal(true); setInfoModal(collection); }}>
+                                            <DeleteForeverTwoToneIcon color="error" />
+                                        </IconButton>
+                                    </Stack>
                                 </CardActions>
                             </Card>
                         </Grid>

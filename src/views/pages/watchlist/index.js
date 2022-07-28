@@ -1,49 +1,67 @@
 import * as React from 'react';
-import { useState } from "react";
-import { useSelector } from 'react-redux';
+import { useState, useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
+import Fab from '@mui/material/Fab';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import Fab from '@mui/material/Fab';
-
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import Stack from '@mui/material/Stack';
 // assets
 import WatchlistInfo from './watchlistInfo';
-import { IconLayoutGridAdd } from '@tabler/icons';
+import { IconDeviceWatchStats, IconLayoutGridAdd, IconPencil } from '@tabler/icons';
 import AddWatchlist from "./addWatchlist";
+import { getCollections } from 'slices/watchlist';
 // =============================|| TABLER ICONS ||============================= //
 
 const Watchlist = () => {
-    const { collection: currentCollection } = useSelector((state) => state.watchlist);
+    const { user: currentUser } = useSelector((state) => state.auth);
+    const [userId] = useState(currentUser.logindata.id);
+    const [collections, setCollections] = useState([]);
     const [addWatchlistModal, setAddWatchlistModal] = useState(false);
-    const [age, setAge] = React.useState('');
+    const dispatch = useDispatch();
+    const [stocks, setStocks] = React.useState('');
 
     const handleChange = (event) => {
-        setAge(event.target.value);
+        setStocks(event.target.value);
     };
+
+    const getTiers = useCallback(() => {
+        dispatch(getCollections({ userId })).unwrap()
+            .then(succ => {
+                setCollections(succ);
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }, [dispatch, userId]);
+
+    useEffect(() => {
+        getTiers();
+    }, [getTiers]);
     return (
         <MainCard title="Watchlist" secondary={
             <Stack direction="row" justifyContent="center" alignItems="center" divider={<Divider orientation="vertical" flexItem />} spacing={2} >
-                <Box fullWidth>
+                <Box sx={{ minWidth: 100 }}>
                     <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                        <InputLabel id="demo-simple-select-label">Stocks</InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            value={age}
-                            label="Age"
+                            value={stocks}
+                            label="Stocks"
                             onChange={handleChange}
                         >
                             {
-                                currentCollection.map((collection) => (
-                                    <MenuItem value={collection.id}>{collection.watchlistCollectionName}</MenuItem>
+                                collections.map((collection) => (
+                                    <MenuItem key={collection.id} value={collection.id}><IconDeviceWatchStats/>{collection.watchlistCollectionName}</MenuItem>
                                 ))
-                            }                           
+                            }
+                            <MenuItem key='ViewCollection' value='ViewCollection'><IconPencil/>View Collection</MenuItem>
                         </Select>
                     </FormControl>
                 </Box>
@@ -54,8 +72,8 @@ const Watchlist = () => {
         }>
             <AddWatchlist show={addWatchlistModal} close={() => { setAddWatchlistModal(false); }} />
             <WatchlistInfo />
-
-        </MainCard>)
+        </MainCard>
+    )
 };
 
 export default Watchlist;

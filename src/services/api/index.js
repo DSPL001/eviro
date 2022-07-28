@@ -38,8 +38,7 @@ export async function getData({ serviceName, apiBaseUrl = BASE_URL, params }) {
 
 export async function postData({ serviceName, apiBaseUrl = BASE_URL, data }) {    
     const headerObj = { headers: authHeader() }
-    const posturl = apiBaseUrl + serviceName
-    debugger
+    const posturl = apiBaseUrl + serviceName    
     return await Axios.post(posturl, data, headerObj)
         .then(function (response) {            
             let respData = response.data
@@ -62,8 +61,7 @@ export async function postData({ serviceName, apiBaseUrl = BASE_URL, data }) {
 
 export async function putData({ serviceName, apiBaseUrl = BASE_URL, data, params, contentType}) {
     const headerObj = { headers: authHeader(contentType) }
-    const puturl = apiBaseUrl + serviceName + params
-    debugger
+    const puturl = apiBaseUrl + serviceName + params    
     return await Axios.put(puturl, data, headerObj)
         .then(function (response) {
             let respData = response.data
@@ -87,6 +85,7 @@ export async function putData({ serviceName, apiBaseUrl = BASE_URL, data, params
 export async function deleteData({ serviceName, apiBaseUrl = BASE_URL, params}) {
     const headerObj = { headers: authHeader() }
     const deleteurl = apiBaseUrl + serviceName + params
+    debugger
     return await Axios.delete(deleteurl, headerObj)
         .then(function (response) {
             let respData = response.data

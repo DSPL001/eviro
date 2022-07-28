@@ -1,4 +1,4 @@
-import { deleteData, getData, postData, putData } from "./api";
+import { getData, postData, putData } from "./api";
 import EviroConfig from "config-items";
 
 async function getCollection(userId) {    
@@ -22,8 +22,8 @@ async function addCollection(userId, watchlistCollectionName, watchlistCollectio
     return Promise.reject(error);
   }
 }
-async function editCollection(id, watchlistCollectionName, watchlistCollectionDescription, watchlistCount) {  
-  const response = await putData({ serviceName: EviroConfig.api.tier.Update, params:id, data: { watchlistCollectionName, watchlistCollectionDescription, watchlistCount } })
+async function editCollection(id, userId, watchlistCollectionName, watchlistCollectionDescription, watchlistCount) {    
+  const response = await putData({ serviceName: EviroConfig.api.watchlist.editCollection, params:id, data: {userId, watchlistCollectionName, watchlistCollectionDescription, watchlistCount } })
   const { success, data, error } = response;
   if (success) {
     return Promise.resolve(data);
@@ -32,8 +32,8 @@ async function editCollection(id, watchlistCollectionName, watchlistCollectionDe
     return Promise.reject(error);
   }
 }
-async function deleteCollection(id, watchlistCollectionName, watchlistCollectionDescription, watchlistCount) {  
-  const response = await deleteData({ serviceName: EviroConfig.api.tier.Delete, params:id, data: { watchlistCollectionName, watchlistCollectionDescription, watchlistCount } })
+async function deleteCollection(id, userId, watchlistCollectionName, watchlistCollectionDescription, watchlistCount) {  
+  const response = await postData({ serviceName: EviroConfig.api.watchlist.deleteCollection, data: {id, userId, watchlistCollectionName, watchlistCollectionDescription, watchlistCount } })
   const { success, data, error } = response;
   if (success) {
     return Promise.resolve(data);
