@@ -19,6 +19,7 @@ export const apiConfiguration = {
     },
     seBasic:{
         marketStatus: 'api/Basic/Marketstatus',
+        stockCodes: 'api/Basic/StockCodes'
     },
     watchlist:{
         getCollections: 'api/Watchlist/GetCollections/',

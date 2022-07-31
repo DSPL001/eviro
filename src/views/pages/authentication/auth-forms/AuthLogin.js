@@ -7,20 +7,20 @@ import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
-import {    
+import {
     Checkbox,
     Divider,
     FormControl,
     FormControlLabel,
     FormHelperText,
-    Grid,    
+    Grid,
     IconButton,
     InputAdornment,
     InputLabel,
     OutlinedInput,
     Stack,
     Typography,
-    useMediaQuery    
+    useMediaQuery
 } from '@mui/material';
 
 // third party
@@ -38,6 +38,7 @@ import EviroConfig from 'config-items';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Google from 'assets/images/icons/social-google.svg';
+import { stockCodes } from 'slices/seBasic';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
@@ -59,7 +60,7 @@ const FirebaseLogin = ({ ...others }) => {
     useEffect(() => {
         dispatch(clearMessage());
     }, [dispatch]);
-   
+
     const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => {
@@ -148,9 +149,9 @@ const FirebaseLogin = ({ ...others }) => {
                         if (scriptedRef.current) {
                             dispatch(login({ username, password }))
                                 .unwrap()
-                                .then(succ => {                                    
+                                .then(succ => {
                                     setStatus({ success: true });
-                                    setSubmitting(false);                                    
+                                    setSubmitting(false);
                                     enqueueSnackbar({
                                         message: succ.message,
                                         options: {
@@ -158,14 +159,20 @@ const FirebaseLogin = ({ ...others }) => {
                                             variant: succ.status,
                                         },
                                     });
+                                    dispatch(stockCodes()).unwrap()
+                                        .then(succ => {                                            
+                                        })
+                                        .catch(err => {
+                                            console.log(err)
+                                        })
                                     setLoading(false);
                                     navigate(EviroConfig.path.main.dashboard);
                                 })
-                                .catch(error => {                                                                    
+                                .catch(error => {
                                     setStatus({ success: false });
                                     setSubmitting(false);
                                     enqueueSnackbar({
-                                        message: (error && error.data && error.logindata.error.message) || error.message|| error.logindata.error.message || error.logindata.error.title || error.toString(),
+                                        message: (error && error.data && error.logindata.error.message) || error.message || error.logindata.error.message || error.logindata.error.title || error.toString(),
                                         options: {
                                             key: new Date().getTime() + Math.random(),
                                             variant: 'error',
@@ -174,11 +181,11 @@ const FirebaseLogin = ({ ...others }) => {
                                     setLoading(false);
                                 })
                         }
-                    } catch (error) {                       
+                    } catch (error) {
                         if (scriptedRef.current) {
                             setStatus({ success: false });
                             setErrors({ submit: error.message });
-                            setSubmitting(false);                            
+                            setSubmitting(false);
                             enqueueSnackbar({
                                 message: error.message,
                                 options: {
@@ -288,7 +295,7 @@ const FirebaseLogin = ({ ...others }) => {
                         </Box>
                     </form>
                 )}
-            </Formik>            
+            </Formik>
         </>
     );
 };

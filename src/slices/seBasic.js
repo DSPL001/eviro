@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import seBasicService from "services/se/basic-service";
-import { setMessage } from "./message";
 
 export const marketStatus = createAsyncThunk(
     "se/basic/marketStatus",
@@ -15,8 +14,21 @@ export const marketStatus = createAsyncThunk(
     }
 );
 
+export const stockCodes = createAsyncThunk(
+    "se/basic/stockCodes",
+    async (thunkAPI) => {
+        try {
+            const response = await seBasicService.stockCodes();            
+            return Promise.resolve(response);
+        }
+        catch (error) {            
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
 const initialState = {
-    marketStatus: null 
+    marketStatus: null,
+    stockCodes: null
 };
 
 const seBasicSlice = createSlice({
@@ -25,9 +37,17 @@ const seBasicSlice = createSlice({
     extraReducers: {
         [marketStatus.fulfilled]: (state, action) => {            
             state.marketStatus = action.payload;
+            state.stockCodes = null;
+
         },
         [marketStatus.rejected]: (state, action) => {            
-            state.marketStatus = null;
+            state.marketStatus = null;            
+        },
+        [stockCodes.fulfilled]: (state, action) => {            
+            state.stockCodes = action.payload;   
+        },
+        [stockCodes.rejected]: (state, action) => {            
+            state.stockCodes = null
         },
     },
 });
