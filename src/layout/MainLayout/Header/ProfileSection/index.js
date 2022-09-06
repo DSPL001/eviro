@@ -48,6 +48,8 @@ const ProfileSection = () => {
     const [firstname] = useState(authUser ? authUser.logindata.firstName : 'FIRST');
     const [lastname] = useState(authUser ? authUser.logindata.lastName : 'LAST');
     const [username] = useState(authUser ? authUser.logindata.username : 'USER');
+    const [phonenumber] = useState(authUser ? authUser.logindata.phonenumber : 'PHONE')
+    const [birthdate] = useState(authUser ? authUser.logindata.birthdate : 'BIRTH')
     const [profilePicture] = useState(authUser ? authUser.logindata.profilePicture : 'PHOTO');
     const navigate = useNavigate();
     const [sdm, setSdm] = useState(true);
@@ -116,6 +118,7 @@ const ProfileSection = () => {
 
     return (
         <>
+        
             <Chip
                 sx={{
                     height: '48px',
@@ -159,6 +162,7 @@ const ProfileSection = () => {
                 onClick={handleToggle}
                 color="primary"
             />
+               
             <Popper
                 placement="bottom-end"
                 open={open}
@@ -188,6 +192,7 @@ const ProfileSection = () => {
                                                 <Typography variant="h4">{greeting}</Typography>
                                                 <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
                                                     {firstname}&nbsp;{lastname}
+                                                    {phonenumber}&nbsp;{birthdate}
                                                 </Typography>
                                             </Stack>
                                             <Typography variant="subtitle2">{username}</Typography>

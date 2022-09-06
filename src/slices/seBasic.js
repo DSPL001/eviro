@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import seBasicService from "services/se/basic-service";
-import { setMessage } from "./message";
+
 
 export const marketStatus = createAsyncThunk(
     "se/basic/marketStatus",

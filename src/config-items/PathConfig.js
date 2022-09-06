@@ -32,5 +32,9 @@ export const Path = {
     user:{
         profile: 'user/profile',
         account: 'user/account'
+    },
+    optionChain:{
+        stockChart : '/optionChain/stockChart'
+         
     }
 }

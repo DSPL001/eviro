@@ -1,5 +1,5 @@
 export const apiConfiguration = {
-    apiBaseURL: 'https://localhost:7065/',
+    apiBaseURL: 'http://192.168.1.11:8065/',
     authenticate: {
         login: 'api/Authenticate/login/',
         register: 'api/Authenticate/register/',

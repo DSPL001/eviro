@@ -28,10 +28,13 @@ const MainProfile = ({ ...others }) => {
     const [firstname] = useState(authUser ? authUser.logindata.firstName : 'FIRST');
     const [lastname] = useState(authUser ? authUser.logindata.lastName : 'LAST');
     const [username] = useState(authUser ? authUser.logindata.username : 'USER');
+    const [phonenumber] = useState(authUser ? authUser.logindata.phonenumber : 'PHONE')
+    const [birthdate] = useState(authUser ? authUser.logindata.birthdate : 'BIRTH')
     const [email] = useState(authUser ? authUser.logindata.email : 'EMAIL');
     const [profilePicture, setProfilePicture] = useState(authUser ? `data:image/*;base64,${authUser.logindata.profilePicture}` : 'PHOTO');
     const dispatch = useDispatch();
     const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
+    
     useEffect(() => {
         dispatch(clearMessage());
     }, [dispatch]);
@@ -77,13 +80,14 @@ const MainProfile = ({ ...others }) => {
             <Grid item xs={12} md={4}>
                 <SubCard title='Profile picture' >
                     <Stack direction="column" justifyContent="space-evenly" alignItems="center" spacing={2}>
-                        <Avatar
+                        
+                    <Avatar
                             alt={firstname + ' ' + lastname}
                             src={profilePicture}
                             sx={{ width: 300, height: 300 }}
                         />
                         <label htmlFor="contained-button-file">
-                            <Input accept="image/*" id="contained-button-file" multiple type="file" onChange={onImageChange} />
+                            <Input accept="image/*" id="contained-button-file" multiple type="file"  onChange={onImageChange} />
                             <Button variant="contained" component="span">
                                 Upload Profile Picture
                             </Button>
@@ -94,10 +98,13 @@ const MainProfile = ({ ...others }) => {
             <Grid item xs={12} md={8}>
                 <SubCard title="Edit Account Detail" secondary={<FormControlLabel control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />} />}>
                     <Box Validate autoComplete="off">
+                   
                         <Formik
                             initialValues={{
                                 firstname: firstname,
                                 lastname: lastname,
+                                phonenumber: phonenumber,
+                                birthdate: birthdate,
                                 username: username,
                                 email: email,
                                 submit: null,
@@ -106,18 +113,24 @@ const MainProfile = ({ ...others }) => {
                             validationSchema={Yup.object().shape({
                                 firstname: Yup.string().max(120).required('Firstname is required'),
                                 lastname: Yup.string().max(120).required('Lastname is required'),
+                                phonenumber: Yup.string().max(120).required('Phonenumber is required'),
+                                birthdate: Yup.string().max(120).required('Birthdate is required'),
                                 username: Yup.string().max(255).required('Username is required'),
                                 email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
                             })}
                             onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
                                 const firstname = values.firstname;
                                 const lastname = values.lastname;
-                                const username = values.username;
+                                 const username = values.username;
+                                 const phonenumber = values.phonenumber;
+                                 const birthdate = values.birthdate;
                                 const email = values.email;
                                 try {
                                     setLoading(true);
                                     if (scriptedRef.current) {
-                                        dispatch(register({ firstname, lastname, username, email }))
+                                        
+                                        dispatch(register({ firstname, lastname, phonenumber, birthdate, username, email }))
+                                        
                                             .unwrap()
                                             .then(succ => {
                                                 setStatus({ success: true });
@@ -166,6 +179,7 @@ const MainProfile = ({ ...others }) => {
                         >
                             {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
                                 <form noValidate onSubmit={handleSubmit} {...others}>
+                                 
                                     <Grid container spacing={2}>
                                         <Grid item xs={12} md={6}>
                                             <FormControl fullWidth error={Boolean(touched.firstname && errors.firstname)} sx={{ ...theme.typography.customInput }}>

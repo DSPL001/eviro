@@ -24,6 +24,7 @@ const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 //User Profile routing
 const UserProfile = Loadable(lazy(() => import('views/profile')));
 const UserAccount = Loadable(lazy(() => import('views/pages/account')));
+const StockChart = Loadable(lazy(() => import('views/optionchain')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -46,6 +47,12 @@ const MainRoutes = {
             path: EviroConfig.path.main.typography,
             element: <PrivateRoute>
                 <UtilsTypography />
+            </PrivateRoute>
+        },
+        {
+            path: EviroConfig.path.user.profile,
+            element: <PrivateRoute>
+                <UserProfile />
             </PrivateRoute>
         },
         {
@@ -84,12 +91,7 @@ const MainRoutes = {
                 <UtilsTier />
             </PrivateRoute>
         },
-        {
-            path: EviroConfig.path.user.profile,
-            element: <PrivateRoute>
-                <UserProfile />
-            </PrivateRoute>
-        },
+       
         {
             path: EviroConfig.path.user.account,
             element: <PrivateRoute>
@@ -107,7 +109,15 @@ const MainRoutes = {
             element: <PrivateRoute>
                 <WatchlistCollection />
             </PrivateRoute>
+        }, 
+        {
+            path: EviroConfig.path.optionChain.stockChart,
+            element: <PrivateRoute>
+                <StockChart/>
+            </PrivateRoute>
         },
+        
+
         {
             path: '*',
             element: <Navigate to="/" />

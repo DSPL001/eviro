@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import {
     Avatar,
+    Badge,
     Box,
     Button,
     ButtonBase,
@@ -21,15 +22,18 @@ import {
     useMediaQuery
 } from '@mui/material';
 
+// third-party
+import PerfectScrollbar from 'react-perfect-scrollbar';
+
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import Transitions from 'ui-component/extended/Transitions';
 
 // assets
-import { IconBuildingStore } from '@tabler/icons';
+import { IconBell } from '@tabler/icons';
 import { useDispatch } from 'react-redux';
 import { marketStatus } from 'slices/seBasic';
-
+import CheckIcon from '@mui/icons-material/Check';
 // notification status options
 const status = [
     {
@@ -49,12 +53,15 @@ const status = [
         label: 'Other'
     }
 ];
-// ==============================|| Stock Status Section ||============================== //
+
+// ==============================|| NOTIFICATION ||============================== //
+
 const StockStatusSection = () => {
     const theme = useTheme();
     const dispatch = useDispatch();
     const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
-
+    const [badge, setBadge] = useState('info');
+    const [marketstatus, setMarketStatus] = useState({});
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('');
     /**
@@ -77,29 +84,47 @@ const StockStatusSection = () => {
     useEffect(() => {
         dispatch(marketStatus()).unwrap()
             .then(succ => {
-                console.log(succ)
+                if (succ != null) {
+                    setMarketStatus(succ.marketState);
+                    const isFound = marketstatus.some(element => {
+                        if (element.market === 'Capital Market' && element.marketStatus === 'Open') {
+                            return true
+                        }
+                        return false
+                    });
+                    if (isFound) {
+                        setBadge('success');
+                    }
+                    else {
+                        setBadge('error');
+                    }
+                }
+                else {
+                    setBadge('warning');
+                }
             })
             .catch(err => {
                 console.log(err)
+                setBadge('warning');
             })
         if (prevOpen.current === true && open === false) {
             anchorRef.current.focus();
         }
         prevOpen.current = open;
-    }, [open, dispatch]);
+    }, [open, dispatch, marketstatus]);
 
     const handleChange = (event) => {
         if (event?.target.value) setValue(event?.target.value);
     };
 
     return (
-        <>
+        <Badge color={badge} badgeContent="" variant="dot">
             <Box
                 sx={{
                     ml: 2,
-                    mr: 1,
+                    mr: 0,
                     [theme.breakpoints.down('md')]: {
-                        mr: 2
+                        mr: 0
                     }
                 }}
             >
@@ -110,11 +135,11 @@ const StockStatusSection = () => {
                             ...theme.typography.commonAvatar,
                             ...theme.typography.mediumAvatar,
                             transition: 'all .2s ease-in-out',
-                            background: theme.palette.error.light,
-                            color: theme.palette.error.dark,
+                            background: theme.palette.secondary.light,
+                            color: theme.palette.secondary.dark,
                             '&[aria-controls="menu-list-grow"],&:hover': {
-                                background: theme.palette.error.dark,
-                                color: theme.palette.error.light
+                                background: theme.palette.secondary.dark,
+                                color: theme.palette.secondary.light
                             }
                         }}
                         ref={anchorRef}
@@ -123,7 +148,7 @@ const StockStatusSection = () => {
                         onClick={handleToggle}
                         color="inherit"
                     >
-                        <IconBuildingStore stroke={1.5} size="1.3rem" />
+                        <IconBell stroke={1.5} size="1.3rem" />
                     </Avatar>
                 </ButtonBase>
             </Box>
@@ -150,70 +175,25 @@ const StockStatusSection = () => {
                         <Paper>
                             <ClickAwayListener onClickAway={handleClose}>
                                 <MainCard border={false} elevation={16} content={false} boxShadow shadow={theme.shadows[16]}>
-                                    <Grid container direction="column" spacing={2}>
+                                    <Grid container direction="column" spacing={2} sx={{ pb: 1.25, justifyContent: 'center' }}>
                                         <Grid item xs={12}>
                                             <Grid container alignItems="center" justifyContent="space-between" sx={{ pt: 2, px: 2 }}>
-                                                <Grid item>
-                                                    <Stack direction="row" spacing={2}>
-                                                        <Typography variant="subtitle1">All Notification</Typography>
-                                                        <Chip
-                                                            size="small"
-                                                            label="01"
-                                                            sx={{
-                                                                color: theme.palette.background.default,
-                                                                bgcolor: theme.palette.warning.dark
-                                                            }}
-                                                        />
-                                                    </Stack>
-                                                </Grid>
-                                                <Grid item>
-                                                    <Typography component={Link} to="#" variant="subtitle2" color="primary">
-                                                        Mark as all read
-                                                    </Typography>
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <Grid container direction="column" spacing={2}>
-                                                <Grid item xs={12}>
-                                                    <Box sx={{ px: 2, pt: 0.25 }}>
-                                                        <TextField
-                                                            id="outlined-select-currency-native"
-                                                            select
-                                                            fullWidth
-                                                            value={value}
-                                                            onChange={handleChange}
-                                                            SelectProps={{
-                                                                native: true
-                                                            }}
-                                                        >
-                                                            {status.map((option) => (
-                                                                <option key={option.value} value={option.value}>
-                                                                    {option.label}
-                                                                </option>
-                                                            ))}
-                                                        </TextField>
-                                                    </Box>
-                                                </Grid>
-                                                <Grid item xs={12} p={0}>
-                                                    <Divider sx={{ my: 0 }} />
-                                                </Grid>
+                                                <Stack direction="column" spacing={1}>
+                                                    {marketstatus.map((option) => (
+                                                        <Chip  icon={<CheckIcon/>} key = {option.market} label={option.market} color={option.marketStatus == 'Open' ? 'success' : 'error' } variant="outlined" />                                                        
+                                                    ))}
+                                                                                                     
+                                                </Stack>
                                             </Grid>
                                         </Grid>
                                     </Grid>
-                                    <Divider />
-                                    <CardActions sx={{ p: 1.25, justifyContent: 'center' }}>
-                                        <Button size="small" disableElevation>
-                                            View All
-                                        </Button>
-                                    </CardActions>
                                 </MainCard>
                             </ClickAwayListener>
                         </Paper>
                     </Transitions>
                 )}
             </Popper>
-        </>
+        </Badge>
     );
 };
 
