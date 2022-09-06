@@ -14,6 +14,8 @@ import NotificationSection from './NotificationSection';
 import { IconMenu2 } from '@tabler/icons';
 import StockStatusSection from './StockStatusSection';
 
+
+
 // ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
 const Header = ({ handleLeftDrawerToggle }) => {
@@ -31,6 +33,7 @@ const Header = ({ handleLeftDrawerToggle }) => {
                     }
                 }}
             >
+                
                 <Box component="span" sx={{ display: { xs: 'none', md: 'block' }, flexGrow: 1 }}>
                     <LogoSection />
                 </Box>
