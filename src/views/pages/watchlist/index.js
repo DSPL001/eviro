@@ -12,7 +12,7 @@ import Select from '@mui/material/Select';
 import MainCard from 'ui-component/cards/MainCard';
 import Stack from '@mui/material/Stack';
 // assets
-import WatchlistInfo from './WatchlistInfo';
+import WatchlistInfo from './watchlistInfo';
 import { IconDeviceWatchStats, IconLayoutGridAdd, IconPencil } from '@tabler/icons';
 import AddWatchlist from "./addWatchlist";
 import { getCollections } from 'slices/watchlist';
