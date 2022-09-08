@@ -25,8 +25,5 @@ const StockData = [
   { label: 'MIDCPNIFTY', },
   //STOCK SYMBOL 
   {label: 'AARTIIND'},
-  {label: ''},
-  {label: ''},
-  {label: ''}
-  {label: ''}
+  
 ];
