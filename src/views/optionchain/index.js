@@ -6,27 +6,26 @@ import Grid from '@mui/material/Grid';
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import StockDataChart from './stockDataChart';
-import ComboBox from './autocomplete';
-import SelectSmall from './select';
-
-
-
+import { Chip, Stack } from '@mui/material';
+import SelectSymbolExpiry from './selectSymbol';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
 const Optionchain = () => {
     const [isLoading, setLoading] = useState(true);
+    const [openSEModal, setOpenSEModal] = useState(false);
     useEffect(() => {
         setLoading(false);
     }, []);
     return (
         <>
-            <MainCard title="SD" secondary={
-                <Grid container direction="row" justifyContent="flex-end" alignItems="flex-start">
-                    <ComboBox />
-                    <SelectSmall />
-                </Grid>
+            <MainCard title="StockData" secondary={
+                <Stack direction="row" spacing={1}>
+                    <Chip label="NIFTY" color="primary" size="small" onClick={() => { setOpenSEModal(true); }} />
+                    <Chip label="19/09/2022" color="secondary" size="small" onClick={() => { setOpenSEModal(true); }} />
+                </Stack>
             }>
+                <SelectSymbolExpiry show={openSEModal} close={() => { setOpenSEModal(false); }} />
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
 
