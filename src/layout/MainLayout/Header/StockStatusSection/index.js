@@ -82,31 +82,33 @@ const StockStatusSection = () => {
 
     const prevOpen = useRef(open);
     useEffect(() => {
-        dispatch(marketStatus()).unwrap()
-            .then(succ => {
-                if (succ != null) {
-                    setMarketStatus(succ.marketState);
-                    const isFound = marketstatus.some(element => {
-                        if (element.market === 'Capital Market' && element.marketStatus === 'Open') {
-                            return true
+        setTimeout(() => {
+            dispatch(marketStatus()).unwrap()
+                .then(succ => {
+                    if (succ != null) {
+                        setMarketStatus(succ.marketState);
+                        const isFound = marketstatus.some(element => {
+                            if (element.market === 'Capital Market' && element.marketStatus === 'Open') {
+                                return true
+                            }
+                            return false
+                        });
+                        if (isFound) {
+                            setBadge('success');
                         }
-                        return false
-                    });
-                    if (isFound) {
-                        setBadge('success');
+                        else {
+                            setBadge('error');
+                        }
                     }
                     else {
-                        setBadge('error');
+                        setBadge('warning');
                     }
-                }
-                else {
+                })
+                .catch(err => {
+                    console.log(err)
                     setBadge('warning');
-                }
-            })
-            .catch(err => {
-                console.log(err)
-                setBadge('warning');
-            })
+                })
+        }, 10000);
         if (prevOpen.current === true && open === false) {
             anchorRef.current.focus();
         }
@@ -180,9 +182,9 @@ const StockStatusSection = () => {
                                             <Grid container alignItems="center" justifyContent="space-between" sx={{ pt: 2, px: 2 }}>
                                                 <Stack direction="column" spacing={1}>
                                                     {marketstatus.map((option) => (
-                                                        <Chip  icon={<CheckIcon/>} key = {option.market} label={option.market} color={option.marketStatus == 'Open' ? 'success' : 'error' } variant="outlined" />                                                        
+                                                        <Chip icon={<CheckIcon />} key={option.market} label={option.market} color={option.marketStatus == 'Open' ? 'success' : 'error'} variant="outlined" />
                                                     ))}
-                                                                                                     
+
                                                 </Stack>
                                             </Grid>
                                         </Grid>

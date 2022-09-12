@@ -5,7 +5,9 @@ import customizationSlice from 'slices/customization';
 import popupSlice from 'slices/popup';
 import tierSlice from 'slices/tier';
 import seBasicSlice from 'slices/seBasic';
-import watchlistSlice from 'slices/watchlist'
+import watchlistSlice from 'slices/watchlist';
+import optionChainSlice from 'slices/optionChain';
+
 
 const store = configureStore({
     reducer: {
@@ -15,7 +17,9 @@ const store = configureStore({
         popup: popupSlice,
         tier: tierSlice,
         watchlist: watchlistSlice,
-        seBasic: seBasicSlice
+        seBasic: seBasicSlice,
+        optionChain : optionChainSlice       
+     
     }
 });
 export default store;

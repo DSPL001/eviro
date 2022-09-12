@@ -1,6 +1,8 @@
+import { expiredData } from "slices/optionChain";
+
 export const apiConfiguration = {
-    apiBaseURL: 'http://192.168.1.18:8065/',
-    //apiBaseURL:  'http://localhost:7065/',
+    //apiBaseURL: 'http://192.168.1.18:8065/',
+    apiBaseURL:  'https://localhost:7065/',
     authenticate: {
         login: 'api/Authenticate/login/',
         register: 'api/Authenticate/register/',
@@ -20,7 +22,9 @@ export const apiConfiguration = {
     },
     seBasic:{
         marketStatus: 'api/Basic/Marketstatus',
-        stockCodes: 'api/Basic/StockCodes'
+        stockCodes: 'api/Basic/StockCodes',
+        quotemaster: 'api/Derivative/quotemaster',
+        expirydates:'api/Derivative/ExpiryDates'
     },
     watchlist:{
         getCollections: 'api/Watchlist/GetCollections/',

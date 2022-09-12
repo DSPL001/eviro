@@ -1,6 +1,7 @@
 // material-ui
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useDispatch} from 'react-redux';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 // project imports
@@ -9,20 +10,19 @@ import StockDataChart from './stockDataChart';
 import { Chip, Stack } from '@mui/material';
 import SelectSymbolExpiry from './selectSymbol';
 
+
 // ==============================|| SAMPLE PAGE ||============================== //
 
 const Optionchain = () => {
-    const [isLoading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(false);
     const [openSEModal, setOpenSEModal] = useState(false);
-    useEffect(() => {
-        setLoading(false);
-    }, []);
+ 
     return (
         <>
             <MainCard title="StockData" secondary={
                 <Stack direction="row" spacing={1}>
-                    <Chip label="NIFTY" color="primary" size="small" onClick={() => { setOpenSEModal(true); }} />
-                    <Chip label="19/09/2022" color="secondary" size="small" onClick={() => { setOpenSEModal(true); }} />
+                    <Chip label="NIFTY" color="warning" size="small" onClick={() => { setOpenSEModal(true); }} />
+                    <Chip label="19/09/2022" color="error" size="small" onClick={() => { setOpenSEModal(true); }} />
                 </Stack>
             }>
                 <SelectSymbolExpiry show={openSEModal} close={() => { setOpenSEModal(false); }} />
