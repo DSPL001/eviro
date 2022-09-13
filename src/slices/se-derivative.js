@@ -1,11 +1,11 @@
-﻿import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import optionChainService from "services/OptionChain-Services";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import derivativeService from "services/se/derivative-service";
 
 export const  quoteData= createAsyncThunk(
     "se/quoteData",
     async (thunkAPI) => {
         try {
-            const response = await optionChainService.quoteMasterData();            
+            const response = await derivativeService.quoteMasterData();            
             return Promise.resolve(response);
         }
         catch (error) {            
@@ -18,7 +18,7 @@ export const expiryDatesbySymbol = createAsyncThunk(
     "se/expiryDates",
     async ({ code }, thunkAPI) => {        
         try {            
-            const response = await optionChainService.expiryDatesSymbol(code);            
+            const response = await derivativeService.expiryDatesSymbol(code);            
             return Promise.resolve(response);
         }
         catch (error) {
@@ -32,7 +32,7 @@ export const getStockdatabyDateandSymbol = createAsyncThunk(
     "se/getStock",
     async ({ code, expirydate }, thunkAPI) => {        
         try {            
-            const response = await optionChainService.getStockdatabyDateandSymbol(code, expirydate);            
+            const response = await derivativeService.getStockdatabyDateandSymbol(code, expirydate);            
             return Promise.resolve(response);
         }
         catch (error) {
@@ -48,7 +48,7 @@ const initialState = {
     getStockdatas:null
 };
 
-const optionChainSlice = createSlice({
+const derivativeSlice = createSlice({
     name: "optionchain",
     initialState,
     extraReducers: {
@@ -63,5 +63,5 @@ const optionChainSlice = createSlice({
         },
     }
 });
-const { reducer } = optionChainSlice;
+const { reducer } = derivativeSlice;
 export default reducer;

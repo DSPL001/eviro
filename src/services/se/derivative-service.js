@@ -1,4 +1,4 @@
-﻿import { getData, postData } from "./api";
+﻿import { getData, postData } from "../api";
 import EviroConfig from "config-items";
 
 async function quoteMasterData() {
@@ -32,9 +32,9 @@ async function getStock(code,expirydate) {
     return Promise.reject(error);
   }
 }
-const optionChainService = {
+const derivativeService = {
   quoteMasterData,
   expiryDatesSymbol,
   getStock
 }
-export default optionChainService;
+export default derivativeService;

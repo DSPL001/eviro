@@ -38,7 +38,7 @@ import EviroConfig from 'config-items';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Google from 'assets/images/icons/social-google.svg';
-import { stockCodes } from 'slices/seBasic';
+import { stockCodes } from 'slices/se-Basic';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 

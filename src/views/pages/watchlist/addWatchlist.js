@@ -27,7 +27,7 @@ import useScriptRef from 'hooks/useScriptRef';
 import { enqueueSnackbar as enqueueSnackbarAction } from 'slices/popup';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import { addTier } from 'slices/tier';
-import { stockCodes } from 'slices/seBasic';
+import { stockCodes } from 'slices/se-Basic';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 

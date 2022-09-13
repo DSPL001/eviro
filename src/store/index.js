@@ -4,9 +4,9 @@ import messageReducer from 'slices/message';
 import customizationSlice from 'slices/customization';
 import popupSlice from 'slices/popup';
 import tierSlice from 'slices/tier';
-import seBasicSlice from 'slices/seBasic';
+import seBasicSlice from 'slices/se-Basic';
 import watchlistSlice from 'slices/watchlist';
-import optionChainSlice from 'slices/optionChain';
+import optionChainSlice from 'slices/se-derivative';
 
 
 const store = configureStore({

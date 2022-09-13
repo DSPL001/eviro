@@ -1,30 +1,19 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
     Avatar,
     Badge,
-    Box,
-    Button,
-    ButtonBase,
-    CardActions,
+    Box,   
+    ButtonBase,    
     Chip,
-    ClickAwayListener,
-    Divider,
+    ClickAwayListener,   
     Grid,
     Paper,
     Popper,
-    Stack,
-    TextField,
-    Typography,
+    Stack,    
     useMediaQuery
 } from '@mui/material';
-
-// third-party
-import PerfectScrollbar from 'react-perfect-scrollbar';
-
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import Transitions from 'ui-component/extended/Transitions';
@@ -32,27 +21,8 @@ import Transitions from 'ui-component/extended/Transitions';
 // assets
 import { IconBell } from '@tabler/icons';
 import { useDispatch } from 'react-redux';
-import { marketStatus } from 'slices/seBasic';
+import { marketStatus } from 'slices/se-Basic';
 import CheckIcon from '@mui/icons-material/Check';
-// notification status options
-const status = [
-    {
-        value: 'all',
-        label: 'All Notification'
-    },
-    {
-        value: 'new',
-        label: 'New'
-    },
-    {
-        value: 'unread',
-        label: 'Unread'
-    },
-    {
-        value: 'other',
-        label: 'Other'
-    }
-];
 
 // ==============================|| NOTIFICATION ||============================== //
 

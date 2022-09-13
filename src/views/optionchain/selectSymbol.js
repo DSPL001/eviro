@@ -5,7 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { expiryDatesbySymbol, quoteData } from 'slices/optionChain';
+import { expiryDatesbySymbol, quoteData } from 'slices/se-derivative';
 import { useDispatch } from 'react-redux';
 // material-ui
 import { Autocomplete, FormControl, InputLabel, TextField, Select, MenuItem } from '@mui/material';

@@ -1,5 +1,3 @@
-import { expiredData } from "slices/optionChain";
-
 export const apiConfiguration = {
     apiBaseURL: 'http://192.168.1.18:8065/',
     //apiBaseURL:  'https://localhost:7065/',
