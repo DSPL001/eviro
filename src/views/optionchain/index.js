@@ -25,6 +25,7 @@ const Optionchain = () => {
                     <Chip label="19/09/2022" color="error" size="small" onClick={() => { setOpenSEModal(true); }} />
                 </Stack>
             }>
+                
                 <SelectSymbolExpiry show={openSEModal} close={() => { setOpenSEModal(false); }} />
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
