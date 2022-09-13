@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 // material-ui
 import { Autocomplete, FormControl, InputLabel, TextField, Select, MenuItem } from '@mui/material';
 
+
 // ==============================|| SAMPLE PAGE ||============================== //
 
 const SelectSymbolExpiry = ({ show, close }) => {
@@ -42,7 +43,7 @@ const SelectSymbolExpiry = ({ show, close }) => {
             .catch(err => {
                 console.log(err)
             })
-
+        
     }, [dispatch]);
     return (
         <Dialog fullScreen={fullScreen} open={show} onClose={close} aria-labelledby="responsive-dialog-title">
@@ -50,6 +51,7 @@ const SelectSymbolExpiry = ({ show, close }) => {
                 {'Select Symbol and Expiry Date'}
             </DialogTitle>
             <DialogContent>
+
                 <Autocomplete
                     disablePortal
                     id="combo-box-demo"
@@ -67,18 +69,20 @@ const SelectSymbolExpiry = ({ show, close }) => {
                         label="Age"
                         onChange={handleChange}
                     >
-                        <MenuItem value="">
+                        <MenuItem value="" key='None'>
                             <em>None</em>
                         </MenuItem>
                         {
                             expiries.map((expiry) => (
-                                <MenuItem value={expiry}>{expiry}</MenuItem>
+                                <MenuItem key={expiry} value={expiry}>{expiry}</MenuItem>
                             ))
                         }                       
                     </Select>
                 </FormControl>
             </DialogContent>
+           
         </Dialog>
+        
     )
 }
 SelectSymbolExpiry.propTypes = {

@@ -28,9 +28,24 @@ export const expiryDatesbySymbol = createAsyncThunk(
         }
     }
 );
+export const getStockdatabyDateandSymbol = createAsyncThunk(
+    "se/getStock",
+    async ({ code, expirydate }, thunkAPI) => {        
+        try {            
+            const response = await optionChainService.getStockdatabyDateandSymbol(code, expirydate);            
+            return Promise.resolve(response);
+        }
+        catch (error) {
+            const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+            thunkAPI.dispatch(message);            
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+);
 const initialState = {
     quotemaster: null,  
-    expirydate:null  
+    expirydate:null ,
+    getStockdatas:null
 };
 
 const optionChainSlice = createSlice({
@@ -41,6 +56,9 @@ const optionChainSlice = createSlice({
             state.quotemaster = action.payload;
         },
         [expiryDatesbySymbol.fulfilled]: (state, action) => {            
+            state.expirydate = action.payload;
+        },
+        [getStockdatabyDateandSymbol.fulfilled]: (state, action) => {            
             state.expirydate = action.payload;
         },
     }

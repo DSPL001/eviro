@@ -12,9 +12,18 @@ async function quoteMasterData() {
   }
 }
 
-async function expiryDatesSymbol(code) {  
-  const service = EviroConfig.api.seBasic.expirydates + '?code=' + code
-  const response = await postData({ serviceName: service, data: {code} })    
+async function expiryDatesSymbol(code) {   
+  const response = await postData({ serviceName: EviroConfig.api.seBasic.expirydates, data: {code} })    
+  const { success, data, error } = response;
+  if (success) {
+    return Promise.resolve(data);
+  }
+  else {    
+    return Promise.reject(error);
+  }
+}
+async function getStock(code,expirydate) {   
+  const response = await postData({ serviceName: EviroConfig.api.seBasic.getStock, data: {code, expirydate} })    
   const { success, data, error } = response;
   if (success) {
     return Promise.resolve(data);
@@ -25,6 +34,7 @@ async function expiryDatesSymbol(code) {
 }
 const optionChainService = {
   quoteMasterData,
-  expiryDatesSymbol
+  expiryDatesSymbol,
+  getStock
 }
 export default optionChainService;
