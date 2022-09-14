@@ -6,7 +6,7 @@ import popupSlice from 'slices/popup';
 import tierSlice from 'slices/tier';
 import seBasicSlice from 'slices/se-Basic';
 import watchlistSlice from 'slices/watchlist';
-import optionChainSlice from 'slices/se-derivative';
+import derivativeSlice from 'slices/se-derivative';
 
 
 const store = configureStore({
@@ -18,8 +18,7 @@ const store = configureStore({
         tier: tierSlice,
         watchlist: watchlistSlice,
         seBasic: seBasicSlice,
-        optionChain : optionChainSlice       
-     
+        seDerivative : derivativeSlice    
     }
 });
 export default store;

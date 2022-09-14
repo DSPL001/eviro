@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import derivativeService from "services/se/derivative-service";
 
 export const  quoteData= createAsyncThunk(
-    "se/quoteData",
+    "se/derivative/quoteData",
     async (thunkAPI) => {
         try {
             const response = await derivativeService.quoteMasterData();            
@@ -15,7 +15,7 @@ export const  quoteData= createAsyncThunk(
 );
 
 export const expiryDatesbySymbol = createAsyncThunk(
-    "se/expiryDates",
+    "se/derivative/expiryDates",
     async ({ code }, thunkAPI) => {        
         try {            
             const response = await derivativeService.expiryDatesSymbol(code);            
@@ -29,7 +29,7 @@ export const expiryDatesbySymbol = createAsyncThunk(
     }
 );
 export const getStockdatabyDateandSymbol = createAsyncThunk(
-    "se/getStock",
+    "se/derivative/getStock",
     async ({ code, expirydate }, thunkAPI) => {        
         try {            
             const response = await derivativeService.getStockdatabyDateandSymbol(code, expirydate);            
@@ -49,7 +49,7 @@ const initialState = {
 };
 
 const derivativeSlice = createSlice({
-    name: "optionchain",
+    name: "seDerivative",
     initialState,
     extraReducers: {
         [quoteData.fulfilled]: (state, action) => {            
