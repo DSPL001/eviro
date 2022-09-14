@@ -29,7 +29,7 @@ const SelectSymbolExpiry = ({ show, close }) => {
         const code = value;
         dispatch(expiryDatesbySymbol({ code })).unwrap()
             .then(succ => {
-                setExpiry(succ.expirydates)
+                setExpiry(succ)
             })
             .catch(err => {
                 console.log(err);

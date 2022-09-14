@@ -37,8 +37,6 @@ const seBasicSlice = createSlice({
     extraReducers: {
         [marketStatus.fulfilled]: (state, action) => {            
             state.marketStatus = action.payload;
-            state.stockCodes = null;
-
         },
         [marketStatus.rejected]: (state, action) => {            
             state.marketStatus = null;            

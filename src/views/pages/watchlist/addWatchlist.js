@@ -1,33 +1,18 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect, useCallback } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from "react";
+import { useSelector } from 'react-redux';
+// material-ui
+import { LoadingButton } from '@mui/lab';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-// material-ui
-import { LoadingButton } from '@mui/lab';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import SaveIcon from '@mui/icons-material/Save';
-import SendIcon from '@mui/icons-material/Send';
-import { FormControl, FormHelperText, InputLabel, OutlinedInput, ListSubheader } from '@mui/material';
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-// third party
-import { Formik } from 'formik';
-import * as Yup from 'yup';
 // project imports
-import useScriptRef from 'hooks/useScriptRef';
-import { enqueueSnackbar as enqueueSnackbarAction } from 'slices/popup';
 import AnimateButton from 'ui-component/extended/AnimateButton';
-import { addTier } from 'slices/tier';
-import { stockCodes } from 'slices/se-Basic';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
@@ -35,29 +20,10 @@ const AddWatchlist = ({ show, close }) => {
     const theme = useTheme(); 
     const { stockCodes: currentstockCodes } = useSelector((state) => state.seBasic);
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-    const [collections, setCollections] = useState(currentstockCodes.nseLists);
+    const [collections] = useState(currentstockCodes);
     const [value, setValue] = useState(collections[0].key); 
-    const scriptedRef = useScriptRef();
-    const [loading, setLoading] = useState(false);
-    const dispatch = useDispatch();
-    const enqueueSnackbar = (...args) => dispatch(enqueueSnackbarAction(...args));
-    const [age, setAge] = React.useState('');
-    const handleSelectChange = (event) => {
-        setAge(event.target.value);
-    };
+    const [loading] = useState(false);
     
-    function handleClick() {
-        setLoading(true);
-    }
-    const getStocks = useCallback(() => {
-        dispatch(stockCodes()).unwrap()
-            .then(succ => {
-                setCollections(succ.nseLists);
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }, [dispatch]);
     const options = collections.map((option) => {
         const category = option.category;
         const key = option.key;

@@ -1,4 +1,4 @@
-﻿import { getData, postData } from "../api";
+import { getData, postData } from "../api";
 import EviroConfig from "config-items";
 
 async function quoteMasterData() {

@@ -8,10 +8,12 @@ import themes from 'themes';
 // project imports
 import NavigationScroll from 'layout/NavigationScroll';
 import useNotifier from 'utils/useNotifier';
+import useSE from 'utils/useSE';
 
 // ==============================|| APP ||============================== //
 const App = () => {
-    useNotifier();    
+    useNotifier();  
+    useSE();  
     const customization = useSelector((state) => state.customization);
     return (
         <StyledEngineProvider injectFirst>

@@ -1,29 +1,70 @@
 import { useState, useRef, useEffect } from 'react';
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import {
+import {   
     Avatar,
     Badge,
-    Box,   
+    Box,
     ButtonBase,    
-    Chip,
-    ClickAwayListener,   
+    ClickAwayListener,
     Grid,
     Paper,
-    Popper,
-    Stack,    
+    Popper,    
     useMediaQuery
 } from '@mui/material';
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import Transitions from 'ui-component/extended/Transitions';
-
+// third-party
+import PerfectScrollbar from 'react-perfect-scrollbar';
 // assets
-import { IconBell } from '@tabler/icons';
+import { IconBuildingStore } from '@tabler/icons';
 import { useDispatch } from 'react-redux';
 import { marketStatus } from 'slices/se-Basic';
-import CheckIcon from '@mui/icons-material/Check';
-
+import StatusCard from './statusCard';
+// notification status options
+const status = [
+    {
+        index: "",
+        last: "",
+        market: "Capital Market",
+        marketStatus: "Error",
+        marketStatusMessage: "Market Status is Loading",
+        percentChange: "",
+        tradeDate: "",
+        variation: ""
+    },
+    {
+        index: "",
+        last: "",
+        market: "Currency",
+        marketStatus: "Error",
+        marketStatusMessage: "Market Status is Loading",
+        percentChange: "",
+        tradeDate: "",
+        variation: ""
+    },
+    {
+        index: "",
+        last: "",
+        market: "Commodity",
+        marketStatus: "Error",
+        marketStatusMessage: "Market Status is Loading",
+        percentChange: "",
+        tradeDate: "",
+        variation: ""
+    },
+    {
+        index: "",
+        last: "",
+        market: "Debt",
+        marketStatus: "Error",
+        marketStatusMessage: "Market Status is Loading",
+        percentChange: "",
+        tradeDate: "",
+        variation: ""
+    }
+]
 // ==============================|| NOTIFICATION ||============================== //
 
 const StockStatusSection = () => {
@@ -31,9 +72,8 @@ const StockStatusSection = () => {
     const dispatch = useDispatch();
     const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
     const [badge, setBadge] = useState('info');
-    const [marketstatus, setMarketStatus] = useState({});
+    const [marketstatus, setMarketStatus] = useState(status);
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState('');
     /**
      * anchorRef is used on different componets and specifying one type leads to other components throwing an error
      * */
@@ -49,14 +89,13 @@ const StockStatusSection = () => {
         }
         setOpen(false);
     };
-
     const prevOpen = useRef(open);
     useEffect(() => {
         setTimeout(() => {
             dispatch(marketStatus()).unwrap()
                 .then(succ => {
                     if (succ != null) {
-                        setMarketStatus(succ.marketState);
+                        setMarketStatus(succ);                        
                         const isFound = marketstatus.some(element => {
                             if (element.market === 'Capital Market' && element.marketStatus === 'Open') {
                                 return true
@@ -84,10 +123,6 @@ const StockStatusSection = () => {
         }
         prevOpen.current = open;
     }, [open, dispatch, marketstatus]);
-
-    const handleChange = (event) => {
-        if (event?.target.value) setValue(event?.target.value);
-    };
 
     return (
         <Badge color={badge} badgeContent="" variant="dot">
@@ -120,7 +155,7 @@ const StockStatusSection = () => {
                         onClick={handleToggle}
                         color="inherit"
                     >
-                        <IconBell stroke={1.5} size="1.3rem" />
+                        <IconBuildingStore stroke={1.5} size="1.3rem" />
                     </Avatar>
                 </ButtonBase>
             </Box>
@@ -147,16 +182,11 @@ const StockStatusSection = () => {
                         <Paper>
                             <ClickAwayListener onClickAway={handleClose}>
                                 <MainCard border={false} elevation={16} content={false} boxShadow shadow={theme.shadows[16]}>
-                                    <Grid container direction="column" spacing={2} sx={{ pb: 1.25, justifyContent: 'center' }}>
+                                    <Grid container direction="column" spacing={2}>
                                         <Grid item xs={12}>
-                                            <Grid container alignItems="center" justifyContent="space-between" sx={{ pt: 2, px: 2 }}>
-                                                <Stack direction="column" spacing={1}>
-                                                    {marketstatus.map((option) => (
-                                                        <Chip icon={<CheckIcon />} key={option.market} label={option.market} color={option.marketStatus == 'Open' ? 'success' : 'error'} variant="outlined" />
-                                                    ))}
-
-                                                </Stack>
-                                            </Grid>
+                                            <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 205px)', overflowX: 'hidden' }} >
+                                                <StatusCard info={marketstatus} />
+                                            </PerfectScrollbar>
                                         </Grid>
                                     </Grid>
                                 </MainCard>
@@ -165,7 +195,7 @@ const StockStatusSection = () => {
                     </Transitions>
                 )}
             </Popper>
-        </Badge>
+        </Badge >
     );
 };
 
