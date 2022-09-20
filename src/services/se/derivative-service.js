@@ -22,8 +22,9 @@ async function expiryDatesSymbol(code) {
     return Promise.reject(error);
   }
 }
-async function getStock(code,expirydate) {   
-  const response = await postData({ serviceName: EviroConfig.api.seBasic.getStock, data: {code, expirydate} })    
+async function getStock(code, date) {   
+  //console.log(code, date)
+  const response = await postData({ serviceName: EviroConfig.api.seBasic.getStockData, data: {code, date} })    
   const { success, data, error } = response;
   if (success) {
     return Promise.resolve(data);
