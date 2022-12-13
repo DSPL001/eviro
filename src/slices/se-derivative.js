@@ -30,9 +30,10 @@ export const expiryDatesbySymbol = createAsyncThunk(
 );
 export const getStockdatabyDateandSymbol = createAsyncThunk(
     "se/derivative/getStock",
-    async ({ code, expirydate }, thunkAPI) => {        
-        try {            
-            const response = await derivativeService.getStockdatabyDateandSymbol(code, expirydate);            
+    async ({ code, date }, thunkAPI) => {        
+        try {  
+            //console.log(code, date)          
+            const response = await derivativeService.getStock(code, date);            
             return Promise.resolve(response);
         }
         catch (error) {
@@ -45,7 +46,7 @@ export const getStockdatabyDateandSymbol = createAsyncThunk(
 const initialState = {
     quotemaster: null,  
     expirydate:null ,
-    getStockdatas:null
+    getStockdata:null
 };
 
 const derivativeSlice = createSlice({
