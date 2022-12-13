@@ -1,4 +1,5 @@
 // ===========================|| DASHBOARD - TOTAL GROWTH BAR CHART ||=========================== //
+import * as React from 'react';
 
 
 const DataChart= {
@@ -35,7 +36,8 @@ const DataChart= {
         },
         xaxis: {
             type: 'category',
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
+            'United States', 'China', 'Germany']
         },
         legend: {
             show: true,
@@ -74,4 +76,7 @@ const DataChart= {
         
     ]
 };
-export default DataChart;
+
+export default DataChart ;
+
+

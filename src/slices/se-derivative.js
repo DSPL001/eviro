@@ -30,10 +30,10 @@ export const expiryDatesbySymbol = createAsyncThunk(
 );
 export const getStockdatabyDateandSymbol = createAsyncThunk(
     "se/derivative/getStock",
-    async ({ code, date }, thunkAPI) => {        
+    async ({ code, expiryDate }, thunkAPI) => {        
         try {  
-            //console.log(code, date)          
-            const response = await derivativeService.getStock(code, date);            
+             
+            const response = await derivativeService.getStock(code, expiryDate);            
             return Promise.resolve(response);
         }
         catch (error) {
@@ -43,10 +43,29 @@ export const getStockdatabyDateandSymbol = createAsyncThunk(
         }
     }
 );
+export const getOptionChainbyDateandSymbol = createAsyncThunk(
+            "se/derivate/getOptioChain",
+            async({ code,expiryDate}, thunkAPI)=>{
+
+                try {  
+                        
+                    const response = await derivativeService.getOptionChain(code, expiryDate);            
+                    return Promise.resolve(response);
+                }
+                catch (error) {
+                    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+                    thunkAPI.dispatch(message);            
+                    return thunkAPI.rejectWithValue(error);
+                }
+            }
+
+
+)
 const initialState = {
     quotemaster: null,  
     expirydate:null ,
-    getStockdata:null
+    getStockdata:null,
+    getOptionChain:null,
 };
 
 const derivativeSlice = createSlice({
@@ -60,7 +79,10 @@ const derivativeSlice = createSlice({
             state.expirydate = action.payload;
         },
         [getStockdatabyDateandSymbol.fulfilled]: (state, action) => {            
-            state.expirydate = action.payload;
+            state.getStockdata = action.payload;
+        },
+        [getOptionChainbyDateandSymbol.fulfilled]: (state, action) => {            
+            state.getOptionChain = action.payload;
         },
     }
 });

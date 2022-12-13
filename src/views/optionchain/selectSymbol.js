@@ -12,31 +12,54 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 // Slices
-import { expiryDatesbySymbol,getStockdatabyDateandSymbol } from 'slices/se-derivative';
+import { expiryDatesbySymbol, getStockdatabyDateandSymbol, getOptionChainbyDateandSymbol } from 'slices/se-derivative';
 //formik
-import { Formik } from 'formik';
+
+
+
+
+
+
+
+
+
+
+
 
 
 // ==============================|| Select Symbol ||============================== //
-const SelectSymbolExpiry = ({ show, close }) => {
+const SelectSymbolExpiry = ({ show, close }, { xaxis, yaxis }) => {
 
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
     const { quotemaster: currentquotemaster } = useSelector((state) => state.seDerivative);
-    const [expiries, setExpiry] = useState([]);    
+    const [expiries, setExpiry] = useState([]);
     const [stocks, setStocks] = useState(currentquotemaster);
     const [value, setValue] = useState(stocks[0]);
-    
-    const [Evalue, setEValue] = useState('');
-    //get data using usestate
-    const [data, setData] = useState([]);
-    const dispatch = useDispatch(); 
+    const [Evalue, setEValue] = useState({});
+
+
+    //bar chart
+    const [chart, setChart] = useState();
+    const [option, getoption] = useState();
+
+    const dispatch = useDispatch();
+
+
+
+
+
+    // const { getStockdata: gsds} = useSelector(x => x.seDerivative); 
+    // console.log('api data',gsds) 
+
+
 
     const handleChange = (event) => {
         setEValue(event.target.value);
-        console.log(event.target.value);  
-              
     };
+
+
+
     const getexpirydate = (newValue) => {
         const code = newValue;
         dispatch(expiryDatesbySymbol({ code })).unwrap()
@@ -48,71 +71,67 @@ const SelectSymbolExpiry = ({ show, close }) => {
             })
     };
     const options = stocks.map((option) => {
-        const category = option.category;        
+        const category = option.category;
         const value = option.value;
         return {
             category, value,
             ...option,
         };
-    }); 
+    });
 
-    
-        const getValue = () => {
-            const code =value.value;
-           const date = Evalue;
-
-            dispatch(getStockdatabyDateandSymbol({code,date})).unwrap()
-                .then(succ => {
-                    setData(succ);
-                    console.log(succ);
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-        };
-    
+    const getValue = () => {
+        const code = value.value;
+        const expiryDate = Evalue;
+        console.log('code', code);
+        console.log('expiryDate', expiryDate);
+        dispatch(getStockdatabyDateandSymbol({ code, expiryDate })).unwrap()
+            .then(succ => {
+                setChart(succ);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        dispatch(getOptionChainbyDateandSymbol({ code, expiryDate })).unwrap()
+            .then(succ => {
+                getoption(succ);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    };
 
     return (
-    
-        <Formik
-            initialValues={{
-                quoteData : "",
-                getexpirydate:"",
-                submit:null
-            }}    onSubmit={() => {
-              
-              }}>
-            
-        
+
+
         <Dialog fullScreen={fullScreen} open={show} onClose={close} aria-labelledby="responsive-dialog-title">
             <DialogTitle id="responsive-dialog-title">
                 {'Select Symbol and Expiry Date'}
             </DialogTitle>
             <DialogContent>
 
-            <FormControl>
-                <Autocomplete                    
-                    id="combo-box-demo"                    
+
+                <Autocomplete
+                    id="combo-box-demo"
                     options={options.sort((a, b) => a)}
                     key={(option) => option.value}
-                    groupBy={(option) => option.category}     
-                    getOptionLabel={(option) => option.value}               
+                    groupBy={(option) => option.category}
+                    getOptionLabel={(option) => option.value}
                     sx={{ m: 2, minWidth: 300 }}
                     value={value}
                     renderInput={(params) => <TextField {...params} label="Quotes" />}
-                    onChange={(event, newValue) => {                        
-                        setValue(newValue); 
+                    onChange={(event, newValue) => {
+                        setValue(newValue);
                         console.log(newValue.value)
                         getexpirydate(newValue.value)
-                   
+
                     }}
-                />    
-                </FormControl>
-                <FormControl sx={{ m: 2, minWidth: 200 }} size="small">
+                />
+
+                <FormControl sx={{ m: 2, minWidth: 300 }} size="small">
                     <InputLabel id="demo-select-small">Expiry</InputLabel>
                     <Select
                         labelId="demo-select-small"
-                        id="demo-select-small"                        
+                        id="demo-select-small"
                         label="Expiry"
                         onChange={handleChange}
                     >
@@ -129,30 +148,35 @@ const SelectSymbolExpiry = ({ show, close }) => {
                 <Box>
                     <Box sx={{ mt: 2 }}>
                         <AnimateButton>
-                            <LoadingButton 
+                            <LoadingButton
                                 disableElevation
                                 fullWidth
                                 size="large"
 
                                 type="submit"
                                 variant="contained"
-                                color="secondary" 
+                                color="secondary"
                                 onClick={getValue}
-                                >
+                            >
                                 Ok
                             </LoadingButton>
-                         
+
                         </AnimateButton>
                     </Box>
                 </Box>
+
             </DialogContent>
         </Dialog>
-        </Formik>
-        
+
+
     )
+
 }
+
 SelectSymbolExpiry.propTypes = {
     show: PropTypes.bool,
-    close: PropTypes.func
+    close: PropTypes.func,
+
 }
+
 export default SelectSymbolExpiry;
