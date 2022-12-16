@@ -28,7 +28,7 @@ import { expiryDatesbySymbol, getStockdatabyDateandSymbol, getOptionChainbyDatea
 
 
 // ==============================|| Select Symbol ||============================== //
-const SelectSymbolExpiry = ({ show, close }, { xaxis, yaxis }) => {
+const SelectSymbolExpiry = ({ show, close }) => {
 
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
